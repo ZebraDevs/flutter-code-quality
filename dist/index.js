@@ -30484,7 +30484,7 @@ const getAnalyze = async () => {
     return response;
 };
 exports.getAnalyze = getAnalyze;
-const _getErrEmoji = (errType) => {
+const getErrEmoji = (errType) => {
     switch (errType) {
         case "error":
             return "⛔️";
@@ -30494,7 +30494,51 @@ const _getErrEmoji = (errType) => {
             return "ℹ️";
     }
 };
-const generateTableRow = (err, type) => `<tr><td>${_getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${err.details}</td></tr>`;
+const generateTableRow = (err, type) => `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${err.details}</td></tr>`;
+
+
+/***/ }),
+
+/***/ 7007:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkBranchStatus = void 0;
+const core_1 = __nccwpck_require__(5969);
+const checkBranchStatus = async (octokit, context) => {
+    (0, core_1.startGroup)("Check if branch is behind");
+    let behindByStr;
+    try {
+        const pr_details = await octokit.request(`GET /repos/${context.issue.owner}/${context.issue.repo}/pulls/${context.issue.number}`);
+        console.log("Got PR details", pr_details);
+        const branch_details = await octokit.request(`GET /repos/${context.issue.owner}/${context.issue.repo}/compare/${pr_details.data.base.sha}...${pr_details.data.head.sha}`);
+        console.log("Got branch details", branch_details);
+        const behind_by = branch_details.data.behind_by;
+        if (behind_by == 0 || behind_by == "0") {
+            behindByStr = {
+                output: "✅ - Branch is not behind and can be merged",
+                error: false,
+            };
+        }
+        else if (behind_by > 0) {
+            behindByStr = {
+                output: `⚠️ - Branch is behind by ${behind_by} commits`,
+                error: true,
+            };
+        }
+    }
+    catch (e) {
+        console.error("Failed checking status.", e);
+    }
+    if (behindByStr == undefined) {
+        behindByStr = { output: "", error: true };
+    }
+    (0, core_1.endGroup)();
+    return behindByStr;
+};
+exports.checkBranchStatus = checkBranchStatus;
 
 
 /***/ }),
@@ -30508,37 +30552,32 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.postComment = exports.createComment = void 0;
 const core_1 = __nccwpck_require__(5969);
 const SIGNATURE = `<sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>`;
-const createComment = (analyze, test, coverage) => {
+const createComment = (analyze, test, coverage, behindBy) => {
+    const isSuccess = !analyze.error && !test.error && !coverage.error && !behindBy.error;
     let output = `<h2>PR Checks complete</h2>
 <ul>
   <li>✅ - Linting / Formatting</li>
   <li>${analyze.output.replaceAll("`|\"|'|<|>", "")}</li>
   <li>${test.output.replaceAll("`|\"|'|<|>", "")}</li>
-  TODO: UP TO DATE here
+  ${isSuccess ? "<li>✅ - Branch is not behind" : null}
   <li>${coverage.output.replaceAll("`|\"|'|<|>", "")}</li>
 </ul>
+
 ${SIGNATURE}
     `.replaceAll("\r\n|\n|\r", "");
     return output;
 };
 exports.createComment = createComment;
-async function postComment(github, commentMessage, context) {
-    const issue = {
+async function postComment(octokit, commentMessage, context) {
+    (0, core_1.startGroup)(`Commenting on PR`);
+    const pr = {
         repo: context.repo.repo,
         owner: context.repo.owner,
         issue_number: context.issue.number,
-        // repo: "zeta_flutter",
-        // owner: "zebrafed",
-        // issue_number: 57,
     };
-    const newComment = {
-        ...issue,
-        body: commentMessage,
-    };
-    (0, core_1.startGroup)(`Commenting on PR`);
     let commentId;
     try {
-        const comments = (await github.rest.issues.listComments(issue)).data;
+        const comments = (await octokit.rest.issues.listComments(pr)).data;
         for (let i = comments.length; i--;) {
             const c = comments[i];
             if (c.body?.includes(SIGNATURE)) {
@@ -30552,10 +30591,10 @@ async function postComment(github, commentMessage, context) {
     }
     if (commentId) {
         try {
-            await github.rest.issues.updateComment({
-                ...issue,
+            await octokit.rest.issues.updateComment({
+                ...pr,
                 comment_id: commentId,
-                body: newComment.body,
+                body: commentMessage,
             });
         }
         catch (e) {
@@ -30564,7 +30603,7 @@ async function postComment(github, commentMessage, context) {
     }
     if (!commentId) {
         try {
-            await github.rest.issues.createComment(newComment);
+            await octokit.rest.issues.createComment({ ...pr, body: commentMessage });
         }
         catch (e) {
             console.error("Error creating comment", e);
@@ -33056,18 +33095,20 @@ const test_1 = __nccwpck_require__(9685);
 const github_1 = __nccwpck_require__(2262);
 const comment_1 = __nccwpck_require__(4752);
 const setup_1 = __nccwpck_require__(796);
+const behind_1 = __nccwpck_require__(7007);
 const run = async () => {
+    // const comment = `Test comment, ${Date.now().toLocaleString("en_GB")}
+    // <sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>
+    //     }`;
     const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
     const octokit = (0, github_1.getOctokit)(token);
+    const behindByStr = await (0, behind_1.checkBranchStatus)(octokit, github_1.context);
     await (0, setup_1.setup)();
     const oldCoverage = (0, coverage_1.getOldCoverage)();
     const analyzeStr = await (0, analyze_1.getAnalyze)();
     const testStr = await (0, test_1.getTest)();
     const coverageStr = await (0, coverage_1.getCoverage)(oldCoverage);
-    // const comment = `Test comment, ${Date.now().toLocaleString("en_GB")}
-    // <sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>
-    //     }`;
-    const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr);
+    const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
     (0, comment_1.postComment)(octokit, comment, github_1.context);
 };
 run();

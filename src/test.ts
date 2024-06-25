@@ -1,6 +1,6 @@
-import { stepResponse } from "./main";
 import { endGroup, startGroup } from "@actions/core";
 import { exec } from "@actions/exec";
+import { stepResponse } from "./types";
 
 export const getTest = async (): Promise<stepResponse> => {
   startGroup("Running tests");

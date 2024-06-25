@@ -1,6 +1,6 @@
 import { exec } from "@actions/exec";
-import type { stepResponse } from "./main";
 import { endGroup, startGroup } from "@actions/core";
+import { analyzeDetails, analyzeErrTypes, stepResponse } from "./types";
 
 export const getAnalyze = async (): Promise<stepResponse> => {
   startGroup("Analyzing code");
@@ -16,9 +16,9 @@ export const getAnalyze = async (): Promise<stepResponse> => {
   } catch (error) {
     const arr = stdout.trim().split("\n");
 
-    const errors: _err[] = [];
-    const warnings: _err[] = [];
-    const infos: _err[] = [];
+    const errors: analyzeDetails[] = [];
+    const warnings: analyzeDetails[] = [];
+    const infos: analyzeDetails[] = [];
 
     arr
       .slice(2, -2)
@@ -64,14 +64,7 @@ export const getAnalyze = async (): Promise<stepResponse> => {
   return response;
 };
 
-type _err = {
-  file: string;
-  details: string;
-};
-
-type _errType = "error" | "warning" | "info";
-
-const _getErrEmoji = (errType: _errType) => {
+const getErrEmoji = (errType: analyzeErrTypes) => {
   switch (errType) {
     case "error":
       return "⛔️";
@@ -82,7 +75,7 @@ const _getErrEmoji = (errType: _errType) => {
   }
 };
 
-const generateTableRow = (err: _err, type: _errType) =>
-  `<tr><td>${_getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${
+const generateTableRow = (err: analyzeDetails, type: analyzeErrTypes) =>
+  `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${
     err.details
   }</td></tr>`;
