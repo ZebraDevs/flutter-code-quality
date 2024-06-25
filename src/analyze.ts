@@ -1,6 +1,11 @@
 import { exec } from "@actions/exec";
+
 import { endGroup, startGroup } from "@actions/core";
-import { analyzeDetails, analyzeErrTypes, stepResponse } from "./types";
+import { stepResponse } from "./main";
+
+export type analyzeDetails = { file: string; details: string };
+
+export type analyzeErrTypes = "error" | "warning" | "info";
 
 export const getAnalyze = async (): Promise<stepResponse> => {
   startGroup("Analyzing code");

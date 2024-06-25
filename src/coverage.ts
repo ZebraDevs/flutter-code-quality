@@ -1,7 +1,7 @@
 import { Lcov, LcovDigest, parse, sum } from "lcov-utils";
 import { readFileSync } from "node:fs";
 import { endGroup, startGroup } from "@actions/core";
-import { stepResponse } from "./types";
+import { stepResponse } from "./main";
 
 export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
   startGroup("Checking test coverage");

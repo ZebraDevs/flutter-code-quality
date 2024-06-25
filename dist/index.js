@@ -30697,6 +30697,53 @@ exports.getOldCoverage = getOldCoverage;
 
 /***/ }),
 
+/***/ 7523:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.push = void 0;
+const core_1 = __nccwpck_require__(2614);
+const exec_1 = __nccwpck_require__(2259);
+const child_process_1 = __nccwpck_require__(2081);
+const push = async () => {
+    (0, core_1.startGroup)("Check for changes");
+    let stdout = "";
+    try {
+        await (0, exec_1.exec)("git status --porcelain", [], {
+            listeners: { stdout: (data) => (stdout += data.toString()) },
+        });
+    }
+    catch (e) {
+        console.error("Unable to check if there are changes", e);
+    }
+    (0, core_1.endGroup)();
+    /// If `stdout` is empty, there are no changes
+    if (stdout != "") {
+        try {
+            (0, core_1.startGroup)("Push changes");
+            await (0, exec_1.exec)('git config --global user.name "github-actions"');
+            await (0, exec_1.exec)('git config --global user.email "github-actions@github.com"');
+            await (0, exec_1.exec)("git add -A");
+            (0, child_process_1.execSync)(`git commit -m 'chore(automated): Lint commit and format' `);
+            await (0, exec_1.exec)("git push -f");
+            console.log("Changes pushed onto branch");
+        }
+        catch (e) {
+            console.error("Unable to push changes", e);
+            (0, core_1.setFailed)("Unable to push changes to branch");
+        }
+        finally {
+            (0, core_1.endGroup)();
+        }
+    }
+};
+exports.push = push;
+
+
+/***/ }),
+
 /***/ 7046:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -33096,10 +33143,8 @@ const github_1 = __nccwpck_require__(8686);
 const comment_1 = __nccwpck_require__(9498);
 const setup_1 = __nccwpck_require__(7046);
 const behind_1 = __nccwpck_require__(8058);
+const push_1 = __nccwpck_require__(7523);
 const run = async () => {
-    // const comment = `Test comment, ${Date.now().toLocaleString("en_GB")}
-    // <sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>
-    //     }`;
     const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
     const octokit = (0, github_1.getOctokit)(token);
     const behindByStr = await (0, behind_1.checkBranchStatus)(octokit, github_1.context);
@@ -33110,6 +33155,7 @@ const run = async () => {
     const coverageStr = await (0, coverage_1.getCoverage)(oldCoverage);
     const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
     (0, comment_1.postComment)(octokit, comment, github_1.context);
+    await (0, push_1.push)();
 };
 run();
 
