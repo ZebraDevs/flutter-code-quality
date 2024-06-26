@@ -1,7 +1,10 @@
 import { exec } from "@actions/exec";
 
 import { endGroup, startGroup } from "@actions/core";
-import { stepResponse } from "./main";
+import { stepResponse } from "../main";
+
+export const ANALYZE_SUCCESS = "✅ - Static analysis passed";
+export const ANALYZE_FAILURE = "⛔️ - Static analysis failed";
 
 export type analyzeDetails = { file: string; details: string };
 
@@ -17,7 +20,7 @@ export const getAnalyze = async (): Promise<stepResponse> => {
         stdout: (data) => (stdout += data.toString()),
       },
     });
-    response = { output: "✅ - Static analysis passed", error: false };
+    response = { output: ANALYZE_SUCCESS, error: false };
   } catch (error) {
     const arr = stdout.trim().split("\n");
 
@@ -51,7 +54,7 @@ export const getAnalyze = async (): Promise<stepResponse> => {
 
     const issuesFound = arr.at(-1);
 
-    const output = `⛔️ - Static analysis failed; ${issuesFound}</br>
+    const output = `${ANALYZE_FAILURE}; ${issuesFound}</br>
         <details><summary>See details</summary>
         <table>
         <tr><th></th><th>Type</th><th>File name</th><th>Details</th></tr>${errorString.join(
@@ -69,7 +72,7 @@ export const getAnalyze = async (): Promise<stepResponse> => {
   return response;
 };
 
-const getErrEmoji = (errType: analyzeErrTypes) => {
+export const getErrEmoji = (errType: analyzeErrTypes) => {
   switch (errType) {
     case "error":
       return "⛔️";
@@ -80,7 +83,7 @@ const getErrEmoji = (errType: analyzeErrTypes) => {
   }
 };
 
-const generateTableRow = (err: analyzeDetails, type: analyzeErrTypes) =>
+export const generateTableRow = (err: analyzeDetails, type: analyzeErrTypes) =>
   `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${
     err.details
   }</td></tr>`;

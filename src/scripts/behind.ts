@@ -1,7 +1,7 @@
 import { endGroup, startGroup } from "@actions/core";
 import { Context } from "@actions/github/lib/context";
 import { GitHub } from "@actions/github/lib/utils";
-import { stepResponse } from "./main";
+import { stepResponse } from "../main";
 
 export const checkBranchStatus = async (
   octokit: InstanceType<typeof GitHub>,

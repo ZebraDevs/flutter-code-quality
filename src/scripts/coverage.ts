@@ -1,7 +1,7 @@
 import { Lcov, LcovDigest, parse, sum } from "lcov-utils";
 import { readFileSync } from "node:fs";
 import { endGroup, startGroup } from "@actions/core";
-import { stepResponse } from "./main";
+import { stepResponse } from "../main";
 
 export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
   startGroup("Checking test coverage");
@@ -43,6 +43,7 @@ export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
     </details>`;
     return { output: str, error: false };
   } catch (error) {
+    console.error("Error checking coverage", error);
     response = { output: "⚠️ - Coverage check failed", error: true };
   } finally {
     if (response == undefined) {

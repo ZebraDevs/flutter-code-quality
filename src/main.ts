@@ -1,12 +1,12 @@
 import { getInput } from "@actions/core";
-import { getAnalyze } from "./analyze";
-import { getCoverage, getOldCoverage } from "./coverage";
-import { getTest } from "./test";
+import { getAnalyze } from "./scripts/analyze";
 import { getOctokit, context } from "@actions/github";
-import { createComment, postComment } from "./comment";
-import { setup } from "./setup";
-import { checkBranchStatus } from "./behind";
-import { push } from "./push";
+import { getCoverage, getOldCoverage } from "./scripts/coverage";
+import { getTest } from "./scripts/runTests";
+import { createComment, postComment } from "./scripts/comment";
+import { setup } from "./scripts/setup";
+import { checkBranchStatus } from "./scripts/behind";
+import { push } from "./scripts/push";
 
 export type stepResponse = { output: string; error: boolean };
 
