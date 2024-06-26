@@ -30419,15 +30419,17 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 7890:
+/***/ 798:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getAnalyze = void 0;
+exports.generateTableRow = exports.getErrEmoji = exports.getAnalyze = exports.ANALYZE_FAILURE = exports.ANALYZE_SUCCESS = void 0;
 const exec_1 = __nccwpck_require__(2259);
 const core_1 = __nccwpck_require__(2614);
+exports.ANALYZE_SUCCESS = "✅ - Static analysis passed";
+exports.ANALYZE_FAILURE = "⛔️ - Static analysis failed";
 const getAnalyze = async () => {
     (0, core_1.startGroup)("Analyzing code");
     let response;
@@ -30438,7 +30440,7 @@ const getAnalyze = async () => {
                 stdout: (data) => (stdout += data.toString()),
             },
         });
-        response = { output: "✅ - Static analysis passed", error: false };
+        response = { output: exports.ANALYZE_SUCCESS, error: false };
     }
     catch (error) {
         const arr = stdout.trim().split("\n");
@@ -30464,11 +30466,11 @@ const getAnalyze = async () => {
             }
             return;
         });
-        const errorString = errors.map((e) => generateTableRow(e, "error"));
-        const warningString = warnings.map((e) => generateTableRow(e, "warning"));
-        const infoString = infos.map((e) => generateTableRow(e, "info"));
+        const errorString = errors.map((e) => (0, exports.generateTableRow)(e, "error"));
+        const warningString = warnings.map((e) => (0, exports.generateTableRow)(e, "warning"));
+        const infoString = infos.map((e) => (0, exports.generateTableRow)(e, "info"));
         const issuesFound = arr.at(-1);
-        const output = `⛔️ - Static analysis failed; ${issuesFound}</br>
+        const output = `${exports.ANALYZE_FAILURE}; ${issuesFound}</br>
         <details><summary>See details</summary>
         <table>
         <tr><th></th><th>Type</th><th>File name</th><th>Details</th></tr>${errorString.join("")}${warningString.join("")}${infoString.join("")}</table></details>
@@ -30494,12 +30496,14 @@ const getErrEmoji = (errType) => {
             return "ℹ️";
     }
 };
-const generateTableRow = (err, type) => `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${err.details}</td></tr>`;
+exports.getErrEmoji = getErrEmoji;
+const generateTableRow = (err, type) => `<tr><td>${(0, exports.getErrEmoji)(type)}</td><td>Error</td><td>${err.file}</td><td>${err.details}</td></tr>`;
+exports.generateTableRow = generateTableRow;
 
 
 /***/ }),
 
-/***/ 8058:
+/***/ 8890:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -30543,7 +30547,7 @@ exports.checkBranchStatus = checkBranchStatus;
 
 /***/ }),
 
-/***/ 9498:
+/***/ 369:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -30616,16 +30620,17 @@ async function postComment(octokit, commentMessage, context) {
 
 /***/ }),
 
-/***/ 7661:
+/***/ 5499:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getOldCoverage = exports.getCoverage = void 0;
+exports.getOldCoverage = exports.getCoverage = exports.COV_FAILURE = void 0;
 const lcov_utils_1 = __nccwpck_require__(1641);
 const node_fs_1 = __nccwpck_require__(7561);
 const core_1 = __nccwpck_require__(2614);
+exports.COV_FAILURE = "⚠️ - Coverage check failed";
 const getCoverage = (oldCoverage) => {
     (0, core_1.startGroup)("Checking test coverage");
     let response;
@@ -30643,10 +30648,10 @@ const getCoverage = (oldCoverage) => {
         });
         if (oldCoverage != undefined) {
             if (oldCoverage > totalPercent) {
-                percentOutput = totalPercent + `% (🔻 down from ` + oldCoverage + `)`;
+                percentOutput = totalPercent + `% (🔻 down from ` + oldCoverage + `%)`;
             }
             else if (oldCoverage < totalPercent) {
-                percentOutput = totalPercent + `% (👆 up from ` + oldCoverage + `)`;
+                percentOutput = totalPercent + `% (⬆️ up from ` + oldCoverage + `%)`;
             }
             else {
                 percentOutput = totalPercent + `% (no change)`;
@@ -30663,15 +30668,11 @@ const getCoverage = (oldCoverage) => {
         ${arr.join("")}
     </table>
     </details>`;
-        return { output: str, error: false };
+        response = { output: str, error: false };
     }
     catch (error) {
-        response = { output: "⚠️ - Coverage check failed", error: true };
-    }
-    finally {
-        if (response == undefined) {
-            response = { output: "⚠️ - Coverage check failed", error: true };
-        }
+        console.error("Error checking coverage", error);
+        response = { output: exports.COV_FAILURE, error: true };
     }
     (0, core_1.endGroup)();
     return response;
@@ -30697,7 +30698,7 @@ exports.getOldCoverage = getOldCoverage;
 
 /***/ }),
 
-/***/ 7523:
+/***/ 3662:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -30744,7 +30745,103 @@ exports.push = push;
 
 /***/ }),
 
-/***/ 7046:
+/***/ 9054:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getTest = exports.TEST_ERROR = exports.TEST_SUCCESS = void 0;
+const core_1 = __nccwpck_require__(2614);
+const exec_1 = __nccwpck_require__(2259);
+exports.TEST_SUCCESS = "✅ - All tests passed";
+exports.TEST_ERROR = "⚠️ - Error running tests";
+const getTest = async () => {
+    (0, core_1.startGroup)("Running tests");
+    let response;
+    let stdout = "";
+    let stderr = "";
+    try {
+        await (0, exec_1.exec)("flutter test --coverage --reporter json", [], {
+            listeners: {
+                stdout: (data) => (stdout += data.toString()),
+                stderr: (data) => (stderr += data.toString()),
+            },
+        });
+        response = { output: exports.TEST_SUCCESS, error: false };
+    }
+    catch (error) {
+        if (!stderr.includes('Test directory "test" not found.')) {
+            const objStr = "[" + stdout.split("\n").join(",").slice(0, -1) + "]";
+            const obj = JSON.parse(objStr);
+            let failIds = [];
+            obj.forEach((element) => {
+                if (element.type == "testDone" &&
+                    element.result.toLowerCase() == "error") {
+                    failIds.push(element.testID);
+                }
+            });
+            let initialString = "";
+            if (failIds.length > 1) {
+                initialString = `${failIds.length} tests failed`;
+            }
+            else if (failIds.length == 1) {
+                initialString = `${failIds.length} test failed`;
+            }
+            const errorString = [];
+            failIds.forEach((e1) => {
+                const allEntries = obj.filter((e) => (e.hasOwnProperty("testID") && e.testID == e1) ||
+                    (e.hasOwnProperty("test") &&
+                        e.test.hasOwnProperty("id") &&
+                        e.test.id == e1));
+                const entry1 = allEntries.find((e) => e.hasOwnProperty("test") && e.test.hasOwnProperty("id"));
+                let testName = "Error getting test name";
+                if (entry1) {
+                    testName = entry1.test.name.split("/test/").slice(-1);
+                }
+                const entry2 = allEntries.find((e) => e.hasOwnProperty("stackTrace") && e.stackTrace.length > 1);
+                const entry3 = allEntries.find((e) => e.hasOwnProperty("message") &&
+                    e.message.length > 1 &&
+                    e.message.includes("EXCEPTION CAUGHT BY FLUTTER"));
+                const entry4 = allEntries.find((e) => e.hasOwnProperty("error") && e.error.length > 1);
+                let testDetails = "Unable to get test details. Run flutter test to replicate";
+                if (entry2) {
+                    testDetails = entry2.stackTrace;
+                }
+                else if (entry3) {
+                    testDetails = entry3.message;
+                }
+                else if (entry4) {
+                    testDetails = entry4.error;
+                }
+                errorString.push("<details><summary>" +
+                    testName +
+                    "</br></summary>`" +
+                    testDetails +
+                    "`</details>");
+            });
+            const output = `⛔️ - ${initialString}</br >
+            <details><summary>See details</summary>
+              ${errorString.join("")}
+            </details>
+        `;
+            response = { output: output, error: true };
+        }
+    }
+    finally {
+        if (response == undefined) {
+            response = { output: exports.TEST_ERROR, error: true };
+        }
+    }
+    (0, core_1.endGroup)();
+    return response;
+};
+exports.getTest = getTest;
+
+
+/***/ }),
+
+/***/ 9346:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -30766,96 +30863,6 @@ const setup = async () => {
     (0, core_1.endGroup)();
 };
 exports.setup = setup;
-
-
-/***/ }),
-
-/***/ 3390:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getTest = void 0;
-const core_1 = __nccwpck_require__(2614);
-const exec_1 = __nccwpck_require__(2259);
-const getTest = async () => {
-    (0, core_1.startGroup)("Running tests");
-    let response;
-    let stdout = "";
-    try {
-        await (0, exec_1.exec)("flutter test --coverage --reporter json", [], {
-            listeners: {
-                stdout: (data) => (stdout += data.toString()),
-            },
-        });
-        response = { output: "✅ - All tests passed", error: false };
-    }
-    catch (error) {
-        const objStr = "[" + stdout.split("\n").join(",").slice(0, -1) + "]";
-        const obj = JSON.parse(objStr);
-        let failIds = [];
-        obj.forEach((element) => {
-            if (element.type == "testDone" &&
-                element.result.toLowerCase() == "error") {
-                failIds.push(element.testID);
-            }
-        });
-        let initialString = "";
-        if (failIds.length > 1) {
-            initialString = `${failIds.length} tests failed`;
-        }
-        else if (failIds.length == 1) {
-            initialString = `${failIds.length} test failed`;
-        }
-        const errorString = [];
-        failIds.forEach((e1) => {
-            const allEntries = obj.filter((e) => (e.hasOwnProperty("testID") && e.testID == e1) ||
-                (e.hasOwnProperty("test") &&
-                    e.test.hasOwnProperty("id") &&
-                    e.test.id == e1));
-            const entry1 = allEntries.find((e) => e.hasOwnProperty("test") && e.test.hasOwnProperty("id"));
-            let testName = "Error getting test name";
-            if (entry1) {
-                testName = entry1.test.name.split("/test/").slice(-1);
-            }
-            const entry2 = allEntries.find((e) => e.hasOwnProperty("stackTrace") && e.stackTrace.length > 1);
-            const entry3 = allEntries.find((e) => e.hasOwnProperty("message") &&
-                e.message.length > 1 &&
-                e.message.includes("EXCEPTION CAUGHT BY FLUTTER"));
-            const entry4 = allEntries.find((e) => e.hasOwnProperty("error") && e.error.length > 1);
-            let testDetails = "Unable to get test details. Run flutter test to replicate";
-            if (entry2) {
-                testDetails = entry2.stackTrace;
-            }
-            else if (entry3) {
-                testDetails = entry3.message;
-            }
-            else if (entry4) {
-                testDetails = entry4.error;
-            }
-            errorString.push("<details><summary>" +
-                testName +
-                "</br></summary>`" +
-                testDetails +
-                "`</details>");
-        });
-        const output = `⛔️ - ${initialString}</br >
-            <details><summary>See details</summary>
-              ${errorString.join("")}
-            </details>
-        `;
-        response = { output: output, error: true };
-    }
-    finally {
-        if (response == undefined) {
-            response = { output: "⚠️ - Error running tests", error: true };
-        }
-    }
-    (0, core_1.endGroup)();
-    return response;
-};
-exports.getTest = getTest;
 
 
 /***/ }),
@@ -33136,14 +33143,14 @@ var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __nccwpck_require__(2614);
-const analyze_1 = __nccwpck_require__(7890);
-const coverage_1 = __nccwpck_require__(7661);
-const test_1 = __nccwpck_require__(3390);
+const analyze_1 = __nccwpck_require__(798);
 const github_1 = __nccwpck_require__(8686);
-const comment_1 = __nccwpck_require__(9498);
-const setup_1 = __nccwpck_require__(7046);
-const behind_1 = __nccwpck_require__(8058);
-const push_1 = __nccwpck_require__(7523);
+const coverage_1 = __nccwpck_require__(5499);
+const runTests_1 = __nccwpck_require__(9054);
+const comment_1 = __nccwpck_require__(369);
+const setup_1 = __nccwpck_require__(9346);
+const behind_1 = __nccwpck_require__(8890);
+const push_1 = __nccwpck_require__(3662);
 const run = async () => {
     const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
     const octokit = (0, github_1.getOctokit)(token);
@@ -33151,7 +33158,7 @@ const run = async () => {
     await (0, setup_1.setup)();
     const oldCoverage = (0, coverage_1.getOldCoverage)();
     const analyzeStr = await (0, analyze_1.getAnalyze)();
-    const testStr = await (0, test_1.getTest)();
+    const testStr = await (0, runTests_1.getTest)();
     const coverageStr = await (0, coverage_1.getCoverage)(oldCoverage);
     const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
     (0, comment_1.postComment)(octokit, comment, github_1.context);
