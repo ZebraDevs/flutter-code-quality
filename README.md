@@ -6,6 +6,8 @@ This action is designed to format and test Flutter repositories on pull requests
 
 Follow the instructions below to integrate this action into your workflow.
 
+<!-- x-release-please-start-version -->
+
 ```yml
 name: Pull Request
 on:
@@ -19,11 +21,13 @@ jobs:
       - uses: actions/checkout@v4
       # Set up Flutter within the action
       - uses: subosito/flutter-action@v2
-      - uses: ZebraDevs/flutter-code-quality@main
+      - uses: ZebraDevs/flutter-code-quality@v1.0.0
         with:
           # Token used for authentication.
           token: ${{secrets.GITHUB_TOKEN}}
 ```
+
+<!-- x-release-please-end -->
 
 ## Contributing
 
