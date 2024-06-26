@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.1](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.0...v1.0.1) (2024-06-26)
+
+
+### 📈 Documentation
+
+* Add version to readme instructions ([#6](https://github.com/ZebraDevs/flutter-code-quality/issues/6)) ([80285f5](https://github.com/ZebraDevs/flutter-code-quality/commit/80285f5bdccf470fdd80c095943f0254871ab0da))
+
+
+### 🧹 Miscellaneous Chores
+
+* update gitignore to remove unneeded files ([80285f5](https://github.com/ZebraDevs/flutter-code-quality/commit/80285f5bdccf470fdd80c095943f0254871ab0da))
+
 ## [1.0.0](https://github.com/ZebraDevs/flutter-code-quality/compare/v0.0.1...v1.0.0) (2024-06-26)
 
 
