@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { endGroup, startGroup } from "@actions/core";
 import { stepResponse } from "../main";
 
+export const COV_FAILURE = "⚠️ - Coverage check failed";
 export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
   startGroup("Checking test coverage");
   let response: stepResponse | undefined;
@@ -23,9 +24,9 @@ export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
 
     if (oldCoverage != undefined) {
       if (oldCoverage > totalPercent) {
-        percentOutput = totalPercent + `% (🔻 down from ` + oldCoverage + `)`;
+        percentOutput = totalPercent + `% (🔻 down from ` + oldCoverage + `%)`;
       } else if (oldCoverage < totalPercent) {
-        percentOutput = totalPercent + `% (👆 up from ` + oldCoverage + `)`;
+        percentOutput = totalPercent + `% (⬆️ up from ` + oldCoverage + `%)`;
       } else {
         percentOutput = totalPercent + `% (no change)`;
       }
@@ -41,14 +42,10 @@ export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
         ${arr.join("")}
     </table>
     </details>`;
-    return { output: str, error: false };
+    response = { output: str, error: false };
   } catch (error) {
     console.error("Error checking coverage", error);
-    response = { output: "⚠️ - Coverage check failed", error: true };
-  } finally {
-    if (response == undefined) {
-      response = { output: "⚠️ - Coverage check failed", error: true };
-    }
+    response = { output: COV_FAILURE, error: true };
   }
   endGroup();
   return response;
