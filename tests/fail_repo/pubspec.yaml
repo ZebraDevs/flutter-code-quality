@@ -1,0 +1,13 @@
+name: fail_repo
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  zds_analysis: ^1.0.0
+
+flutter:
