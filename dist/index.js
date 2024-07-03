@@ -30776,8 +30776,7 @@ const getTest = async () => {
             const obj = JSON.parse(objStr);
             let failIds = [];
             obj.forEach((element) => {
-                if (element.type == "testDone" &&
-                    element.result.toLowerCase() == "error") {
+                if (element.type == "testDone" && element.result.toLowerCase() == "error") {
                     failIds.push(element.testID);
                 }
             });
@@ -30791,18 +30790,14 @@ const getTest = async () => {
             const errorString = [];
             failIds.forEach((e1) => {
                 const allEntries = obj.filter((e) => (e.hasOwnProperty("testID") && e.testID == e1) ||
-                    (e.hasOwnProperty("test") &&
-                        e.test.hasOwnProperty("id") &&
-                        e.test.id == e1));
+                    (e.hasOwnProperty("test") && e.test.hasOwnProperty("id") && e.test.id == e1));
                 const entry1 = allEntries.find((e) => e.hasOwnProperty("test") && e.test.hasOwnProperty("id"));
                 let testName = "Error getting test name";
                 if (entry1) {
                     testName = entry1.test.name.split("/test/").slice(-1);
                 }
                 const entry2 = allEntries.find((e) => e.hasOwnProperty("stackTrace") && e.stackTrace.length > 1);
-                const entry3 = allEntries.find((e) => e.hasOwnProperty("message") &&
-                    e.message.length > 1 &&
-                    e.message.includes("EXCEPTION CAUGHT BY FLUTTER"));
+                const entry3 = allEntries.find((e) => e.hasOwnProperty("message") && e.message.length > 1 && e.message.includes("EXCEPTION CAUGHT BY FLUTTER"));
                 const entry4 = allEntries.find((e) => e.hasOwnProperty("error") && e.error.length > 1);
                 let testDetails = "Unable to get test details. Run flutter test to replicate";
                 if (entry2) {
@@ -30814,11 +30809,7 @@ const getTest = async () => {
                 else if (entry4) {
                     testDetails = entry4.error;
                 }
-                errorString.push("<details><summary>" +
-                    testName +
-                    "</br></summary>`" +
-                    testDetails +
-                    "`</details>");
+                errorString.push("<details><summary>" + testName + "</br></summary>`" + testDetails + "`</details>");
             });
             const output = `⛔️ - ${initialString}</br >
             <details><summary>See details</summary>
@@ -33152,17 +33143,25 @@ const setup_1 = __nccwpck_require__(9346);
 const behind_1 = __nccwpck_require__(8890);
 const push_1 = __nccwpck_require__(3662);
 const run = async () => {
-    const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
-    const octokit = (0, github_1.getOctokit)(token);
-    const behindByStr = await (0, behind_1.checkBranchStatus)(octokit, github_1.context);
-    await (0, setup_1.setup)();
-    const oldCoverage = (0, coverage_1.getOldCoverage)();
-    const analyzeStr = await (0, analyze_1.getAnalyze)();
-    const testStr = await (0, runTests_1.getTest)();
-    const coverageStr = await (0, coverage_1.getCoverage)(oldCoverage);
-    const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
-    (0, comment_1.postComment)(octokit, comment, github_1.context);
-    await (0, push_1.push)();
+    try {
+        const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
+        const octokit = (0, github_1.getOctokit)(token);
+        const behindByStr = await (0, behind_1.checkBranchStatus)(octokit, github_1.context);
+        await (0, setup_1.setup)();
+        const oldCoverage = (0, coverage_1.getOldCoverage)();
+        const analyzeStr = await (0, analyze_1.getAnalyze)();
+        const testStr = await (0, runTests_1.getTest)();
+        const coverageStr = await (0, coverage_1.getCoverage)(oldCoverage);
+        const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
+        (0, comment_1.postComment)(octokit, comment, github_1.context);
+        await (0, push_1.push)();
+        if (analyzeStr.error || testStr.error || coverageStr.error) {
+            (0, core_1.setFailed)(`${analyzeStr.output}\n${testStr.output}\n${coverageStr.output}`);
+        }
+    }
+    catch (err) {
+        (0, core_1.setFailed)(`Action failed with error ${err}`);
+    }
 };
 run();
 
