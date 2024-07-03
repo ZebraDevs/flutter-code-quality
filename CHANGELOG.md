@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.0.1](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.0...v1.0.1) (2024-07-03)
+
+
+### 🪲 Bug Fixes
+
+* Add basic error reporting ([#8](https://github.com/ZebraDevs/flutter-code-quality/issues/8)) ([a2a68cd](https://github.com/ZebraDevs/flutter-code-quality/commit/a2a68cdbc323dedf56f02152d02bcff3377501ef))
+* Comment works correctly for failed test ([#9](https://github.com/ZebraDevs/flutter-code-quality/issues/9)) ([cd84942](https://github.com/ZebraDevs/flutter-code-quality/commit/cd84942b9cde14e13d12a49e3016f5b37c175705))
+
+
+### 📈 Documentation
+
+* Add version to readme instructions ([#6](https://github.com/ZebraDevs/flutter-code-quality/issues/6)) ([80285f5](https://github.com/ZebraDevs/flutter-code-quality/commit/80285f5bdccf470fdd80c095943f0254871ab0da))
+
+
+### 🧹 Miscellaneous Chores
+
+* update gitignore to remove unneeded files ([80285f5](https://github.com/ZebraDevs/flutter-code-quality/commit/80285f5bdccf470fdd80c095943f0254871ab0da))
+
 ## [1.0.0](https://github.com/ZebraDevs/flutter-code-quality/compare/v0.0.1...v1.0.0) (2024-06-26)
 
 
