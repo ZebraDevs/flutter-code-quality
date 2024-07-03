@@ -30564,7 +30564,7 @@ const createComment = (analyze, test, coverage, behindBy) => {
   <li>✅ - Linting / Formatting</li>
   <li>${analyze.output.replaceAll("`|\"|'|<|>", "")}</li>
   <li>${test.output.replaceAll("`|\"|'|<|>", "")}</li>
-  ${isSuccess ? "<li>✅ - Branch is not behind" : null}
+  ${isSuccess ? "<li>✅ - Branch is not behind</li>" : ""}
   <li>${coverage.output.replaceAll("`|\"|'|<|>", "")}</li>
 </ul>
 
@@ -30809,6 +30809,8 @@ const getTest = async () => {
                 else if (entry4) {
                     testDetails = entry4.error;
                 }
+                testDetails = testDetails.replace(/(?:\r\n|\r|\n)/g, "<br>");
+                testDetails = testDetails.replace(/(?:<>'"`)/g, "");
                 errorString.push("<details><summary>" + testName + "</br></summary>`" + testDetails + "`</details>");
             });
             const output = `⛔️ - ${initialString}</br >
@@ -33151,7 +33153,7 @@ const run = async () => {
         const oldCoverage = (0, coverage_1.getOldCoverage)();
         const analyzeStr = await (0, analyze_1.getAnalyze)();
         const testStr = await (0, runTests_1.getTest)();
-        const coverageStr = await (0, coverage_1.getCoverage)(oldCoverage);
+        const coverageStr = (0, coverage_1.getCoverage)(oldCoverage);
         const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
         (0, comment_1.postComment)(octokit, comment, github_1.context);
         await (0, push_1.push)();
