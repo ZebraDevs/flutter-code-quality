@@ -11,8 +11,7 @@ export const createComment = (
   coverage: stepResponse,
   behindBy: stepResponse
 ): string => {
-  const isSuccess =
-    !analyze.error && !test.error && !coverage.error && !behindBy.error;
+  const isSuccess = !analyze.error && !test.error && !coverage.error && !behindBy.error;
 
   let output = `<h2>PR Checks complete</h2>
 <ul>
@@ -29,11 +28,7 @@ ${SIGNATURE}
   return output;
 };
 
-export async function postComment(
-  octokit: InstanceType<typeof GitHub>,
-  commentMessage: string,
-  context: Context
-) {
+export async function postComment(octokit: InstanceType<typeof GitHub>, commentMessage: string, context: Context) {
   startGroup(`Commenting on PR`);
 
   const pr = {

@@ -1,10 +1,6 @@
 import { exec, execSync } from "child_process";
 import { stepResponse } from "../../../src/main";
-import {
-  COV_FAILURE,
-  getCoverage,
-  getOldCoverage,
-} from "../../../src/scripts/coverage";
+import { COV_FAILURE, getCoverage, getOldCoverage } from "../../../src/scripts/coverage";
 const oldCoverage = 83.33;
 
 test("should return stepResponse object", () => {

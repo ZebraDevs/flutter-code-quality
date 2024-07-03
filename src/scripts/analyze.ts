@@ -57,9 +57,9 @@ export const getAnalyze = async (): Promise<stepResponse> => {
     const output = `${ANALYZE_FAILURE}; ${issuesFound}</br>
         <details><summary>See details</summary>
         <table>
-        <tr><th></th><th>Type</th><th>File name</th><th>Details</th></tr>${errorString.join(
-          ""
-        )}${warningString.join("")}${infoString.join("")}</table></details>
+        <tr><th></th><th>Type</th><th>File name</th><th>Details</th></tr>${errorString.join("")}${warningString.join(
+      ""
+    )}${infoString.join("")}</table></details>
         `;
 
     response = { output: output, error: true };
@@ -84,6 +84,4 @@ export const getErrEmoji = (errType: analyzeErrTypes) => {
 };
 
 export const generateTableRow = (err: analyzeDetails, type: analyzeErrTypes) =>
-  `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${
-    err.details
-  }</td></tr>`;
+  `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${err.details}</td></tr>`;

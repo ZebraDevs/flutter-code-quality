@@ -1,8 +1,4 @@
-import {
-  getTest,
-  TEST_ERROR,
-  TEST_SUCCESS,
-} from "../../../src/scripts/runTests";
+import { getTest, TEST_ERROR, TEST_SUCCESS } from "../../../src/scripts/runTests";
 
 test("all tests pass", async () => {
   process.chdir("tests/pass_repo");

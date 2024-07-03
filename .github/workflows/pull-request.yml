@@ -37,5 +37,5 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add -A
-          git commit -m 'ci(automated commit): lint format and import sort'
+          git commit -m 'ci(automated commit): Build bundled file'
           git push

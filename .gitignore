@@ -156,13 +156,14 @@ migrate_working_dir/
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
-.dart_tool/
+**/.dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
 build/
-
-
-
 **/docs/addver
+*/package_config_subset
+tests/pass_repo/.dart_tool/package_config_subset
+tests/pass_repo/.dart_tool/package_config.json
+tests/pass_repo/build/test_cache/build/cache.dill.track.dill
