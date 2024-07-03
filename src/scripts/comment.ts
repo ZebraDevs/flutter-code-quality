@@ -18,7 +18,7 @@ export const createComment = (
   <li>✅ - Linting / Formatting</li>
   <li>${analyze.output.replaceAll("`|\"|'|<|>", "")}</li>
   <li>${test.output.replaceAll("`|\"|'|<|>", "")}</li>
-  ${isSuccess ? "<li>✅ - Branch is not behind" : null}
+  ${isSuccess ? "<li>✅ - Branch is not behind</li>" : ""}
   <li>${coverage.output.replaceAll("`|\"|'|<|>", "")}</li>
 </ul>
 

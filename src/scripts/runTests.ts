@@ -75,7 +75,8 @@ export const getTest = async (): Promise<stepResponse> => {
         } else if (entry4) {
           testDetails = entry4.error;
         }
-
+        testDetails = testDetails.replace(/(?:\r\n|\r|\n)/g, "<br>");
+        testDetails = testDetails.replace(/(?:<>'"`)/g, "");
         errorString.push("<details><summary>" + testName + "</br></summary>`" + testDetails + "`</details>");
       });
 

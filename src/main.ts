@@ -20,7 +20,7 @@ const run = async () => {
 
     const analyzeStr: stepResponse = await getAnalyze();
     const testStr: stepResponse = await getTest();
-    const coverageStr: stepResponse = await getCoverage(oldCoverage);
+    const coverageStr: stepResponse = getCoverage(oldCoverage);
 
     const comment = createComment(analyzeStr, testStr, coverageStr, behindByStr);
 
