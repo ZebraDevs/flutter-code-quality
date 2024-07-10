@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.2...v1.0.3) (2024-07-10)
+
+
+### 🧹 Miscellaneous Chores
+
+* release 1.0.3 ([f3941c2](https://github.com/ZebraDevs/flutter-code-quality/commit/f3941c29da80549c8f95776c397b12a2f1e2f4b1))
+
 ## [1.0.2](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.1...v1.0.2) (2024-07-10)
 
 
