@@ -30430,6 +30430,7 @@ const exec_1 = __nccwpck_require__(2259);
 const core_1 = __nccwpck_require__(2614);
 exports.ANALYZE_SUCCESS = "✅ - Static analysis passed";
 exports.ANALYZE_FAILURE = "⛔️ - Static analysis failed";
+const ANALYZE_PASS_LOG = "No issues found!";
 const getAnalyze = async () => {
     (0, core_1.startGroup)("Analyzing code");
     let response;
@@ -30440,7 +30441,12 @@ const getAnalyze = async () => {
                 stdout: (data) => (stdout += data.toString()),
             },
         });
-        response = { output: exports.ANALYZE_SUCCESS, error: false };
+        if (stdout.includes(ANALYZE_PASS_LOG)) {
+            response = { output: exports.ANALYZE_SUCCESS, error: false };
+        }
+        else {
+            throw new Error("Issues found");
+        }
     }
     catch (error) {
         const arr = stdout.trim().split("\n");
