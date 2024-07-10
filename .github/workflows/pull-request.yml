@@ -4,7 +4,30 @@ on:
 name: Pull Request
 
 jobs:
-  pull_request:
+  set-env:
+    name: "Set environment"
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.get_env.outputs.env }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+          ref: ${{ github.head_ref }}
+      - name: Determine Environment
+        id: get_env
+        run: |
+          codeowners=$(cat .github/CODEOWNERS) 
+          if [[ $(echo "${codeowners[@]}" | fgrep -w "@${{github.actor}}") ]]; then
+            echo PROWNER
+            echo "env=pr_owner" >> $GITHUB_OUTPUT
+          else
+            echo PR
+            echo "env=pr" >> $GITHUB_OUTPUT
+          fi
+  pull_request_checks:
+    needs: set-env
+    environment: needs.set-env.outputs.env
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
