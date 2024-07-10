@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.1...v1.0.2) (2024-07-10)
+
+
+### 🪲 Bug Fixes
+
+* Show info only lints in comment ([e0586be](https://github.com/ZebraDevs/flutter-code-quality/commit/e0586befd1d06ad4a7f11f1af18dcf1a7de07ffb))
+
 ## [1.0.1](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.0...v1.0.1) (2024-07-03)
 
 

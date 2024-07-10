@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       # Set up Flutter within the action
       - uses: subosito/flutter-action@v2
-      - uses: ZebraDevs/flutter-code-quality@v1.0.1
+      - uses: ZebraDevs/flutter-code-quality@v1.0.2
         with:
           # Token used for authentication.
           token: ${{secrets.GITHUB_TOKEN}}
