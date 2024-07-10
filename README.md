@@ -1,4 +1,4 @@
-# flutter-code-quality
+# flutter-code-qualitee
 
 This action is designed to format and test Flutter repositories on pull requests. It helps ensure that your code meets the required quality standards.
 
