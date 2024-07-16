@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.4](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.3...v1.0.4) (2024-07-16)
+
+
+### ✨ New Features
+
+* Add inputs to enable / disable parts of the action([#20](https://github.com/ZebraDevs/flutter-code-quality/issues/20)) ([a74d1f2](https://github.com/ZebraDevs/flutter-code-quality/commit/a74d1f2082274824dc38bf7af22decd7a9967de3))
+
+
+### 🧪 Tests
+
+* Fix coverage test ([a74d1f2](https://github.com/ZebraDevs/flutter-code-quality/commit/a74d1f2082274824dc38bf7af22decd7a9967de3))
+
+
+### 🧹 Miscellaneous Chores
+
+* release 1.0.4 ([209c44c](https://github.com/ZebraDevs/flutter-code-quality/commit/209c44c87034893f3fbb7d6537d5e386166062ad))
+
 ## [1.0.3](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.2...v1.0.3) (2024-07-10)
 
 
