@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.5](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.4...v1.0.5) (2024-07-16)
+
+
+### ✨ New Features
+
+* Adds working directory ([#23](https://github.com/ZebraDevs/flutter-code-quality/issues/23)) ([fe7b327](https://github.com/ZebraDevs/flutter-code-quality/commit/fe7b327823ca6ef12102ec55fbce2e4a7bb1a238))
+
+
+### 🧹 Miscellaneous Chores
+
+* release 1.0.5 ([9d5c138](https://github.com/ZebraDevs/flutter-code-quality/commit/9d5c138155331e99472ac1874facb4c69d576b27))
+* update readme ([fe7b327](https://github.com/ZebraDevs/flutter-code-quality/commit/fe7b327823ca6ef12102ec55fbce2e4a7bb1a238))
+
 ## [1.0.4](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.3...v1.0.4) (2024-07-16)
 
 
