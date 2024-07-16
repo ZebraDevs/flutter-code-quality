@@ -60,7 +60,6 @@ test("no old coverage", () => {
 test("fail", () => {
   process.chdir("tests/fail_repo");
   const result: stepResponse = getCoverage(undefined);
-  console.log(result);
   expect(result.error).toBe(true);
   expect(result.output).toEqual(COV_FAILURE);
   process.chdir("../..");
@@ -70,7 +69,7 @@ test("oldCoverage fail", () => {
   process.chdir("tests/fail_repo");
 
   const result = getOldCoverage();
-  expect(result).toEqual(undefined);
+  expect(result).toEqual(0);
   process.chdir("../..");
 });
 test("oldCoverage pass", () => {
