@@ -33153,11 +33153,11 @@ const push_1 = __nccwpck_require__(3662);
 const run = async () => {
     try {
         const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
-        const runTests = (0, core_1.getInput)("run-tests");
-        const runAnalyze = (0, core_1.getInput)("run-analyze");
-        const runCoverage = (0, core_1.getInput)("run-coverage");
-        const runBehindBy = (0, core_1.getInput)("run-behind-by");
-        const createComment = (0, core_1.getInput)("create-comment");
+        const runTests = (0, core_1.getBooleanInput)("run-tests");
+        const runAnalyze = (0, core_1.getBooleanInput)("run-analyze");
+        const runCoverage = (0, core_1.getBooleanInput)("run-coverage");
+        const runBehindBy = (0, core_1.getBooleanInput)("run-behind-by");
+        const createComment = (0, core_1.getBooleanInput)("create-comment");
         const octokit = (0, github_1.getOctokit)(token);
         const behindByStr = runBehindBy ? await (0, behind_1.checkBranchStatus)(octokit, github_1.context) : undefined;
         await (0, setup_1.setup)();
