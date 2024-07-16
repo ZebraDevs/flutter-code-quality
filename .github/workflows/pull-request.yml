@@ -1,7 +1,7 @@
 on:
   pull_request_target:
 
-name: Pull Request
+name: CI - Pull Request
 
 jobs:
   set-env:

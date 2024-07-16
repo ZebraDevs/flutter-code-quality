@@ -30564,14 +30564,14 @@ exports.postComment = postComment;
 const core_1 = __nccwpck_require__(2614);
 const SIGNATURE = `<sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>`;
 const createComment = (analyze, test, coverage, behindBy) => {
-    const isSuccess = !analyze.error && !test.error && !coverage.error && !behindBy.error;
+    const isSuccess = !analyze?.error && !test?.error && !coverage?.error && !behindBy?.error;
     let output = `<h2>PR Checks complete</h2>
 <ul>
   <li>✅ - Linting / Formatting</li>
-  <li>${analyze.output.replaceAll("`|\"|'|<|>", "")}</li>
-  <li>${test.output.replaceAll("`|\"|'|<|>", "")}</li>
-  ${isSuccess ? "<li>✅ - Branch is not behind</li>" : ""}
-  <li>${coverage.output.replaceAll("`|\"|'|<|>", "")}</li>
+ ${analyze ? `<li>${analyze?.output.replaceAll("`|\"|'|<|>", "")}</li>` : ""}
+  ${test ? `<li>${test?.output.replaceAll("`|\"|'|<|>", "")}</li>` : ""}
+  ${behindBy && isSuccess ? "<li>✅ - Branch is not behind</li>" : ""}
+  ${coverage ? `<li>${coverage?.output.replaceAll("`|\"|'|<|>", "")}</li>` : ""}
 </ul>
 
 ${SIGNATURE}
@@ -30685,7 +30685,7 @@ const getCoverage = (oldCoverage) => {
 };
 exports.getCoverage = getCoverage;
 const getOldCoverage = () => {
-    let value;
+    let value = 0;
     (0, core_1.startGroup)("Retrieving existing coverage value");
     try {
         const contents = (0, node_fs_1.readFileSync)("coverage/lcov.info", "utf8");
@@ -33153,18 +33153,26 @@ const push_1 = __nccwpck_require__(3662);
 const run = async () => {
     try {
         const token = process.env.GITHUB_TOKEN || (0, core_1.getInput)("token");
+        const runTests = (0, core_1.getInput)("run-tests");
+        const runAnalyze = (0, core_1.getInput)("run-analyze");
+        const runCoverage = (0, core_1.getInput)("run-coverage");
+        const runBehindBy = (0, core_1.getInput)("run-behind-by");
+        const createComment = (0, core_1.getInput)("create-comment");
         const octokit = (0, github_1.getOctokit)(token);
-        const behindByStr = await (0, behind_1.checkBranchStatus)(octokit, github_1.context);
+        const behindByStr = runBehindBy ? await (0, behind_1.checkBranchStatus)(octokit, github_1.context) : undefined;
         await (0, setup_1.setup)();
-        const oldCoverage = (0, coverage_1.getOldCoverage)();
-        const analyzeStr = await (0, analyze_1.getAnalyze)();
-        const testStr = await (0, runTests_1.getTest)();
-        const coverageStr = (0, coverage_1.getCoverage)(oldCoverage);
-        const comment = (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr);
-        (0, comment_1.postComment)(octokit, comment, github_1.context);
+        const oldCoverage = runCoverage ? (0, coverage_1.getOldCoverage)() : undefined;
+        const analyzeStr = runAnalyze ? await (0, analyze_1.getAnalyze)() : undefined;
+        const testStr = runTests ? await (0, runTests_1.getTest)() : undefined;
+        const coverageStr = runCoverage ? (0, coverage_1.getCoverage)(oldCoverage) : undefined;
+        const comment = createComment
+            ? (0, comment_1.createComment)(analyzeStr, testStr, coverageStr, behindByStr)
+            : undefined;
+        if (createComment)
+            (0, comment_1.postComment)(octokit, comment, github_1.context);
         await (0, push_1.push)();
-        if (analyzeStr.error || testStr.error || coverageStr.error) {
-            (0, core_1.setFailed)(`${analyzeStr.output}\n${testStr.output}\n${coverageStr.output}`);
+        if (analyzeStr?.error || testStr?.error || coverageStr?.error) {
+            (0, core_1.setFailed)(`${analyzeStr?.output}\n${testStr?.output}\n${coverageStr?.output}`);
         }
     }
     catch (err) {

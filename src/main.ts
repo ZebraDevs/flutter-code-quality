@@ -1,4 +1,4 @@
-import { getInput, setFailed } from "@actions/core";
+import { getBooleanInput, getInput, setFailed } from "@actions/core";
 import { getAnalyze } from "./scripts/analyze";
 import { getOctokit, context } from "@actions/github";
 import { getCoverage, getOldCoverage } from "./scripts/coverage";
@@ -14,11 +14,11 @@ export type stepResponse = { output: string; error: boolean };
 const run = async () => {
   try {
     const token = process.env.GITHUB_TOKEN || getInput("token");
-    const runTests = getInput("run-tests");
-    const runAnalyze = getInput("run-analyze");
-    const runCoverage = getInput("run-coverage");
-    const runBehindBy = getInput("run-behind-by");
-    const createComment = getInput("create-comment");
+    const runTests = getBooleanInput("run-tests");
+    const runAnalyze = getBooleanInput("run-analyze");
+    const runCoverage = getBooleanInput("run-coverage");
+    const runBehindBy = getBooleanInput("run-behind-by");
+    const createComment = getBooleanInput("create-comment");
 
     const octokit = getOctokit(token);
     const behindByStr: stepResponse | undefined = runBehindBy ? await checkBranchStatus(octokit, context) : undefined;
