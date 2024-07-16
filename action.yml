@@ -9,3 +9,33 @@ inputs:
   token:
     description: "Token used for pushing fixes and commenting on PRs"
     required: true
+
+  run-tests:
+    description: "Run tests"
+    required: false
+    default: true
+    type: boolean
+
+  run-analyze:
+    description: "Run static analysis"
+    required: false
+    default: true
+    type: boolean
+
+  run-coverage:
+    description: "Run test coverage check"
+    required: false
+    default: true
+    type: boolean
+
+  run-behind-by:
+    description: "Run behind by check"
+    required: false
+    default: true
+    type: boolean
+
+  create-comment:
+    description: "Create a comment on PRs"
+    required: false
+    default: true
+    type: boolean

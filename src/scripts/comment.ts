@@ -6,20 +6,20 @@ import { stepResponse } from "../main";
 const SIGNATURE = `<sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>`;
 
 export const createComment = (
-  analyze: stepResponse,
-  test: stepResponse,
-  coverage: stepResponse,
-  behindBy: stepResponse
+  analyze: stepResponse | undefined,
+  test: stepResponse | undefined,
+  coverage: stepResponse | undefined,
+  behindBy: stepResponse | undefined
 ): string => {
-  const isSuccess = !analyze.error && !test.error && !coverage.error && !behindBy.error;
+  const isSuccess = !analyze?.error && !test?.error && !coverage?.error && !behindBy?.error;
 
   let output = `<h2>PR Checks complete</h2>
 <ul>
   <li>✅ - Linting / Formatting</li>
-  <li>${analyze.output.replaceAll("`|\"|'|<|>", "")}</li>
-  <li>${test.output.replaceAll("`|\"|'|<|>", "")}</li>
-  ${isSuccess ? "<li>✅ - Branch is not behind</li>" : ""}
-  <li>${coverage.output.replaceAll("`|\"|'|<|>", "")}</li>
+ ${analyze ? `<li>${analyze?.output.replaceAll("`|\"|'|<|>", "")}</li>` : ""}
+  ${test ? `<li>${test?.output.replaceAll("`|\"|'|<|>", "")}</li>` : ""}
+  ${behindBy && isSuccess ? "<li>✅ - Branch is not behind</li>" : ""}
+  ${coverage ? `<li>${coverage?.output.replaceAll("`|\"|'|<|>", "")}</li>` : ""}
 </ul>
 
 ${SIGNATURE}

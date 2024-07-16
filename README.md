@@ -9,10 +9,6 @@ Follow the instructions below to integrate this action into your workflow.
 <!-- x-release-please-start-version -->
 
 ```yml
-name: Pull Request
-on:
-  pull_request:
-
 jobs:
   code-quality:
     runs-on: ubuntu-latest
@@ -21,6 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       # Set up Flutter within the action
       - uses: subosito/flutter-action@v2
+        with:
+          # See https://github.com/subosito/flutter-action
       - uses: ZebraDevs/flutter-code-quality@v1.0.3
         with:
           # Token used for authentication.
@@ -29,9 +27,20 @@ jobs:
 
 <!-- x-release-please-end -->
 
+## Inputs
+
+| Name           | Description                                                       | Required | default |
+| -------------- | ----------------------------------------------------------------- | -------- | ------- |
+| token          | Token used for pushing fixes and commenting on PRs.               | true     |         |
+| run-tests      | Whether tests should be run.                                      | false    | true    |
+| run-analysis   | Whether static analysis should be run.                            | false    | true    |
+| run-coverage   | Whether code coverage should be run.                              | false    | true    |
+| run-behind-by  | Whether action should check if HEAD branch is behind base branch. | false    | true    |
+| create-comment | Whether the action should comment the output status.              | false    | true    |
+
 ## Contributing
 
-This project welcomes contributions. Pleae check out our [Contributing guide](CONTRIBUTING.md) to learn more on how to get started.
+This project welcomes contributions. Please check out our [Contributing guide](CONTRIBUTING.md) to learn more on how to get started.
 
 ### License
 

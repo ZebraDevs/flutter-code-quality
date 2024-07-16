@@ -51,8 +51,8 @@ export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
   return response;
 };
 
-export const getOldCoverage = (): number | undefined => {
-  let value: number | undefined;
+export const getOldCoverage = (): number => {
+  let value: number = 0;
   startGroup("Retrieving existing coverage value");
   try {
     const contents = readFileSync("coverage/lcov.info", "utf8");
