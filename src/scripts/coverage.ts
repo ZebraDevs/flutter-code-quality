@@ -2,14 +2,16 @@ import { Lcov, LcovDigest, parse, sum } from "lcov-utils";
 import { readFileSync } from "node:fs";
 import { endGroup, startGroup } from "@actions/core";
 import { stepResponse } from "../main";
+import { getLcovLines } from "./utils";
 
 export const COV_FAILURE = "⚠️ - Coverage check failed";
-export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
+
+export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: string): stepResponse => {
   startGroup("Checking test coverage");
   let response: stepResponse | undefined;
 
   try {
-    const contents = readFileSync("coverage/lcov.info", "utf8");
+    const contents = readFileSync(`${coverageDirectory}/lcov.info`, "utf8");
     const lcov: Lcov = parse(contents);
     const digest: LcovDigest = sum(lcov);
     const totalPercent: number = digest.lines;
@@ -22,11 +24,12 @@ export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
       return `<tr><td>${fileName}</td><td>${percent}%</td><td>${passing}</td></tr>`;
     });
 
-    if (oldCoverage != undefined) {
-      if (oldCoverage > totalPercent) {
-        percentOutput = totalPercent + `% (🔻 down from ` + oldCoverage + `%)`;
-      } else if (oldCoverage < totalPercent) {
-        percentOutput = totalPercent + `% (⬆️ up from ` + oldCoverage + `%)`;
+    if (prevCoverage != undefined) {
+      const prevPercent = getLcovLines(prevCoverage);
+      if (prevPercent > totalPercent) {
+        percentOutput = totalPercent + `% (🔻 down from ` + prevPercent + `%)`;
+      } else if (prevPercent < totalPercent) {
+        percentOutput = totalPercent + `% (⬆️ up from ` + prevPercent + `%)`;
       } else {
         percentOutput = totalPercent + `% (no change)`;
       }
@@ -49,19 +52,4 @@ export const getCoverage = (oldCoverage: number | undefined): stepResponse => {
   }
   endGroup();
   return response;
-};
-
-export const getOldCoverage = (): number => {
-  let value: number = 0;
-  startGroup("Retrieving existing coverage value");
-  try {
-    const contents = readFileSync("coverage/lcov.info", "utf8");
-    const lcov: Lcov = parse(contents);
-    const digest: LcovDigest = sum(lcov);
-    value = digest.lines;
-  } catch (e) {
-    console.error("Unable to find existing coverage report.", e);
-  }
-  endGroup();
-  return value;
 };

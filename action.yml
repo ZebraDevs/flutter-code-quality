@@ -15,6 +15,11 @@ inputs:
     required: false
     default: "."
 
+  coverage-directory:
+    description: "The test coverage directory"
+    required: false
+    default: "coverage"
+
   run-tests:
     description: "Run tests"
     required: false
