@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.6](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.5...v1.0.6) (2024-07-22)
+
+
+### ✨ New Features
+
+* Add `run-prev-coverage` flag ([b4d7937](https://github.com/ZebraDevs/flutter-code-quality/commit/b4d7937af031e6e977341679d2a5b8cae5ff68cc))
+
+
+### 🪲 Bug Fixes
+
+* **UX-1139:** Prevent commiting coverage file; store previous coverage result as artifact ([#25](https://github.com/ZebraDevs/flutter-code-quality/issues/25)) ([b4d7937](https://github.com/ZebraDevs/flutter-code-quality/commit/b4d7937af031e6e977341679d2a5b8cae5ff68cc))
+
+
+### 🧹 Miscellaneous Chores
+
+* Add debug logs ([b4d7937](https://github.com/ZebraDevs/flutter-code-quality/commit/b4d7937af031e6e977341679d2a5b8cae5ff68cc))
+
 ## [1.0.5](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.4...v1.0.5) (2024-07-16)
 
 
