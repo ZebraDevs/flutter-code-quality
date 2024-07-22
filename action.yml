@@ -15,11 +15,6 @@ inputs:
     required: false
     default: "."
 
-  coverage-directory:
-    description: "The test coverage directory"
-    required: false
-    default: "coverage"
-
   run-tests:
     description: "Run tests"
     required: false
@@ -34,6 +29,12 @@ inputs:
 
   run-coverage:
     description: "Run test coverage check"
+    required: false
+    default: true
+    type: boolean
+
+  run-prev-coverage:
+    description: "Run test coverage check on base branch"
     required: false
     default: true
     type: boolean

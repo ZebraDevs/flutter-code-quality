@@ -2,6 +2,7 @@ import { Lcov, LcovDigest, parse, sum } from "lcov-utils";
 import { readFileSync } from "node:fs";
 import { endGroup, startGroup } from "@actions/core";
 import { stepResponse } from "../main";
+import { debug } from "@actions/core";
 import { getLcovLines } from "./utils";
 
 export const COV_FAILURE = "⚠️ - Coverage check failed";
@@ -13,6 +14,7 @@ export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: s
   try {
     const contents = readFileSync(`${coverageDirectory}/lcov.info`, "utf8");
     const lcov: Lcov = parse(contents);
+    debug("Parsed lcov.info");
     const digest: LcovDigest = sum(lcov);
     const totalPercent: number = digest.lines;
     let percentOutput: string;
@@ -23,14 +25,18 @@ export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: s
       const passing = percent > 96 ? "✅" : "⛔️";
       return `<tr><td>${fileName}</td><td>${percent}%</td><td>${passing}</td></tr>`;
     });
-
+    debug(`Coverage at ${totalPercent}%`);
     if (prevCoverage != undefined) {
+      debug("Comparing with previous coverage");
       const prevPercent = getLcovLines(prevCoverage);
       if (prevPercent > totalPercent) {
+        debug("Coverage decreased");
         percentOutput = totalPercent + `% (🔻 down from ` + prevPercent + `%)`;
       } else if (prevPercent < totalPercent) {
+        debug("Coverage increased");
         percentOutput = totalPercent + `% (⬆️ up from ` + prevPercent + `%)`;
       } else {
+        debug("Coverage unchanged");
         percentOutput = totalPercent + `% (no change)`;
       }
     } else {
@@ -50,6 +56,7 @@ export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: s
     console.error("Error checking coverage", error);
     response = { output: COV_FAILURE, error: true };
   }
+  debug("Finished checking coverage; generated response");
   endGroup();
   return response;
 };

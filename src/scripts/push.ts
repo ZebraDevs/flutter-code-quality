@@ -1,6 +1,7 @@
 import { endGroup, setFailed, setOutput, startGroup } from "@actions/core";
 import { exec } from "@actions/exec";
 import { execSync } from "child_process";
+import { debug } from "@actions/core";
 
 export const push = async () => {
   startGroup("Check for changes");
@@ -23,7 +24,7 @@ export const push = async () => {
       await exec("git add -A");
       execSync(`git commit -m 'chore(automated): Lint commit and format' `);
       await exec("git push -f");
-      console.log("Changes pushed onto branch");
+      debug("Changes pushed onto branch");
     } catch (e) {
       console.error("Unable to push changes", e);
       setFailed("Unable to push changes to branch");

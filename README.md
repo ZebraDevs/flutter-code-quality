@@ -29,31 +29,28 @@ jobs:
 
 ## Inputs
 
-| Name               | Description                                                                | Required | Default    |
-| ------------------ | -------------------------------------------------------------------------- | -------- | ---------- |
-| token              | Token used for pushing fixes and commenting on PRs.                        | true     |            |
-| run-tests          | Whether tests should be run.                                               | false    | true       |
-| run-analysis       | Whether static analysis should be run.                                     | false    | true       |
-| run-coverage       | Whether code coverage should be run.                                       | false    | true       |
-| run-behind-by      | Whether action should check if HEAD branch is behind base branch.          | false    | true       |
-| create-comment     | Whether the action should comment the output status.                       | false    | true       |
-| working-directory  | Working directory to run the action in                                     | false    | "."        |
-| coverage-directory | Directory for test coverage reports to be saved. See [coverage](#coverage) | false    | "coverage" |
-
-//TODO: Remove coverage-directory and use some temp folder
+| Name              | Description                                                       | Required | Default |
+| ----------------- | ----------------------------------------------------------------- | -------- | ------- |
+| token             | Token used for pushing fixes and commenting on PRs.               | true     |         |
+| run-tests         | Whether tests should be run.                                      | false    | true    |
+| run-analysis      | Whether static analysis should be run.                            | false    | true    |
+| run-coverage      | Whether code coverage should be run.                              | false    | true    |
+| run-prev-coverage | Whether code coverage should be compared with the base branch.    | false    | true    |
+| run-behind-by     | Whether action should check if HEAD branch is behind base branch. | false    | true    |
+| create-comment    | Whether the action should comment the output status.              | false    | true    |
+| working-directory | Working directory to run the action in                            | false    | "."     |
 
 ## Coverage
 
-//TODO: Fix this by deleting the file
-By default, running the test coverage will create a directory containing an `lcov.info` file. This defaults to `coverage/lcov.info`, but can be changed using the input `coverage-directory`. It is recommended that this directory is added to `.gitignore` to ensure the file is not committed by the action, potentially causing conflicts.
+⚠️ To compare coverage against previous code, it is required that the code is checked out with `fetch-depth: 0`:
 
-> ⚠️ To compare coverage against previous code, it is required that the code is checked out with `fetch-depth: 0`:
->
-> ```yaml
-> - uses: actions/checkout@v4
->     with:
->       fetch-depth: 0
-> ```
+```yaml
+- uses: actions/checkout@v4
+    with:
+      fetch-depth: 0
+```
+
+> During the action, coverage will be calculated, and lcov.info will be saved in temporary directory `.coverage`. Please refrain from using a top level directory with this path, as this could cause issues.
 
 ## Contributing
 

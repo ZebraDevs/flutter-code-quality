@@ -2,6 +2,7 @@ import { endGroup, startGroup } from "@actions/core";
 import { Context } from "@actions/github/lib/context";
 import { GitHub } from "@actions/github/lib/utils";
 import { stepResponse } from "../main";
+import { debug } from "@actions/core";
 
 const SIGNATURE = `<sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>`;
 
@@ -11,8 +12,9 @@ export const createComment = (
   coverage: stepResponse | undefined,
   behindBy: stepResponse | undefined
 ): string => {
+  startGroup("Building comment");
   const isSuccess = !analyze?.error && !test?.error && !coverage?.error && !behindBy?.error;
-
+  debug("isSuccess: " + isSuccess.toString());
   let output = `<h2>PR Checks complete</h2>
 <ul>
   <li>✅ - Linting / Formatting</li>
@@ -24,7 +26,8 @@ export const createComment = (
 
 ${SIGNATURE}
     `.replaceAll("\r\n|\n|\r", "");
-
+  debug("Comment built");
+  endGroup();
   return output;
 };
 
@@ -39,12 +42,15 @@ export async function postComment(octokit: InstanceType<typeof GitHub>, commentM
 
   let commentId;
   try {
+    debug("Getting existing comments");
     const comments = (await octokit.rest.issues.listComments(pr)).data;
 
     for (let i = comments.length; i--; ) {
       const c = comments[i];
       if (c.body?.includes(SIGNATURE)) {
         commentId = c.id;
+        debug("Existing comment found");
+
         break;
       }
     }
@@ -53,6 +59,7 @@ export async function postComment(octokit: InstanceType<typeof GitHub>, commentM
   }
 
   if (commentId) {
+    debug("Updating existing comment");
     try {
       await octokit.rest.issues.updateComment({
         ...pr,
@@ -65,10 +72,11 @@ export async function postComment(octokit: InstanceType<typeof GitHub>, commentM
   }
 
   if (!commentId) {
+    debug("Posting new comment");
     try {
       await octokit.rest.issues.createComment({ ...pr, body: commentMessage });
     } catch (e) {
-      console.error("Error creating comment", e);
+      console.error("Error posting comment", e);
     }
   }
   endGroup();

@@ -5,14 +5,14 @@ import { stepResponse } from "../main";
 export const TEST_SUCCESS = "✅ - All tests passed";
 export const TEST_ERROR = "⚠️ - Error running tests";
 
-export const getTest = async (): Promise<stepResponse> => {
+export const getTest = async (coverageDir: string): Promise<stepResponse> => {
   startGroup("Running tests");
   let response: stepResponse | undefined;
   let stdout: string = "";
   let stderr: string = "";
 
   try {
-    await exec("flutter test --coverage --reporter json", [], {
+    await exec(`flutter test --coverage --reporter json --coverage-path ${coverageDir}/lcov.info`, [], {
       listeners: {
         stdout: (data) => (stdout += data.toString()),
         stderr: (data) => (stderr += data.toString()),
