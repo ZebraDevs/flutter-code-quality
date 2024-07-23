@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.6...v1.0.7) (2024-07-23)
+
+
+### 🪲 Bug Fixes
+
+* Pass correct coverage path for generating previous test results ([#27](https://github.com/ZebraDevs/flutter-code-quality/issues/27)) ([bdb334b](https://github.com/ZebraDevs/flutter-code-quality/commit/bdb334b63582e51403a08687ff0ec1d54ca4e6c4))
+
 ## [1.0.6](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.5...v1.0.6) (2024-07-22)
 
 
