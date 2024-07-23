@@ -93,7 +93,7 @@ const generateOldCoverage = async (
 ): Promise<Lcov> => {
   const artifact = new DefaultArtifactClient();
   await exec(`git checkout ${prev_sha}`);
-  await exec("flutter test --coverage");
+  await exec(`flutter test --coverage --coverage-path ${coverage_directory}/lcov.info`);
   const report = await importLcov(coverage_directory);
   const { id, size } = await artifact.uploadArtifact(
     ARTIFACT_NAME + "-" + prev_sha,
