@@ -9,11 +9,12 @@ import { checkBranchStatus } from "./scripts/behind";
 import { push } from "./scripts/push";
 import { retrievePreviousCoverage } from "./scripts/prevCoverage";
 import { Lcov } from "lcov-utils";
+import minimist from "minimist";
 
 export type stepResponse = { output: string; error: boolean };
 export const COVERAGE_DIR = ".coverage";
 
-const run = async () => {
+const run = async (isLocal: boolean) => {
   try {
     const workingDirectory = getInput("working-directory");
     // Check if the working directory is different from the current directory
@@ -23,12 +24,12 @@ const run = async () => {
 
     const token = process.env.GITHUB_TOKEN || getInput("token");
 
-    const runTests = getBooleanInput("run-tests");
-    const runAnalyze = getBooleanInput("run-analyze");
-    const runCoverage = getBooleanInput("run-coverage");
-    const runPrevCoverage = getBooleanInput("run-prev-coverage");
-    const runBehindBy = getBooleanInput("run-behind-by");
-    const createComment = getBooleanInput("create-comment");
+    const runTests = isLocal ? true : getBooleanInput("run-tests");
+    const runAnalyze = isLocal ? true : getBooleanInput("run-analyze");
+    const runCoverage = isLocal ? true : getBooleanInput("run-coverage");
+    const runPrevCoverage = isLocal ? true : getBooleanInput("run-prev-coverage");
+    const runBehindBy = isLocal ? true : getBooleanInput("run-behind-by");
+    const createComment = isLocal ? true : getBooleanInput("create-comment");
 
     const octokit = getOctokit(token);
     let prevCoverage: Lcov | undefined;
@@ -39,6 +40,7 @@ const run = async () => {
         console.error(e);
       }
     }
+
     const behindByStr: stepResponse | undefined = runBehindBy ? await checkBranchStatus(octokit, context) : undefined;
     await setup();
 
@@ -62,6 +64,8 @@ const run = async () => {
   }
 };
 
-run();
+const argv = minimist(process.argv.slice(2));
+
+run(argv.local ?? false);
 
 //TODO: Show coverage diff in comment - which files coverage have changed.
