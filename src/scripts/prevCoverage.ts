@@ -24,14 +24,14 @@ export const retrievePreviousCoverage = async (
 ): Promise<Lcov> => {
   startGroup("Retrieving previous coverage");
   let report: Lcov | undefined;
-  let baseSHA: string, headSHA: string;
+  let baseSHA: string, headBranch: string;
   try {
     const pullDetails = await octokit.request(
       `GET /repos/${context.issue.owner}/${context.issue.repo}/pulls/${context.issue.number}`
     );
 
     baseSHA = pullDetails.data.base.sha;
-    headSHA = pullDetails.data.head.sha;
+    headBranch = pullDetails.data.head.ref;
   } catch (err) {
     console.error("Failed to get pull details", err);
     throw err;
@@ -79,7 +79,7 @@ export const retrievePreviousCoverage = async (
   }
   if (!report) {
     debug("Artifact not found, will pull coverage from BASE");
-    report = await generatePreviousCoverage(baseSHA, headSHA, coverageDirectory);
+    report = await generatePreviousCoverage(baseSHA, headBranch, coverageDirectory);
   } else {
     try {
       await exec(`rm ${coverageDirectory}/${COV_FILE}`);
@@ -96,13 +96,13 @@ export const retrievePreviousCoverage = async (
 /**
  * Generate coverage report from the base branch
  * @param prev_sha - Base branch SHA
- * @param current_sha - Current branch SHA
+ * @param current_branch - Current branch name
  * @param coverage_directory - Directory to store coverage report
  * @returns Previous coverage report as Lcov object
  */
 const generatePreviousCoverage = async (
   prev_sha: string,
-  current_sha: string,
+  current_branch: string,
   coverage_directory: string
 ): Promise<Lcov> => {
   const artifact = new DefaultArtifactClient();
@@ -118,6 +118,6 @@ const generatePreviousCoverage = async (
 
   debug(`Artifact uploaded with id: ${id} and size: ${size}`);
   await exec(`git reset --hard`);
-  await exec(`git checkout ${current_sha}`);
+  await exec(`git checkout ${current_branch}`);
   return report;
 };
