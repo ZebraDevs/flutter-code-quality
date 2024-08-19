@@ -11,6 +11,10 @@ export type analyzeDetails = { file: string; details: string };
 
 export type analyzeErrTypes = "error" | "warning" | "info";
 
+/**
+ * Run static analysis on the codebase
+ * @returns Analysis result as a stepResponse object
+ */
 export const getAnalyze = async (): Promise<stepResponse> => {
   startGroup("Analyzing code");
   let response: stepResponse | undefined;
@@ -78,6 +82,11 @@ export const getAnalyze = async (): Promise<stepResponse> => {
   return response;
 };
 
+/**
+ * Get the emoji corresponding to the error type
+ * @param errType - Type of error
+ * @returns Emoji corresponding to the error type
+ */
 export const getErrEmoji = (errType: analyzeErrTypes) => {
   switch (errType) {
     case "error":
@@ -89,5 +98,11 @@ export const getErrEmoji = (errType: analyzeErrTypes) => {
   }
 };
 
+/**
+ * Generate a table row for the error
+ * @param err - Error details
+ * @param type - Type of error
+ * @returns Formatted table row for the error
+ */
 export const generateTableRow = (err: analyzeDetails, type: analyzeErrTypes) =>
   `<tr><td>${getErrEmoji(type)}</td><td>Error</td><td>${err.file}</td><td>${err.details}</td></tr>`;

@@ -2,7 +2,7 @@ import { Context } from "@actions/github/lib/context";
 import { GitHub } from "@actions/github/lib/utils";
 import { exec } from "@actions/exec";
 import { Lcov, parse } from "lcov-utils";
-import { COV_FILE, importLcov } from "./utils";
+import { COV_FILE, importLcov, toBuffer } from "./utils";
 import { DefaultArtifactClient } from "@actions/artifact";
 import { endGroup, startGroup } from "@actions/core";
 import { debug } from "@actions/core";
@@ -10,6 +10,13 @@ import AdmZip from "adm-zip";
 
 const ARTIFACT_NAME = "coverage";
 
+/**
+ * Retrieve previous coverage report from the base branch
+ * @param octokit - Instance of GitHub client
+ * @param context - GitHub context
+ * @param coverageDirectory - Directory to store coverage report
+ * @returns Lcov object
+ */
 export const retrievePreviousCoverage = async (
   octokit: InstanceType<typeof GitHub>,
   context: Context,
@@ -72,7 +79,7 @@ export const retrievePreviousCoverage = async (
   }
   if (!report) {
     debug("Artifact not found, will pull coverage from BASE");
-    report = await generateOldCoverage(baseSHA, headSHA, coverageDirectory);
+    report = await generatePreviousCoverage(baseSHA, headSHA, coverageDirectory);
   } else {
     try {
       await exec(`rm ${coverageDirectory}/${COV_FILE}`);
@@ -86,7 +93,14 @@ export const retrievePreviousCoverage = async (
   throw new Error("Failed to generate coverage report");
 };
 
-const generateOldCoverage = async (
+/**
+ * Generate coverage report from the base branch
+ * @param prev_sha - Base branch SHA
+ * @param current_sha - Current branch SHA
+ * @param coverage_directory - Directory to store coverage report
+ * @returns Previous coverage report as Lcov object
+ */
+const generatePreviousCoverage = async (
   prev_sha: string,
   current_sha: string,
   coverage_directory: string
@@ -106,13 +120,4 @@ const generateOldCoverage = async (
   await exec(`git reset --hard`);
   await exec(`git checkout ${current_sha}`);
   return report;
-};
-
-export const toBuffer = (arrayBuffer: ArrayBuffer) => {
-  const buffer = Buffer.alloc(arrayBuffer.byteLength);
-  const view = new Uint8Array(arrayBuffer);
-  for (let i = 0; i < buffer.length; ++i) {
-    buffer[i] = view[i];
-  }
-  return buffer;
 };

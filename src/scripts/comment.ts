@@ -6,6 +6,14 @@ import { debug } from "@actions/core";
 
 const SIGNATURE = `<sub>Created with <a href='https://github.com/ZebraDevs/flutter-code-quality'>Flutter code quality action</a></sub>`;
 
+/**
+ * Create a comment for the PR
+ * @param analyze - Static analysis result
+ * @param test  - Test result
+ * @param coverage - Coverage result
+ * @param behindBy - Branch status
+ * @returns Comment message
+ */
 export const createComment = (
   analyze: stepResponse | undefined,
   test: stepResponse | undefined,
@@ -31,6 +39,12 @@ ${SIGNATURE}
   return output;
 };
 
+/**
+ * Post a comment on the PR
+ * @param octokit - Instance of GitHub client
+ * @param commentMessage - Comment message
+ * @param context - GitHub context
+ */
 export async function postComment(octokit: InstanceType<typeof GitHub>, commentMessage: string, context: Context) {
   startGroup(`Commenting on PR`);
 

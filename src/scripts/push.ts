@@ -3,6 +3,9 @@ import { exec } from "@actions/exec";
 import { execSync } from "child_process";
 import { debug } from "@actions/core";
 
+/**
+ * Push changes to the branch
+ */
 export const push = async () => {
   startGroup("Check for changes");
   let stdout: string = "";

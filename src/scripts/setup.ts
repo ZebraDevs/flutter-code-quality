@@ -1,6 +1,9 @@
 import { endGroup, startGroup } from "@actions/core";
 import { exec } from "@actions/exec";
 
+/**
+ * Set up Flutter
+ */
 export const setup = async () => {
   startGroup("Set up Flutter");
   try {

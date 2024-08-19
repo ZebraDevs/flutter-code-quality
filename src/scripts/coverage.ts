@@ -7,6 +7,12 @@ import { getLcovLines } from "./utils";
 
 export const COV_FAILURE = "⚠️ - Coverage check failed";
 
+/**
+ * Get the coverage report and compare with the previous coverage
+ * @param prevCoverage - Previous coverage report
+ * @param coverageDirectory - Directory to store coverage report
+ * @returns Coverage report as a stepResponse object
+ */
 export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: string): stepResponse => {
   startGroup("Checking test coverage");
   let response: stepResponse | undefined;

@@ -4,6 +4,12 @@ import { GitHub } from "@actions/github/lib/utils";
 import { stepResponse } from "../main";
 import { debug } from "@actions/core";
 
+/**
+ * Check if the branch is behind the base branch
+ * @param octokit - Instance of GitHub client
+ * @param context - GitHub context
+ * @returns stepResponse object
+ */
 export const checkBranchStatus = async (
   octokit: InstanceType<typeof GitHub>,
   context: Context
