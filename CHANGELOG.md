@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.8](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.7...v1.0.8) (2024-08-19)
+
+
+### 🪲 Bug Fixes
+
+* Git push fails when cacluating previous coverage ([#30](https://github.com/ZebraDevs/flutter-code-quality/issues/30)) ([2eef29f](https://github.com/ZebraDevs/flutter-code-quality/commit/2eef29f3c53790c3b36a4c3683634b450f306c8f))
+
+
+### 📈 Documentation
+
+* Add brief documentation comments to each function ([2eef29f](https://github.com/ZebraDevs/flutter-code-quality/commit/2eef29f3c53790c3b36a4c3683634b450f306c8f))
+
+
+### 🧪 Tests
+
+* Added --local input arg to test functionality locally ([2eef29f](https://github.com/ZebraDevs/flutter-code-quality/commit/2eef29f3c53790c3b36a4c3683634b450f306c8f))
+
 ## [1.0.7](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.6...v1.0.7) (2024-07-23)
 
 
