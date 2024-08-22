@@ -1,6 +1,6 @@
 {
   "name": "flutter-code-quality",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Github Action that analyzes and formats Flutter repositories",
   "main": "dist/index.js",
   "license": "MIT",
