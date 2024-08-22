@@ -24,7 +24,12 @@ export const push = async (coverageDirectory: string) => {
       startGroup("Push changes");
       await exec('git config --global user.name "github-actions"');
       await exec('git config --global user.email "github-actions@github.com"');
-      await exec(`git add -A -- ':!${coverageDirectory}'`);
+      try {
+        await exec(`git add -A -- ':!${coverageDirectory}/lcov.info'`);
+      } catch (e) {
+        await exec(`git add -A`);
+      }
+
       execSync(`git commit -m 'chore(automated): Lint commit and format' `);
       await exec("git push -f");
       debug("Changes pushed onto branch");
