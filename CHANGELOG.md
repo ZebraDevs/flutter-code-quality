@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.9](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.8...v1.0.9) (2024-08-22)
+
+
+### 🪲 Bug Fixes
+
+* Action fails when previous commit had a failing test ([#32](https://github.com/ZebraDevs/flutter-code-quality/issues/32)) ([e411b2e](https://github.com/ZebraDevs/flutter-code-quality/commit/e411b2e2cb35330929a537363c7ca48522466385))
+* Don't commit coverage directory ([#35](https://github.com/ZebraDevs/flutter-code-quality/issues/35)) ([3211e3e](https://github.com/ZebraDevs/flutter-code-quality/commit/3211e3ec9134fa756c2f53c3eb9a763303bd1b04))
+
 ## [1.0.8](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.7...v1.0.8) (2024-08-19)
 
 

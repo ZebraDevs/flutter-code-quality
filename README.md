@@ -19,7 +19,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           # See https://github.com/subosito/flutter-action
-      - uses: ZebraDevs/flutter-code-quality@v1.0.8
+      - uses: ZebraDevs/flutter-code-quality@v1.0.9
         with:
           # Token used for authentication.
           token: ${{secrets.GITHUB_TOKEN}}
