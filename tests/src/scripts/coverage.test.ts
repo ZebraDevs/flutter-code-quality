@@ -158,7 +158,7 @@ test("oldCoverage pass", () => {
   expect(result).toEqual(83.33);
   process.chdir("../..");
 });
-test("low coverage score", () => {
+test("differet coverage scores", () => {
   process.chdir("tests/pass_repo");
 
   const result: stepResponse = getCoverage(
@@ -183,8 +183,31 @@ end_of_record
     "50"
   );
 
-  console.log(result.output);
-  expect(result.output.includes(" (🔻 down from")).toBe(true);
+  expect(result.output.includes("✅")).toBe(true);
+
+  const result2: stepResponse = getCoverage(
+    parse(`SF:lib/main.dart
+DA:3,1
+DA:8,1
+DA:10,1
+DA:17,1
+DA:21,1
+DA:22,1
+DA:28,1
+DA:30,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+LF:12
+LH:12
+end_of_record
+`),
+    COVERAGE_DIR,
+    "99"
+  );
+
+  expect(result.output.includes("✅")).toBe(false);
 
   process.chdir("../..");
 });
