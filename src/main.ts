@@ -16,7 +16,7 @@ export const COVERAGE_DIR = ".coverage";
 
 const run = async (isLocal: boolean) => {
   try {
-    const workingDirectory = getInput("working-directory");
+    const workingDirectory = isLocal ? "." : getInput("working-directory");
     // Check if the working directory is different from the current directory
     if (workingDirectory && workingDirectory !== process.cwd()) {
       process.chdir(workingDirectory);
@@ -30,6 +30,7 @@ const run = async (isLocal: boolean) => {
     const runPrevCoverage = isLocal ? true : getBooleanInput("run-prev-coverage");
     const runBehindBy = isLocal ? true : getBooleanInput("run-behind-by");
     const createComment = isLocal ? true : getBooleanInput("create-comment");
+    const score = isLocal ? "90" : getInput("coverage-pass-score");
 
     const octokit = getOctokit(token);
     let prevCoverage: Lcov | undefined;
@@ -46,7 +47,9 @@ const run = async (isLocal: boolean) => {
 
     const analyzeStr: stepResponse | undefined = runAnalyze ? await getAnalyze() : undefined;
     const testStr: stepResponse | undefined = runTests ? await getTest(COVERAGE_DIR) : undefined;
-    const coverageStr: stepResponse | undefined = runCoverage ? getCoverage(prevCoverage, COVERAGE_DIR) : undefined;
+    const coverageStr: stepResponse | undefined = runCoverage
+      ? getCoverage(prevCoverage, COVERAGE_DIR, score)
+      : undefined;
 
     const comment: string | undefined = createComment
       ? getComment(analyzeStr, testStr, coverageStr, behindByStr)

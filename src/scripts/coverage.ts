@@ -13,9 +13,20 @@ export const COV_FAILURE = "⚠️ - Coverage check failed";
  * @param coverageDirectory - Directory to store coverage report
  * @returns Coverage report as a stepResponse object
  */
-export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: string): stepResponse => {
+export const getCoverage = (
+  prevCoverage: Lcov | undefined,
+  coverageDirectory: string,
+  scoreStr: string
+): stepResponse => {
   startGroup("Checking test coverage");
   let response: stepResponse | undefined;
+  let score = 90;
+
+  try {
+    score = parseInt(scoreStr);
+  } catch (error) {
+    console.error("Error parsing score", "Will default to 90", error);
+  }
 
   try {
     const contents = readFileSync(`${coverageDirectory}/lcov.info`, "utf8");
@@ -28,7 +39,7 @@ export const getCoverage = (prevCoverage: Lcov | undefined, coverageDirectory: s
     const arr = Object.values(lcov).map((e) => {
       const fileName = e.sf;
       const percent = Math.round((e.lh / e.lf) * 1000) / 10;
-      const passing = percent > 96 ? "✅" : "⛔️";
+      const passing = percent > score ? "✅" : "⛔️";
       return `<tr><td>${fileName}</td><td>${percent}%</td><td>${passing}</td></tr>`;
     });
     debug(`Coverage at ${totalPercent}%`);

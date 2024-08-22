@@ -32,7 +32,7 @@ LF:12
 LH:12
 end_of_record
 `);
-  const result: stepResponse = getCoverage(oldCoverage, COVERAGE_DIR);
+  const result: stepResponse = getCoverage(oldCoverage, COVERAGE_DIR, "90");
 
   expect(result).toEqual(
     expect.objectContaining({
@@ -64,7 +64,8 @@ LF:12
 LH:12
 end_of_record
 `),
-    "coverage"
+    "coverage",
+    "90"
   );
 
   expect(result.output.includes(" (🔻 down from")).toBe(true);
@@ -92,7 +93,8 @@ LF:12
 LH:0
 end_of_record
 `),
-    COVERAGE_DIR
+    COVERAGE_DIR,
+    "90"
   );
   expect(result.output.includes(" (⬆️ up from")).toBe(true);
 
@@ -120,7 +122,8 @@ LF:12
 LH:10
 end_of_record
 `),
-    COVERAGE_DIR
+    COVERAGE_DIR,
+    "90"
   );
   expect(result.output.includes(" (no change)")).toBe(true);
 
@@ -130,7 +133,7 @@ end_of_record
 test("no old coverage", () => {
   process.chdir("tests/pass_repo");
 
-  const result: stepResponse = getCoverage(undefined, COVERAGE_DIR);
+  const result: stepResponse = getCoverage(undefined, COVERAGE_DIR, "90");
   expect(result.output.includes(" (🔻 down from 95%)")).toBe(false);
   expect(result.output.includes(" (⬆️ up from 5%)")).toBe(false);
   expect(result.output.includes(" (no change)")).toBe(false);
@@ -141,7 +144,7 @@ test("no old coverage", () => {
 test("fail", () => {
   process.chdir("tests/fail_repo");
   try {
-    const result: stepResponse = getCoverage(undefined, COVERAGE_DIR);
+    const result: stepResponse = getCoverage(undefined, COVERAGE_DIR, "90");
   } catch (error) {
     expect(error).toBeInstanceOf(Error);
   }
@@ -153,5 +156,36 @@ test("oldCoverage pass", () => {
 
   const result = getLcovLines(importLcov(COVERAGE_DIR));
   expect(result).toEqual(83.33);
+  process.chdir("../..");
+});
+test("differet coverage scores", () => {
+  process.chdir("tests/pass_repo");
+
+  const testLcov = `SF:lib/main.dart
+DA:3,1
+DA:8,1
+DA:10,1
+DA:17,1
+DA:21,1
+DA:22,1
+DA:28,1
+DA:30,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+LF:12
+LH:12
+end_of_record
+`;
+
+  const result: stepResponse = getCoverage(parse(testLcov), COVERAGE_DIR, "50");
+
+  expect(result.output.includes("✅")).toBe(true);
+
+  const result2: stepResponse = getCoverage(parse(testLcov), COVERAGE_DIR, "99");
+
+  expect(result2.output.includes("✅")).toBe(false);
+
   process.chdir("../..");
 });
