@@ -18,16 +18,22 @@ export const push = async (coverageDirectory: string) => {
   }
   endGroup();
 
+  const changes = stdout.split("\n").filter((line) => line.trim() !== "");
   /// If `stdout` is empty, there are no changes
+  console.log(changes);
   if (stdout != "") {
     try {
       startGroup("Push changes");
       await exec('git config --global user.name "github-actions"');
       await exec('git config --global user.email "github-actions@github.com"');
       try {
-        await exec(`git add -A -- ':!${coverageDirectory}/lcov.info'`);
+        await exec(`git add -A -- ':!/${coverageDirectory}/*'`);
       } catch (e) {
-        await exec(`git add -A`);
+        try {
+          await exec(`git add -A -- :!/${coverageDirectory}/*`);
+        } catch (e) {
+          console.error("Unable to add files", e);
+        }
       }
 
       execSync(`git commit -m 'chore(automated): Lint commit and format' `);
@@ -41,3 +47,5 @@ export const push = async (coverageDirectory: string) => {
     }
   }
 };
+
+push(".coverage");
