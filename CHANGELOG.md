@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.10](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.9...v1.0.10) (2024-08-22)
+
+
+### 🧹 Miscellaneous Chores
+
+* **automated:** Lint commit and format ([14cb9e8](https://github.com/ZebraDevs/flutter-code-quality/commit/14cb9e8a19d5a3b265e0a0d8f3e8154830ac4552))
+* **automated:** Lint commit and format ([f091719](https://github.com/ZebraDevs/flutter-code-quality/commit/f091719e84e9b091bd0c6f49ada90afd942ca039))
+* **automated:** Lint commit and format ([974e038](https://github.com/ZebraDevs/flutter-code-quality/commit/974e03823b671520990bf95d3bf0efce16447750))
+* **automated:** Lint commit and format ([9d87119](https://github.com/ZebraDevs/flutter-code-quality/commit/9d871197eabe6b986c3a50813c47695e69854935))
+* **automated:** Lint commit and format ([38d3aac](https://github.com/ZebraDevs/flutter-code-quality/commit/38d3aace3704c78e3bc4b354a43f8f8b42d84b77))
+
 ## [1.0.9](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.8...v1.0.9) (2024-08-22)
 
 
