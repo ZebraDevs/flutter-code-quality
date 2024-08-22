@@ -6,7 +6,7 @@ import { debug } from "@actions/core";
 /**
  * Push changes to the branch
  */
-export const push = async () => {
+export const push = async (coverageDirectory: string) => {
   startGroup("Check for changes");
   let stdout: string = "";
   try {
@@ -24,7 +24,7 @@ export const push = async () => {
       startGroup("Push changes");
       await exec('git config --global user.name "github-actions"');
       await exec('git config --global user.email "github-actions@github.com"');
-      await exec("git add -A");
+      await exec(`git add -A -- ':!${coverageDirectory}'`);
       execSync(`git commit -m 'chore(automated): Lint commit and format' `);
       await exec("git push -f");
       debug("Changes pushed onto branch");

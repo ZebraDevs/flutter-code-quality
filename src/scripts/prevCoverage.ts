@@ -7,6 +7,7 @@ import { DefaultArtifactClient } from "@actions/artifact";
 import { endGroup, startGroup } from "@actions/core";
 import { debug } from "@actions/core";
 import AdmZip from "adm-zip";
+import { getTest } from "./runTests";
 
 const ARTIFACT_NAME = "coverage";
 
@@ -104,20 +105,28 @@ const generatePreviousCoverage = async (
   prev_sha: string,
   current_branch: string,
   coverage_directory: string
-): Promise<Lcov> => {
+): Promise<Lcov | undefined> => {
   const artifact = new DefaultArtifactClient();
   await exec(`git checkout ${prev_sha}`);
-  await exec(`flutter test --coverage --coverage-path ${coverage_directory}/lcov.info`);
-  const report = await importLcov(coverage_directory);
-  const { id, size } = await artifact.uploadArtifact(
-    ARTIFACT_NAME + "-" + prev_sha,
-    [`${coverage_directory}/${COV_FILE}`],
-    ".",
-    {}
-  );
+  let report: Lcov | undefined;
+  try {
+    await getTest(coverage_directory);
+    report = await importLcov(coverage_directory);
 
-  debug(`Artifact uploaded with id: ${id} and size: ${size}`);
-  await exec(`git reset --hard`);
-  await exec(`git checkout ${current_branch}`);
-  return report;
+    const { id, size } = await artifact.uploadArtifact(
+      ARTIFACT_NAME + "-" + prev_sha,
+      [`${coverage_directory}/${COV_FILE}`],
+      ".",
+      {}
+    );
+
+    debug(`Artifact uploaded with id: ${id} and size: ${size}`);
+  } catch (e) {
+    console.error("Failed to run tests");
+  } finally {
+    await exec(`git reset --hard`);
+    await exec(`git clean -d -f .`);
+    await exec(`git checkout ${current_branch}`);
+    return report;
+  }
 };

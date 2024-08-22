@@ -54,7 +54,7 @@ const run = async (isLocal: boolean) => {
 
     if (createComment) postComment(octokit, comment!, context);
 
-    await push();
+    await push(COVERAGE_DIR);
 
     if (analyzeStr?.error || testStr?.error || coverageStr?.error) {
       setFailed(`${analyzeStr?.output}\n${testStr?.output}\n${coverageStr?.output}`);
