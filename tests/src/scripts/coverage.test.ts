@@ -32,7 +32,7 @@ LF:12
 LH:12
 end_of_record
 `);
-  const result: stepResponse = getCoverage(oldCoverage, COVERAGE_DIR);
+  const result: stepResponse = getCoverage(oldCoverage, COVERAGE_DIR, "90");
 
   expect(result).toEqual(
     expect.objectContaining({
@@ -64,7 +64,8 @@ LF:12
 LH:12
 end_of_record
 `),
-    "coverage"
+    "coverage",
+    "90"
   );
 
   expect(result.output.includes(" (🔻 down from")).toBe(true);
@@ -92,7 +93,8 @@ LF:12
 LH:0
 end_of_record
 `),
-    COVERAGE_DIR
+    COVERAGE_DIR,
+    "90"
   );
   expect(result.output.includes(" (⬆️ up from")).toBe(true);
 
@@ -120,7 +122,8 @@ LF:12
 LH:10
 end_of_record
 `),
-    COVERAGE_DIR
+    COVERAGE_DIR,
+    "90"
   );
   expect(result.output.includes(" (no change)")).toBe(true);
 
@@ -130,7 +133,7 @@ end_of_record
 test("no old coverage", () => {
   process.chdir("tests/pass_repo");
 
-  const result: stepResponse = getCoverage(undefined, COVERAGE_DIR);
+  const result: stepResponse = getCoverage(undefined, COVERAGE_DIR, "90");
   expect(result.output.includes(" (🔻 down from 95%)")).toBe(false);
   expect(result.output.includes(" (⬆️ up from 5%)")).toBe(false);
   expect(result.output.includes(" (no change)")).toBe(false);
@@ -141,7 +144,7 @@ test("no old coverage", () => {
 test("fail", () => {
   process.chdir("tests/fail_repo");
   try {
-    const result: stepResponse = getCoverage(undefined, COVERAGE_DIR);
+    const result: stepResponse = getCoverage(undefined, COVERAGE_DIR, "90");
   } catch (error) {
     expect(error).toBeInstanceOf(Error);
   }
