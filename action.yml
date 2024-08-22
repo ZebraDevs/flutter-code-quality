@@ -50,3 +50,8 @@ inputs:
     required: false
     default: true
     type: boolean
+
+  coverage-pass-score:
+    description: "Coverage passing percentage"
+    required: false
+    default: "90"
