@@ -55,5 +55,3 @@ export const push = async (coverageDirectory: string) => {
     }
   }
 };
-
-push(".coverage");
