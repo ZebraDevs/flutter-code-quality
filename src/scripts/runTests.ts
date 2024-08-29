@@ -34,6 +34,9 @@ export const getTest = async (coverageDir: string): Promise<stepResponse> => {
           failIds.push(element.testID);
         }
       });
+      if (failIds.length == 0) {
+        failIds = obj.filter((e: any) => e.hasOwnProperty("error")).map((e: any) => e.testID);
+      }
       let initialString = "";
       if (failIds.length > 1) {
         initialString = `${failIds.length} tests failed`;
@@ -84,6 +87,11 @@ export const getTest = async (coverageDir: string): Promise<stepResponse> => {
         testDetails = testDetails.replace(/(?:<>'"`)/g, "");
         errorString.push("<details><summary>" + testName + "</br></summary>`" + testDetails + "`</details>");
       });
+
+      if (initialString == "") {
+        initialString = "Error running tests";
+        errorString.push("Unable to get test details. Run flutter test to replicate");
+      }
 
       const output = `⛔️ - ${initialString}</br >
             <details><summary>See details</summary>

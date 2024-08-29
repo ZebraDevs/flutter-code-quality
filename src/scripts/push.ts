@@ -7,7 +7,7 @@ import { start } from "repl";
 /**
  * Push changes to the branch
  */
-export const push = async (coverageDirectory: string) => {
+export const pushChanges = async (coverageDirectory: string) => {
   startGroup("Check for changes");
   let stdout: string = "";
   try {

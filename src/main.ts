@@ -6,15 +6,22 @@ import { getTest } from "./scripts/runTests";
 import { createComment as getComment, postComment } from "./scripts/comment";
 import { setup } from "./scripts/setup";
 import { checkBranchStatus } from "./scripts/behind";
-import { push } from "./scripts/push";
+import { pushChanges } from "./scripts/push";
 import { retrievePreviousCoverage } from "./scripts/prevCoverage";
 import { Lcov } from "lcov-utils";
 import minimist from "minimist";
+import { execSync } from "node:child_process";
 
 export type stepResponse = { output: string; error: boolean };
 export const COVERAGE_DIR = ".coverage";
 
 const run = async (isLocal: boolean) => {
+  try {
+    execSync("flutter pub get");
+  } catch (e) {
+    console.error(e);
+  }
+
   try {
     const workingDirectory = isLocal ? "." : getInput("working-directory");
     // Check if the working directory is different from the current directory
@@ -57,10 +64,11 @@ const run = async (isLocal: boolean) => {
 
     if (createComment) postComment(octokit, comment!, context);
 
-    await push(COVERAGE_DIR);
+    await pushChanges(COVERAGE_DIR);
 
-    if (analyzeStr?.error || testStr?.error || coverageStr?.error) {
-      setFailed(`${analyzeStr?.output}\n${testStr?.output}\n${coverageStr?.output}`);
+    const errors = [analyzeStr, testStr, coverageStr].filter((step) => step?.error);
+    if (errors.length > 0) {
+      setFailed(errors.map((step) => step?.output).join("; "));
     }
   } catch (err) {
     setFailed(`Action failed with error ${err}`);
