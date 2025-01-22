@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.10](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.9...v1.0.10) (2025-01-22)
+
+
+### 🪲 Bug Fixes
+
+* Action should now only commit once, not twice ([#39](https://github.com/ZebraDevs/flutter-code-quality/issues/39)) ([b06c962](https://github.com/ZebraDevs/flutter-code-quality/commit/b06c9621b53a20f0c6f5f3a5d9a101c3c05ebbb9))
+* Add input to change the desired coverage percentage ([#37](https://github.com/ZebraDevs/flutter-code-quality/issues/37)) ([d4a5194](https://github.com/ZebraDevs/flutter-code-quality/commit/d4a5194e5c911b6ba062dbaa0a51a7a05fc38782))
+
 ## [1.0.9](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.8...v1.0.9) (2024-08-22)
 
 
