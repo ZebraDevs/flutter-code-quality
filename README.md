@@ -40,6 +40,9 @@ jobs:
 | create-comment      | Whether the action should comment the output status.              | false    | true    |
 | working-directory   | Working directory to run the action in                            | false    | "."     |
 | coverage-pass-score | Coverage passing percentage                                       | false    | "90"    |
+| test-command        | Command used to run test suite.                                   | false    | ""      |
+
+Test command is empty by default, and the command used is: `flutter test --coverage --reporter json --coverage-path ${coverageDir}/lcov.info`. This whole string is replaced with the content of test-command, so it is important to consider that `coverageDir` is not provided.
 
 ## Coverage
 
