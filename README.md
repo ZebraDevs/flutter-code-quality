@@ -42,7 +42,13 @@ jobs:
 | coverage-pass-score | Coverage passing percentage                                       | false    | "90"    |
 | test-command        | Command used to run test suite.                                   | false    | ""      |
 
-Test command is empty by default, and the command used is: `flutter test --coverage --reporter json --coverage-path ${coverageDir}/lcov.info`. This whole string is replaced with the content of test-command, so it is important to consider that `coverageDir` is not provided.
+By default, the `test-command` input is empty, and the action uses the following command to run tests and generate coverage:
+
+```bash
+flutter test --coverage --reporter json --coverage-path ${coverageDirectory}/lcov.info
+```
+
+If you provide a custom `test-command`, this default behavior is overridden. Note that the `${coverageDirectory}/lcov.info` path for coverage output is not automatically applied when using a custom command. You must ensure that your custom test command handles coverage generation and specifies the appropriate output path if required.
 
 ## Coverage
 

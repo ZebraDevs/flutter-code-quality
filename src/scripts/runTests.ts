@@ -7,10 +7,10 @@ export const TEST_ERROR = "⚠️ - Error running tests";
 
 /**
  * Run tests and return the result
- * @param coverageDir - Directory to store coverage report
+ * @param coverageDirectory - Directory to store coverage report
  * @returns Test result as a stepResponse object
  */
-export const getTest = async (coverageDir: string, testCommand: string): Promise<stepResponse> => {
+export const getTest = async (coverageDirectory: string, testCommand: string): Promise<stepResponse> => {
   startGroup("Running tests");
   let response: stepResponse | undefined;
   let stdout: string = "";
@@ -20,7 +20,7 @@ export const getTest = async (coverageDir: string, testCommand: string): Promise
     const command =
       testCommand.length !== 0
         ? testCommand
-        : `flutter test --coverage --reporter json --coverage-path ${coverageDir}/lcov.info`;
+        : `flutter test --coverage --reporter json --coverage-path ${coverageDirectory}/lcov.info`;
     await exec(command, [], {
       listeners: {
         stdout: (data) => (stdout += data.toString()),

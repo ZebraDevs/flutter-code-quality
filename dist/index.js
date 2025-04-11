@@ -110366,10 +110366,10 @@ exports.TEST_SUCCESS = "✅ - All tests passed";
 exports.TEST_ERROR = "⚠️ - Error running tests";
 /**
  * Run tests and return the result
- * @param coverageDir - Directory to store coverage report
+ * @param coverageDirectory - Directory to store coverage report
  * @returns Test result as a stepResponse object
  */
-const getTest = async (coverageDir, testCommand) => {
+const getTest = async (coverageDirectory, testCommand) => {
     (0, core_1.startGroup)("Running tests");
     let response;
     let stdout = "";
@@ -110377,7 +110377,7 @@ const getTest = async (coverageDir, testCommand) => {
     try {
         const command = testCommand.length !== 0
             ? testCommand
-            : `flutter test --coverage --reporter json --coverage-path ${coverageDir}/lcov.info`;
+            : `flutter test --coverage --reporter json --coverage-path ${coverageDirectory}/lcov.info`;
         await (0, exec_1.exec)(command, [], {
             listeners: {
                 stdout: (data) => (stdout += data.toString()),
