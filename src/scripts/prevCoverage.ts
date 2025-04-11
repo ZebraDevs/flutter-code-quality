@@ -21,7 +21,8 @@ const ARTIFACT_NAME = "coverage";
 export const retrievePreviousCoverage = async (
   octokit: InstanceType<typeof GitHub>,
   context: Context,
-  coverageDirectory: string
+  coverageDirectory: string,
+  testCommand: string
 ): Promise<Lcov> => {
   startGroup("Retrieving previous coverage");
   let report: Lcov | undefined;
@@ -80,7 +81,7 @@ export const retrievePreviousCoverage = async (
   }
   if (!report) {
     debug("Artifact not found, will pull coverage from BASE");
-    report = await generatePreviousCoverage(baseSHA, headBranch, coverageDirectory);
+    report = await generatePreviousCoverage(baseSHA, headBranch, coverageDirectory, testCommand);
   } else {
     try {
       await exec(`rm ${coverageDirectory}/${COV_FILE}`);
@@ -96,26 +97,27 @@ export const retrievePreviousCoverage = async (
 
 /**
  * Generate coverage report from the base branch
- * @param prev_sha - Base branch SHA
- * @param current_branch - Current branch name
- * @param coverage_directory - Directory to store coverage report
+ * @param prevSha - Base branch SHA
+ * @param currentBranch - Current branch name
+ * @param coverageDirectory - Directory to store coverage report
  * @returns Previous coverage report as Lcov object
  */
 const generatePreviousCoverage = async (
-  prev_sha: string,
-  current_branch: string,
-  coverage_directory: string
+  prevSha: string,
+  currentBranch: string,
+  coverageDirectory: string,
+  testCommand: string
 ): Promise<Lcov | undefined> => {
   const artifact = new DefaultArtifactClient();
-  await exec(`git checkout ${prev_sha}`);
+  await exec(`git checkout ${prevSha}`);
   let report: Lcov | undefined;
   try {
-    await getTest(coverage_directory);
-    report = await importLcov(coverage_directory);
+    await getTest(coverageDirectory, testCommand);
+    report = await importLcov(coverageDirectory);
 
     const { id, size } = await artifact.uploadArtifact(
-      ARTIFACT_NAME + "-" + prev_sha,
-      [`${coverage_directory}/${COV_FILE}`],
+      ARTIFACT_NAME + "-" + prevSha,
+      [`${coverageDirectory}/${COV_FILE}`],
       ".",
       {}
     );
@@ -126,7 +128,7 @@ const generatePreviousCoverage = async (
   } finally {
     await exec(`git reset --hard`);
     await exec(`git clean -d -f .`);
-    await exec(`git checkout ${current_branch}`);
+    await exec(`git checkout ${currentBranch}`);
     return report;
   }
 };

@@ -55,3 +55,8 @@ inputs:
     description: "Coverage passing percentage"
     required: false
     default: "90"
+
+  test-command:
+    description: "Command used to run tests"
+    required: false
+    default: ""

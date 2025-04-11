@@ -32,6 +32,7 @@ const run = async (isLocal: boolean) => {
     const token = process.env.GITHUB_TOKEN || getInput("token");
 
     const runTests = isLocal ? true : getBooleanInput("run-tests");
+    const testCommand = isLocal ? "" : getInput("test-command");
     const runAnalyze = isLocal ? true : getBooleanInput("run-analyze");
     const runCoverage = isLocal ? true : getBooleanInput("run-coverage");
     const runPrevCoverage = isLocal ? true : getBooleanInput("run-prev-coverage");
@@ -43,7 +44,7 @@ const run = async (isLocal: boolean) => {
     let prevCoverage: Lcov | undefined;
     if (runPrevCoverage) {
       try {
-        prevCoverage = await retrievePreviousCoverage(octokit, context, COVERAGE_DIR);
+        prevCoverage = await retrievePreviousCoverage(octokit, context, COVERAGE_DIR, testCommand);
       } catch (e) {
         console.error(e);
       }
@@ -53,7 +54,7 @@ const run = async (isLocal: boolean) => {
     await setup();
 
     const analyzeStr: stepResponse | undefined = runAnalyze ? await getAnalyze() : undefined;
-    const testStr: stepResponse | undefined = runTests ? await getTest(COVERAGE_DIR) : undefined;
+    const testStr: stepResponse | undefined = runTests ? await getTest(COVERAGE_DIR, testCommand) : undefined;
     const coverageStr: stepResponse | undefined = runCoverage
       ? getCoverage(prevCoverage, COVERAGE_DIR, score)
       : undefined;
