@@ -47314,7 +47314,7 @@ var difference = __nccwpck_require__(46129);
 var union = __nccwpck_require__(51527);
 var isPlainObject = __nccwpck_require__(60679);
 
-var glob = __nccwpck_require__(45338);
+var glob = __nccwpck_require__(73146);
 
 var file = module.exports = {};
 
@@ -63869,7 +63869,7 @@ var Stream = __nccwpck_require__(2790);
 
 /*<replacement>*/
 
-var Buffer = (__nccwpck_require__(25183).Buffer);
+var Buffer = (__nccwpck_require__(32857).Buffer);
 var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -63986,7 +63986,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = (__nccwpck_require__(24859)/* .StringDecoder */ .I);
+    if (!StringDecoder) StringDecoder = (__nccwpck_require__(15793)/* .StringDecoder */ .I);
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -64142,7 +64142,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = (__nccwpck_require__(24859)/* .StringDecoder */ .I);
+  if (!StringDecoder) StringDecoder = (__nccwpck_require__(15793)/* .StringDecoder */ .I);
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -65144,7 +65144,7 @@ var Stream = __nccwpck_require__(2790);
 
 /*<replacement>*/
 
-var Buffer = (__nccwpck_require__(25183).Buffer);
+var Buffer = (__nccwpck_require__(32857).Buffer);
 var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
@@ -65758,7 +65758,7 @@ Writable.prototype._destroy = function (err, cb) {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Buffer = (__nccwpck_require__(25183).Buffer);
+var Buffer = (__nccwpck_require__(32857).Buffer);
 var util = __nccwpck_require__(39023);
 
 function copyBuffer(src, target, offset) {
@@ -65965,378 +65965,6 @@ if (process.env.READABLE_STREAM === 'disable' && Stream) {
   exports.PassThrough = __nccwpck_require__(60522);
 }
 
-
-/***/ }),
-
-/***/ 25183:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-/* eslint-disable node/no-deprecated-api */
-var buffer = __nccwpck_require__(20181)
-var Buffer = buffer.Buffer
-
-// alternative to using Object.keys for old browsers
-function copyProps (src, dst) {
-  for (var key in src) {
-    dst[key] = src[key]
-  }
-}
-if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer
-} else {
-  // Copy properties from require('buffer')
-  copyProps(buffer, exports)
-  exports.Buffer = SafeBuffer
-}
-
-function SafeBuffer (arg, encodingOrOffset, length) {
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-// Copy static methods from Buffer
-copyProps(Buffer, SafeBuffer)
-
-SafeBuffer.from = function (arg, encodingOrOffset, length) {
-  if (typeof arg === 'number') {
-    throw new TypeError('Argument must not be a number')
-  }
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-SafeBuffer.alloc = function (size, fill, encoding) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  var buf = Buffer(size)
-  if (fill !== undefined) {
-    if (typeof encoding === 'string') {
-      buf.fill(fill, encoding)
-    } else {
-      buf.fill(fill)
-    }
-  } else {
-    buf.fill(0)
-  }
-  return buf
-}
-
-SafeBuffer.allocUnsafe = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return Buffer(size)
-}
-
-SafeBuffer.allocUnsafeSlow = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return buffer.SlowBuffer(size)
-}
-
-
-/***/ }),
-
-/***/ 24859:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-/*<replacement>*/
-
-var Buffer = (__nccwpck_require__(25183).Buffer);
-/*</replacement>*/
-
-var isEncoding = Buffer.isEncoding || function (encoding) {
-  encoding = '' + encoding;
-  switch (encoding && encoding.toLowerCase()) {
-    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
-      return true;
-    default:
-      return false;
-  }
-};
-
-function _normalizeEncoding(enc) {
-  if (!enc) return 'utf8';
-  var retried;
-  while (true) {
-    switch (enc) {
-      case 'utf8':
-      case 'utf-8':
-        return 'utf8';
-      case 'ucs2':
-      case 'ucs-2':
-      case 'utf16le':
-      case 'utf-16le':
-        return 'utf16le';
-      case 'latin1':
-      case 'binary':
-        return 'latin1';
-      case 'base64':
-      case 'ascii':
-      case 'hex':
-        return enc;
-      default:
-        if (retried) return; // undefined
-        enc = ('' + enc).toLowerCase();
-        retried = true;
-    }
-  }
-};
-
-// Do not cache `Buffer.isEncoding` when checking encoding names as some
-// modules monkey-patch it to support additional encodings
-function normalizeEncoding(enc) {
-  var nenc = _normalizeEncoding(enc);
-  if (typeof nenc !== 'string' && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
-  return nenc || enc;
-}
-
-// StringDecoder provides an interface for efficiently splitting a series of
-// buffers into a series of JS strings without breaking apart multi-byte
-// characters.
-exports.I = StringDecoder;
-function StringDecoder(encoding) {
-  this.encoding = normalizeEncoding(encoding);
-  var nb;
-  switch (this.encoding) {
-    case 'utf16le':
-      this.text = utf16Text;
-      this.end = utf16End;
-      nb = 4;
-      break;
-    case 'utf8':
-      this.fillLast = utf8FillLast;
-      nb = 4;
-      break;
-    case 'base64':
-      this.text = base64Text;
-      this.end = base64End;
-      nb = 3;
-      break;
-    default:
-      this.write = simpleWrite;
-      this.end = simpleEnd;
-      return;
-  }
-  this.lastNeed = 0;
-  this.lastTotal = 0;
-  this.lastChar = Buffer.allocUnsafe(nb);
-}
-
-StringDecoder.prototype.write = function (buf) {
-  if (buf.length === 0) return '';
-  var r;
-  var i;
-  if (this.lastNeed) {
-    r = this.fillLast(buf);
-    if (r === undefined) return '';
-    i = this.lastNeed;
-    this.lastNeed = 0;
-  } else {
-    i = 0;
-  }
-  if (i < buf.length) return r ? r + this.text(buf, i) : this.text(buf, i);
-  return r || '';
-};
-
-StringDecoder.prototype.end = utf8End;
-
-// Returns only complete characters in a Buffer
-StringDecoder.prototype.text = utf8Text;
-
-// Attempts to complete a partial non-UTF-8 character using bytes from a Buffer
-StringDecoder.prototype.fillLast = function (buf) {
-  if (this.lastNeed <= buf.length) {
-    buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
-    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-  }
-  buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, buf.length);
-  this.lastNeed -= buf.length;
-};
-
-// Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
-// continuation byte. If an invalid byte is detected, -2 is returned.
-function utf8CheckByte(byte) {
-  if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
-  return byte >> 6 === 0x02 ? -1 : -2;
-}
-
-// Checks at most 3 bytes at the end of a Buffer in order to detect an
-// incomplete multi-byte UTF-8 character. The total number of bytes (2, 3, or 4)
-// needed to complete the UTF-8 character (if applicable) are returned.
-function utf8CheckIncomplete(self, buf, i) {
-  var j = buf.length - 1;
-  if (j < i) return 0;
-  var nb = utf8CheckByte(buf[j]);
-  if (nb >= 0) {
-    if (nb > 0) self.lastNeed = nb - 1;
-    return nb;
-  }
-  if (--j < i || nb === -2) return 0;
-  nb = utf8CheckByte(buf[j]);
-  if (nb >= 0) {
-    if (nb > 0) self.lastNeed = nb - 2;
-    return nb;
-  }
-  if (--j < i || nb === -2) return 0;
-  nb = utf8CheckByte(buf[j]);
-  if (nb >= 0) {
-    if (nb > 0) {
-      if (nb === 2) nb = 0;else self.lastNeed = nb - 3;
-    }
-    return nb;
-  }
-  return 0;
-}
-
-// Validates as many continuation bytes for a multi-byte UTF-8 character as
-// needed or are available. If we see a non-continuation byte where we expect
-// one, we "replace" the validated continuation bytes we've seen so far with
-// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
-// behavior. The continuation byte check is included three times in the case
-// where all of the continuation bytes for a character exist in the same buffer.
-// It is also done this way as a slight performance increase instead of using a
-// loop.
-function utf8CheckExtraBytes(self, buf, p) {
-  if ((buf[0] & 0xC0) !== 0x80) {
-    self.lastNeed = 0;
-    return '\ufffd';
-  }
-  if (self.lastNeed > 1 && buf.length > 1) {
-    if ((buf[1] & 0xC0) !== 0x80) {
-      self.lastNeed = 1;
-      return '\ufffd';
-    }
-    if (self.lastNeed > 2 && buf.length > 2) {
-      if ((buf[2] & 0xC0) !== 0x80) {
-        self.lastNeed = 2;
-        return '\ufffd';
-      }
-    }
-  }
-}
-
-// Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
-function utf8FillLast(buf) {
-  var p = this.lastTotal - this.lastNeed;
-  var r = utf8CheckExtraBytes(this, buf, p);
-  if (r !== undefined) return r;
-  if (this.lastNeed <= buf.length) {
-    buf.copy(this.lastChar, p, 0, this.lastNeed);
-    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-  }
-  buf.copy(this.lastChar, p, 0, buf.length);
-  this.lastNeed -= buf.length;
-}
-
-// Returns all complete UTF-8 characters in a Buffer. If the Buffer ended on a
-// partial character, the character's bytes are buffered until the required
-// number of bytes are available.
-function utf8Text(buf, i) {
-  var total = utf8CheckIncomplete(this, buf, i);
-  if (!this.lastNeed) return buf.toString('utf8', i);
-  this.lastTotal = total;
-  var end = buf.length - (total - this.lastNeed);
-  buf.copy(this.lastChar, 0, end);
-  return buf.toString('utf8', i, end);
-}
-
-// For UTF-8, a replacement character is added when ending on a partial
-// character.
-function utf8End(buf) {
-  var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + '\ufffd';
-  return r;
-}
-
-// UTF-16LE typically needs two bytes per character, but even if we have an even
-// number of bytes available, we need to check if we end on a leading/high
-// surrogate. In that case, we need to wait for the next two bytes in order to
-// decode the last character properly.
-function utf16Text(buf, i) {
-  if ((buf.length - i) % 2 === 0) {
-    var r = buf.toString('utf16le', i);
-    if (r) {
-      var c = r.charCodeAt(r.length - 1);
-      if (c >= 0xD800 && c <= 0xDBFF) {
-        this.lastNeed = 2;
-        this.lastTotal = 4;
-        this.lastChar[0] = buf[buf.length - 2];
-        this.lastChar[1] = buf[buf.length - 1];
-        return r.slice(0, -1);
-      }
-    }
-    return r;
-  }
-  this.lastNeed = 1;
-  this.lastTotal = 2;
-  this.lastChar[0] = buf[buf.length - 1];
-  return buf.toString('utf16le', i, buf.length - 1);
-}
-
-// For UTF-16LE we do not explicitly append special replacement characters if we
-// end on a partial character, we simply let v8 handle that.
-function utf16End(buf) {
-  var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) {
-    var end = this.lastTotal - this.lastNeed;
-    return r + this.lastChar.toString('utf16le', 0, end);
-  }
-  return r;
-}
-
-function base64Text(buf, i) {
-  var n = (buf.length - i) % 3;
-  if (n === 0) return buf.toString('base64', i);
-  this.lastNeed = 3 - n;
-  this.lastTotal = 3;
-  if (n === 1) {
-    this.lastChar[0] = buf[buf.length - 1];
-  } else {
-    this.lastChar[0] = buf[buf.length - 2];
-    this.lastChar[1] = buf[buf.length - 1];
-  }
-  return buf.toString('base64', i, buf.length - n);
-}
-
-function base64End(buf) {
-  var r = buf && buf.length ? this.write(buf) : '';
-  if (this.lastNeed) return r + this.lastChar.toString('base64', 0, 3 - this.lastNeed);
-  return r;
-}
-
-// Pass bytes on through for single-byte encodings (e.g. ascii, latin1, hex)
-function simpleWrite(buf) {
-  return buf.toString(this.encoding);
-}
-
-function simpleEnd(buf) {
-  return buf && buf.length ? this.write(buf) : '';
-}
 
 /***/ }),
 
@@ -74694,7 +74322,7 @@ const {
 } = __nccwpck_require__(26071)
 const { validateObject } = __nccwpck_require__(31161)
 const kPaused = Symbol('kPaused')
-const { StringDecoder } = __nccwpck_require__(15793)
+const { StringDecoder } = __nccwpck_require__(32350)
 const from = __nccwpck_require__(8280)
 ObjectSetPrototypeOf(Readable.prototype, Stream.prototype)
 ObjectSetPrototypeOf(Readable, Stream)
@@ -78831,6 +78459,381 @@ module.exports = {
 
 /***/ }),
 
+/***/ 48934:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+/* eslint-disable node/no-deprecated-api */
+var buffer = __nccwpck_require__(20181)
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.prototype = Object.create(Buffer.prototype)
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
+
+/***/ }),
+
+/***/ 32350:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+/*<replacement>*/
+
+var Buffer = (__nccwpck_require__(48934).Buffer);
+/*</replacement>*/
+
+var isEncoding = Buffer.isEncoding || function (encoding) {
+  encoding = '' + encoding;
+  switch (encoding && encoding.toLowerCase()) {
+    case 'hex':case 'utf8':case 'utf-8':case 'ascii':case 'binary':case 'base64':case 'ucs2':case 'ucs-2':case 'utf16le':case 'utf-16le':case 'raw':
+      return true;
+    default:
+      return false;
+  }
+};
+
+function _normalizeEncoding(enc) {
+  if (!enc) return 'utf8';
+  var retried;
+  while (true) {
+    switch (enc) {
+      case 'utf8':
+      case 'utf-8':
+        return 'utf8';
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return 'utf16le';
+      case 'latin1':
+      case 'binary':
+        return 'latin1';
+      case 'base64':
+      case 'ascii':
+      case 'hex':
+        return enc;
+      default:
+        if (retried) return; // undefined
+        enc = ('' + enc).toLowerCase();
+        retried = true;
+    }
+  }
+};
+
+// Do not cache `Buffer.isEncoding` when checking encoding names as some
+// modules monkey-patch it to support additional encodings
+function normalizeEncoding(enc) {
+  var nenc = _normalizeEncoding(enc);
+  if (typeof nenc !== 'string' && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
+  return nenc || enc;
+}
+
+// StringDecoder provides an interface for efficiently splitting a series of
+// buffers into a series of JS strings without breaking apart multi-byte
+// characters.
+exports.StringDecoder = StringDecoder;
+function StringDecoder(encoding) {
+  this.encoding = normalizeEncoding(encoding);
+  var nb;
+  switch (this.encoding) {
+    case 'utf16le':
+      this.text = utf16Text;
+      this.end = utf16End;
+      nb = 4;
+      break;
+    case 'utf8':
+      this.fillLast = utf8FillLast;
+      nb = 4;
+      break;
+    case 'base64':
+      this.text = base64Text;
+      this.end = base64End;
+      nb = 3;
+      break;
+    default:
+      this.write = simpleWrite;
+      this.end = simpleEnd;
+      return;
+  }
+  this.lastNeed = 0;
+  this.lastTotal = 0;
+  this.lastChar = Buffer.allocUnsafe(nb);
+}
+
+StringDecoder.prototype.write = function (buf) {
+  if (buf.length === 0) return '';
+  var r;
+  var i;
+  if (this.lastNeed) {
+    r = this.fillLast(buf);
+    if (r === undefined) return '';
+    i = this.lastNeed;
+    this.lastNeed = 0;
+  } else {
+    i = 0;
+  }
+  if (i < buf.length) return r ? r + this.text(buf, i) : this.text(buf, i);
+  return r || '';
+};
+
+StringDecoder.prototype.end = utf8End;
+
+// Returns only complete characters in a Buffer
+StringDecoder.prototype.text = utf8Text;
+
+// Attempts to complete a partial non-UTF-8 character using bytes from a Buffer
+StringDecoder.prototype.fillLast = function (buf) {
+  if (this.lastNeed <= buf.length) {
+    buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
+    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
+  }
+  buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, buf.length);
+  this.lastNeed -= buf.length;
+};
+
+// Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
+// continuation byte. If an invalid byte is detected, -2 is returned.
+function utf8CheckByte(byte) {
+  if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
+  return byte >> 6 === 0x02 ? -1 : -2;
+}
+
+// Checks at most 3 bytes at the end of a Buffer in order to detect an
+// incomplete multi-byte UTF-8 character. The total number of bytes (2, 3, or 4)
+// needed to complete the UTF-8 character (if applicable) are returned.
+function utf8CheckIncomplete(self, buf, i) {
+  var j = buf.length - 1;
+  if (j < i) return 0;
+  var nb = utf8CheckByte(buf[j]);
+  if (nb >= 0) {
+    if (nb > 0) self.lastNeed = nb - 1;
+    return nb;
+  }
+  if (--j < i || nb === -2) return 0;
+  nb = utf8CheckByte(buf[j]);
+  if (nb >= 0) {
+    if (nb > 0) self.lastNeed = nb - 2;
+    return nb;
+  }
+  if (--j < i || nb === -2) return 0;
+  nb = utf8CheckByte(buf[j]);
+  if (nb >= 0) {
+    if (nb > 0) {
+      if (nb === 2) nb = 0;else self.lastNeed = nb - 3;
+    }
+    return nb;
+  }
+  return 0;
+}
+
+// Validates as many continuation bytes for a multi-byte UTF-8 character as
+// needed or are available. If we see a non-continuation byte where we expect
+// one, we "replace" the validated continuation bytes we've seen so far with
+// a single UTF-8 replacement character ('\ufffd'), to match v8's UTF-8 decoding
+// behavior. The continuation byte check is included three times in the case
+// where all of the continuation bytes for a character exist in the same buffer.
+// It is also done this way as a slight performance increase instead of using a
+// loop.
+function utf8CheckExtraBytes(self, buf, p) {
+  if ((buf[0] & 0xC0) !== 0x80) {
+    self.lastNeed = 0;
+    return '\ufffd';
+  }
+  if (self.lastNeed > 1 && buf.length > 1) {
+    if ((buf[1] & 0xC0) !== 0x80) {
+      self.lastNeed = 1;
+      return '\ufffd';
+    }
+    if (self.lastNeed > 2 && buf.length > 2) {
+      if ((buf[2] & 0xC0) !== 0x80) {
+        self.lastNeed = 2;
+        return '\ufffd';
+      }
+    }
+  }
+}
+
+// Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
+function utf8FillLast(buf) {
+  var p = this.lastTotal - this.lastNeed;
+  var r = utf8CheckExtraBytes(this, buf, p);
+  if (r !== undefined) return r;
+  if (this.lastNeed <= buf.length) {
+    buf.copy(this.lastChar, p, 0, this.lastNeed);
+    return this.lastChar.toString(this.encoding, 0, this.lastTotal);
+  }
+  buf.copy(this.lastChar, p, 0, buf.length);
+  this.lastNeed -= buf.length;
+}
+
+// Returns all complete UTF-8 characters in a Buffer. If the Buffer ended on a
+// partial character, the character's bytes are buffered until the required
+// number of bytes are available.
+function utf8Text(buf, i) {
+  var total = utf8CheckIncomplete(this, buf, i);
+  if (!this.lastNeed) return buf.toString('utf8', i);
+  this.lastTotal = total;
+  var end = buf.length - (total - this.lastNeed);
+  buf.copy(this.lastChar, 0, end);
+  return buf.toString('utf8', i, end);
+}
+
+// For UTF-8, a replacement character is added when ending on a partial
+// character.
+function utf8End(buf) {
+  var r = buf && buf.length ? this.write(buf) : '';
+  if (this.lastNeed) return r + '\ufffd';
+  return r;
+}
+
+// UTF-16LE typically needs two bytes per character, but even if we have an even
+// number of bytes available, we need to check if we end on a leading/high
+// surrogate. In that case, we need to wait for the next two bytes in order to
+// decode the last character properly.
+function utf16Text(buf, i) {
+  if ((buf.length - i) % 2 === 0) {
+    var r = buf.toString('utf16le', i);
+    if (r) {
+      var c = r.charCodeAt(r.length - 1);
+      if (c >= 0xD800 && c <= 0xDBFF) {
+        this.lastNeed = 2;
+        this.lastTotal = 4;
+        this.lastChar[0] = buf[buf.length - 2];
+        this.lastChar[1] = buf[buf.length - 1];
+        return r.slice(0, -1);
+      }
+    }
+    return r;
+  }
+  this.lastNeed = 1;
+  this.lastTotal = 2;
+  this.lastChar[0] = buf[buf.length - 1];
+  return buf.toString('utf16le', i, buf.length - 1);
+}
+
+// For UTF-16LE we do not explicitly append special replacement characters if we
+// end on a partial character, we simply let v8 handle that.
+function utf16End(buf) {
+  var r = buf && buf.length ? this.write(buf) : '';
+  if (this.lastNeed) {
+    var end = this.lastTotal - this.lastNeed;
+    return r + this.lastChar.toString('utf16le', 0, end);
+  }
+  return r;
+}
+
+function base64Text(buf, i) {
+  var n = (buf.length - i) % 3;
+  if (n === 0) return buf.toString('base64', i);
+  this.lastNeed = 3 - n;
+  this.lastTotal = 3;
+  if (n === 1) {
+    this.lastChar[0] = buf[buf.length - 1];
+  } else {
+    this.lastChar[0] = buf[buf.length - 2];
+    this.lastChar[1] = buf[buf.length - 1];
+  }
+  return buf.toString('base64', i, buf.length - n);
+}
+
+function base64End(buf) {
+  var r = buf && buf.length ? this.write(buf) : '';
+  if (this.lastNeed) return r + this.lastChar.toString('base64', 0, 3 - this.lastNeed);
+  return r;
+}
+
+// Pass bytes on through for single-byte encodings (e.g. ascii, latin1, hex)
+function simpleWrite(buf) {
+  return buf.toString(this.encoding);
+}
+
+function simpleEnd(buf) {
+  return buf && buf.length ? this.write(buf) : '';
+}
+
+/***/ }),
+
 /***/ 56889:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -80045,7 +80048,6 @@ minimatch.Minimatch = Minimatch
 /***/ 32857:
 /***/ ((module, exports, __nccwpck_require__) => {
 
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = __nccwpck_require__(20181)
 var Buffer = buffer.Buffer
@@ -80067,8 +80069,6 @@ if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow)
 function SafeBuffer (arg, encodingOrOffset, length) {
   return Buffer(arg, encodingOrOffset, length)
 }
-
-SafeBuffer.prototype = Object.create(Buffer.prototype)
 
 // Copy static methods from Buffer
 copyProps(Buffer, SafeBuffer)
@@ -81383,7 +81383,7 @@ function normalizeEncoding(enc) {
 // StringDecoder provides an interface for efficiently splitting a series of
 // buffers into a series of JS strings without breaking apart multi-byte
 // characters.
-exports.StringDecoder = StringDecoder;
+exports.I = StringDecoder;
 function StringDecoder(encoding) {
   this.encoding = normalizeEncoding(encoding);
   var nb;
@@ -109766,12 +109766,14 @@ const minimist_1 = __importDefault(__nccwpck_require__(38595));
 const node_child_process_1 = __nccwpck_require__(31421);
 exports.COVERAGE_DIR = ".coverage";
 const run = async (isLocal) => {
+    (0, core_1.startGroup)("Setup");
     try {
         (0, node_child_process_1.execSync)("flutter pub get");
     }
     catch (e) {
         console.error(e);
     }
+    (0, core_1.endGroup)();
     try {
         const workingDirectory = isLocal ? "." : (0, core_1.getInput)("working-directory");
         // Check if the working directory is different from the current directory
@@ -109783,7 +109785,7 @@ const run = async (isLocal) => {
         const testCommand = isLocal ? "" : (0, core_1.getInput)("test-command");
         const runAnalyze = isLocal ? true : (0, core_1.getBooleanInput)("run-analyze");
         const runCoverage = isLocal ? true : (0, core_1.getBooleanInput)("run-coverage");
-        const runPrevCoverage = isLocal ? true : (0, core_1.getBooleanInput)("run-prev-coverage");
+        const runPrevCoverage = isLocal ? true : (0, core_1.getBooleanInput)("run-prev-coverage") && (0, core_1.getBooleanInput)("run-coverage");
         const runBehindBy = isLocal ? true : (0, core_1.getBooleanInput)("run-behind-by");
         const createComment = isLocal ? true : (0, core_1.getBooleanInput)("create-comment");
         const score = isLocal ? "90" : (0, core_1.getInput)("coverage-pass-score");
@@ -110263,6 +110265,8 @@ exports.retrievePreviousCoverage = retrievePreviousCoverage;
  */
 const generatePreviousCoverage = async (prevSha, currentBranch, coverageDirectory, testCommand) => {
     const artifact = new artifact_1.DefaultArtifactClient();
+    // If any changes have already happened in the build process, save them to be restored later
+    await (0, exec_1.exec)("git add . && git stash");
     await (0, exec_1.exec)(`git checkout ${prevSha}`);
     let report;
     try {
@@ -110278,6 +110282,13 @@ const generatePreviousCoverage = async (prevSha, currentBranch, coverageDirector
         await (0, exec_1.exec)(`git reset --hard`);
         await (0, exec_1.exec)(`git clean -d -f .`);
         await (0, exec_1.exec)(`git checkout ${currentBranch}`);
+        try {
+            await (0, exec_1.exec)("git stash pop");
+        }
+        catch (e) {
+            (0, core_2.debug)("Failed to pop stash");
+            (0, core_2.debug)("Error" + e);
+        }
         return report;
     }
 };
@@ -121724,18 +121735,18 @@ module.exports = parseParams
 
 /***/ }),
 
-/***/ 45678:
+/***/ 84814:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Glob = void 0;
-const minimatch_1 = __nccwpck_require__(10944);
+const minimatch_1 = __nccwpck_require__(20128);
 const node_url_1 = __nccwpck_require__(73136);
 const path_scurry_1 = __nccwpck_require__(32622);
-const pattern_js_1 = __nccwpck_require__(1488);
-const walker_js_1 = __nccwpck_require__(19554);
+const pattern_js_1 = __nccwpck_require__(35920);
+const walker_js_1 = __nccwpck_require__(21154);
 // if no process global, just call it linux.
 // so we default to case-sensitive, / separators
 const defaultPlatform = (typeof process === 'object' &&
@@ -121978,14 +121989,14 @@ exports.Glob = Glob;
 
 /***/ }),
 
-/***/ 61308:
+/***/ 10780:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hasMagic = void 0;
-const minimatch_1 = __nccwpck_require__(10944);
+const minimatch_1 = __nccwpck_require__(20128);
 /**
  * Return true if the patterns provided contain any magic glob characters,
  * given the options provided.
@@ -122012,7 +122023,7 @@ exports.hasMagic = hasMagic;
 
 /***/ }),
 
-/***/ 20330:
+/***/ 38826:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -122023,8 +122034,8 @@ exports.hasMagic = hasMagic;
 // Ignores are always parsed in dot:true mode
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Ignore = void 0;
-const minimatch_1 = __nccwpck_require__(10944);
-const pattern_js_1 = __nccwpck_require__(1488);
+const minimatch_1 = __nccwpck_require__(20128);
+const pattern_js_1 = __nccwpck_require__(35920);
 const defaultPlatform = (typeof process === 'object' &&
     process &&
     typeof process.platform === 'string') ?
@@ -122138,7 +122149,7 @@ exports.Ignore = Ignore;
 
 /***/ }),
 
-/***/ 45338:
+/***/ 73146:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -122150,17 +122161,17 @@ exports.globStream = globStream;
 exports.globSync = globSync;
 exports.globIterateSync = globIterateSync;
 exports.globIterate = globIterate;
-const minimatch_1 = __nccwpck_require__(10944);
-const glob_js_1 = __nccwpck_require__(45678);
-const has_magic_js_1 = __nccwpck_require__(61308);
-var minimatch_2 = __nccwpck_require__(10944);
+const minimatch_1 = __nccwpck_require__(20128);
+const glob_js_1 = __nccwpck_require__(84814);
+const has_magic_js_1 = __nccwpck_require__(10780);
+var minimatch_2 = __nccwpck_require__(20128);
 Object.defineProperty(exports, "escape", ({ enumerable: true, get: function () { return minimatch_2.escape; } }));
 Object.defineProperty(exports, "unescape", ({ enumerable: true, get: function () { return minimatch_2.unescape; } }));
-var glob_js_2 = __nccwpck_require__(45678);
+var glob_js_2 = __nccwpck_require__(84814);
 Object.defineProperty(exports, "Glob", ({ enumerable: true, get: function () { return glob_js_2.Glob; } }));
-var has_magic_js_2 = __nccwpck_require__(61308);
+var has_magic_js_2 = __nccwpck_require__(10780);
 Object.defineProperty(exports, "hasMagic", ({ enumerable: true, get: function () { return has_magic_js_2.hasMagic; } }));
-var ignore_js_1 = __nccwpck_require__(20330);
+var ignore_js_1 = __nccwpck_require__(38826);
 Object.defineProperty(exports, "Ignore", ({ enumerable: true, get: function () { return ignore_js_1.Ignore; } }));
 function globStreamSync(pattern, options = {}) {
     return new glob_js_1.Glob(pattern, options).streamSync();
@@ -122213,7 +122224,7 @@ exports.glob.glob = exports.glob;
 
 /***/ }),
 
-/***/ 1488:
+/***/ 35920:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -122221,7 +122232,7 @@ exports.glob.glob = exports.glob;
 // this is just a very light wrapper around 2 arrays with an offset index
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Pattern = void 0;
-const minimatch_1 = __nccwpck_require__(10944);
+const minimatch_1 = __nccwpck_require__(20128);
 const isPatternList = (pl) => pl.length >= 1;
 const isGlobList = (gl) => gl.length >= 1;
 /**
@@ -122439,7 +122450,7 @@ exports.Pattern = Pattern;
 
 /***/ }),
 
-/***/ 98798:
+/***/ 97774:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -122447,7 +122458,7 @@ exports.Pattern = Pattern;
 // synchronous utility for filtering entries and calculating subwalks
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Processor = exports.SubWalks = exports.MatchRecord = exports.HasWalkedCache = void 0;
-const minimatch_1 = __nccwpck_require__(10944);
+const minimatch_1 = __nccwpck_require__(20128);
 /**
  * A cache of which patterns have been processed for a given Path
  */
@@ -122747,7 +122758,7 @@ exports.Processor = Processor;
 
 /***/ }),
 
-/***/ 19554:
+/***/ 21154:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -122761,8 +122772,8 @@ exports.GlobStream = exports.GlobWalker = exports.GlobUtil = void 0;
  * @module
  */
 const minipass_1 = __nccwpck_require__(7962);
-const ignore_js_1 = __nccwpck_require__(20330);
-const processor_js_1 = __nccwpck_require__(98798);
+const ignore_js_1 = __nccwpck_require__(38826);
+const processor_js_1 = __nccwpck_require__(97774);
 const makeIgnore = (ignore, opts) => typeof ignore === 'string' ? new ignore_js_1.Ignore([ignore], opts)
     : Array.isArray(ignore) ? new ignore_js_1.Ignore(ignore, opts)
         : ignore;
@@ -123141,7 +123152,7 @@ exports.GlobStream = GlobStream;
 
 /***/ }),
 
-/***/ 91456:
+/***/ 45472:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -123162,7 +123173,7 @@ exports.assertValidPattern = assertValidPattern;
 
 /***/ }),
 
-/***/ 70096:
+/***/ 3920:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -123170,8 +123181,8 @@ exports.assertValidPattern = assertValidPattern;
 // parse a single path portion
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AST = void 0;
-const brace_expressions_js_1 = __nccwpck_require__(48505);
-const unescape_js_1 = __nccwpck_require__(95918);
+const brace_expressions_js_1 = __nccwpck_require__(87097);
+const unescape_js_1 = __nccwpck_require__(55566);
 const types = new Set(['!', '?', '+', '*', '@']);
 const isExtglobType = (c) => types.has(c);
 // Patterns that get prepended to bind to the start of either the
@@ -123761,7 +123772,7 @@ exports.AST = AST;
 
 /***/ }),
 
-/***/ 48505:
+/***/ 87097:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -123920,7 +123931,7 @@ exports.parseClass = parseClass;
 
 /***/ }),
 
-/***/ 23793:
+/***/ 15153:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -123949,7 +123960,7 @@ exports.escape = escape;
 
 /***/ }),
 
-/***/ 10944:
+/***/ 20128:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -123960,10 +123971,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.unescape = exports.escape = exports.AST = exports.Minimatch = exports.match = exports.makeRe = exports.braceExpand = exports.defaults = exports.filter = exports.GLOBSTAR = exports.sep = exports.minimatch = void 0;
 const brace_expansion_1 = __importDefault(__nccwpck_require__(4420));
-const assert_valid_pattern_js_1 = __nccwpck_require__(91456);
-const ast_js_1 = __nccwpck_require__(70096);
-const escape_js_1 = __nccwpck_require__(23793);
-const unescape_js_1 = __nccwpck_require__(95918);
+const assert_valid_pattern_js_1 = __nccwpck_require__(45472);
+const ast_js_1 = __nccwpck_require__(3920);
+const escape_js_1 = __nccwpck_require__(15153);
+const unescape_js_1 = __nccwpck_require__(55566);
 const minimatch = (p, pattern, options = {}) => {
     (0, assert_valid_pattern_js_1.assertValidPattern)(pattern);
     // shortcut: comments match nothing.
@@ -124958,11 +124969,11 @@ class Minimatch {
 }
 exports.Minimatch = Minimatch;
 /* c8 ignore start */
-var ast_js_2 = __nccwpck_require__(70096);
+var ast_js_2 = __nccwpck_require__(3920);
 Object.defineProperty(exports, "AST", ({ enumerable: true, get: function () { return ast_js_2.AST; } }));
-var escape_js_2 = __nccwpck_require__(23793);
+var escape_js_2 = __nccwpck_require__(15153);
 Object.defineProperty(exports, "escape", ({ enumerable: true, get: function () { return escape_js_2.escape; } }));
-var unescape_js_2 = __nccwpck_require__(95918);
+var unescape_js_2 = __nccwpck_require__(55566);
 Object.defineProperty(exports, "unescape", ({ enumerable: true, get: function () { return unescape_js_2.unescape; } }));
 /* c8 ignore stop */
 exports.minimatch.AST = ast_js_1.AST;
@@ -124973,7 +124984,7 @@ exports.minimatch.unescape = unescape_js_1.unescape;
 
 /***/ }),
 
-/***/ 95918:
+/***/ 55566:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -125001,6 +125012,1559 @@ const unescape = (s, { windowsPathsNoEscape = false, } = {}) => {
 };
 exports.unescape = unescape;
 //# sourceMappingURL=unescape.js.map
+
+/***/ }),
+
+/***/ 26258:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/**
+ * @module LRUCache
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LRUCache = void 0;
+const perf = typeof performance === 'object' &&
+    performance &&
+    typeof performance.now === 'function'
+    ? performance
+    : Date;
+const warned = new Set();
+/* c8 ignore start */
+const PROCESS = (typeof process === 'object' && !!process ? process : {});
+/* c8 ignore start */
+const emitWarning = (msg, type, code, fn) => {
+    typeof PROCESS.emitWarning === 'function'
+        ? PROCESS.emitWarning(msg, type, code, fn)
+        : console.error(`[${code}] ${type}: ${msg}`);
+};
+let AC = globalThis.AbortController;
+let AS = globalThis.AbortSignal;
+/* c8 ignore start */
+if (typeof AC === 'undefined') {
+    //@ts-ignore
+    AS = class AbortSignal {
+        onabort;
+        _onabort = [];
+        reason;
+        aborted = false;
+        addEventListener(_, fn) {
+            this._onabort.push(fn);
+        }
+    };
+    //@ts-ignore
+    AC = class AbortController {
+        constructor() {
+            warnACPolyfill();
+        }
+        signal = new AS();
+        abort(reason) {
+            if (this.signal.aborted)
+                return;
+            //@ts-ignore
+            this.signal.reason = reason;
+            //@ts-ignore
+            this.signal.aborted = true;
+            //@ts-ignore
+            for (const fn of this.signal._onabort) {
+                fn(reason);
+            }
+            this.signal.onabort?.(reason);
+        }
+    };
+    let printACPolyfillWarning = PROCESS.env?.LRU_CACHE_IGNORE_AC_WARNING !== '1';
+    const warnACPolyfill = () => {
+        if (!printACPolyfillWarning)
+            return;
+        printACPolyfillWarning = false;
+        emitWarning('AbortController is not defined. If using lru-cache in ' +
+            'node 14, load an AbortController polyfill from the ' +
+            '`node-abort-controller` package. A minimal polyfill is ' +
+            'provided for use by LRUCache.fetch(), but it should not be ' +
+            'relied upon in other contexts (eg, passing it to other APIs that ' +
+            'use AbortController/AbortSignal might have undesirable effects). ' +
+            'You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.', 'NO_ABORT_CONTROLLER', 'ENOTSUP', warnACPolyfill);
+    };
+}
+/* c8 ignore stop */
+const shouldWarn = (code) => !warned.has(code);
+const TYPE = Symbol('type');
+const isPosInt = (n) => n && n === Math.floor(n) && n > 0 && isFinite(n);
+/* c8 ignore start */
+// This is a little bit ridiculous, tbh.
+// The maximum array length is 2^32-1 or thereabouts on most JS impls.
+// And well before that point, you're caching the entire world, I mean,
+// that's ~32GB of just integers for the next/prev links, plus whatever
+// else to hold that many keys and values.  Just filling the memory with
+// zeroes at init time is brutal when you get that big.
+// But why not be complete?
+// Maybe in the future, these limits will have expanded.
+const getUintArray = (max) => !isPosInt(max)
+    ? null
+    : max <= Math.pow(2, 8)
+        ? Uint8Array
+        : max <= Math.pow(2, 16)
+            ? Uint16Array
+            : max <= Math.pow(2, 32)
+                ? Uint32Array
+                : max <= Number.MAX_SAFE_INTEGER
+                    ? ZeroArray
+                    : null;
+/* c8 ignore stop */
+class ZeroArray extends Array {
+    constructor(size) {
+        super(size);
+        this.fill(0);
+    }
+}
+class Stack {
+    heap;
+    length;
+    // private constructor
+    static #constructing = false;
+    static create(max) {
+        const HeapCls = getUintArray(max);
+        if (!HeapCls)
+            return [];
+        Stack.#constructing = true;
+        const s = new Stack(max, HeapCls);
+        Stack.#constructing = false;
+        return s;
+    }
+    constructor(max, HeapCls) {
+        /* c8 ignore start */
+        if (!Stack.#constructing) {
+            throw new TypeError('instantiate Stack using Stack.create(n)');
+        }
+        /* c8 ignore stop */
+        this.heap = new HeapCls(max);
+        this.length = 0;
+    }
+    push(n) {
+        this.heap[this.length++] = n;
+    }
+    pop() {
+        return this.heap[--this.length];
+    }
+}
+/**
+ * Default export, the thing you're using this module to get.
+ *
+ * The `K` and `V` types define the key and value types, respectively. The
+ * optional `FC` type defines the type of the `context` object passed to
+ * `cache.fetch()` and `cache.memo()`.
+ *
+ * Keys and values **must not** be `null` or `undefined`.
+ *
+ * All properties from the options object (with the exception of `max`,
+ * `maxSize`, `fetchMethod`, `memoMethod`, `dispose` and `disposeAfter`) are
+ * added as normal public members. (The listed options are read-only getters.)
+ *
+ * Changing any of these will alter the defaults for subsequent method calls.
+ */
+class LRUCache {
+    // options that cannot be changed without disaster
+    #max;
+    #maxSize;
+    #dispose;
+    #disposeAfter;
+    #fetchMethod;
+    #memoMethod;
+    /**
+     * {@link LRUCache.OptionsBase.ttl}
+     */
+    ttl;
+    /**
+     * {@link LRUCache.OptionsBase.ttlResolution}
+     */
+    ttlResolution;
+    /**
+     * {@link LRUCache.OptionsBase.ttlAutopurge}
+     */
+    ttlAutopurge;
+    /**
+     * {@link LRUCache.OptionsBase.updateAgeOnGet}
+     */
+    updateAgeOnGet;
+    /**
+     * {@link LRUCache.OptionsBase.updateAgeOnHas}
+     */
+    updateAgeOnHas;
+    /**
+     * {@link LRUCache.OptionsBase.allowStale}
+     */
+    allowStale;
+    /**
+     * {@link LRUCache.OptionsBase.noDisposeOnSet}
+     */
+    noDisposeOnSet;
+    /**
+     * {@link LRUCache.OptionsBase.noUpdateTTL}
+     */
+    noUpdateTTL;
+    /**
+     * {@link LRUCache.OptionsBase.maxEntrySize}
+     */
+    maxEntrySize;
+    /**
+     * {@link LRUCache.OptionsBase.sizeCalculation}
+     */
+    sizeCalculation;
+    /**
+     * {@link LRUCache.OptionsBase.noDeleteOnFetchRejection}
+     */
+    noDeleteOnFetchRejection;
+    /**
+     * {@link LRUCache.OptionsBase.noDeleteOnStaleGet}
+     */
+    noDeleteOnStaleGet;
+    /**
+     * {@link LRUCache.OptionsBase.allowStaleOnFetchAbort}
+     */
+    allowStaleOnFetchAbort;
+    /**
+     * {@link LRUCache.OptionsBase.allowStaleOnFetchRejection}
+     */
+    allowStaleOnFetchRejection;
+    /**
+     * {@link LRUCache.OptionsBase.ignoreFetchAbort}
+     */
+    ignoreFetchAbort;
+    // computed properties
+    #size;
+    #calculatedSize;
+    #keyMap;
+    #keyList;
+    #valList;
+    #next;
+    #prev;
+    #head;
+    #tail;
+    #free;
+    #disposed;
+    #sizes;
+    #starts;
+    #ttls;
+    #hasDispose;
+    #hasFetchMethod;
+    #hasDisposeAfter;
+    /**
+     * Do not call this method unless you need to inspect the
+     * inner workings of the cache.  If anything returned by this
+     * object is modified in any way, strange breakage may occur.
+     *
+     * These fields are private for a reason!
+     *
+     * @internal
+     */
+    static unsafeExposeInternals(c) {
+        return {
+            // properties
+            starts: c.#starts,
+            ttls: c.#ttls,
+            sizes: c.#sizes,
+            keyMap: c.#keyMap,
+            keyList: c.#keyList,
+            valList: c.#valList,
+            next: c.#next,
+            prev: c.#prev,
+            get head() {
+                return c.#head;
+            },
+            get tail() {
+                return c.#tail;
+            },
+            free: c.#free,
+            // methods
+            isBackgroundFetch: (p) => c.#isBackgroundFetch(p),
+            backgroundFetch: (k, index, options, context) => c.#backgroundFetch(k, index, options, context),
+            moveToTail: (index) => c.#moveToTail(index),
+            indexes: (options) => c.#indexes(options),
+            rindexes: (options) => c.#rindexes(options),
+            isStale: (index) => c.#isStale(index),
+        };
+    }
+    // Protected read-only members
+    /**
+     * {@link LRUCache.OptionsBase.max} (read-only)
+     */
+    get max() {
+        return this.#max;
+    }
+    /**
+     * {@link LRUCache.OptionsBase.maxSize} (read-only)
+     */
+    get maxSize() {
+        return this.#maxSize;
+    }
+    /**
+     * The total computed size of items in the cache (read-only)
+     */
+    get calculatedSize() {
+        return this.#calculatedSize;
+    }
+    /**
+     * The number of items stored in the cache (read-only)
+     */
+    get size() {
+        return this.#size;
+    }
+    /**
+     * {@link LRUCache.OptionsBase.fetchMethod} (read-only)
+     */
+    get fetchMethod() {
+        return this.#fetchMethod;
+    }
+    get memoMethod() {
+        return this.#memoMethod;
+    }
+    /**
+     * {@link LRUCache.OptionsBase.dispose} (read-only)
+     */
+    get dispose() {
+        return this.#dispose;
+    }
+    /**
+     * {@link LRUCache.OptionsBase.disposeAfter} (read-only)
+     */
+    get disposeAfter() {
+        return this.#disposeAfter;
+    }
+    constructor(options) {
+        const { max = 0, ttl, ttlResolution = 1, ttlAutopurge, updateAgeOnGet, updateAgeOnHas, allowStale, dispose, disposeAfter, noDisposeOnSet, noUpdateTTL, maxSize = 0, maxEntrySize = 0, sizeCalculation, fetchMethod, memoMethod, noDeleteOnFetchRejection, noDeleteOnStaleGet, allowStaleOnFetchRejection, allowStaleOnFetchAbort, ignoreFetchAbort, } = options;
+        if (max !== 0 && !isPosInt(max)) {
+            throw new TypeError('max option must be a nonnegative integer');
+        }
+        const UintArray = max ? getUintArray(max) : Array;
+        if (!UintArray) {
+            throw new Error('invalid max value: ' + max);
+        }
+        this.#max = max;
+        this.#maxSize = maxSize;
+        this.maxEntrySize = maxEntrySize || this.#maxSize;
+        this.sizeCalculation = sizeCalculation;
+        if (this.sizeCalculation) {
+            if (!this.#maxSize && !this.maxEntrySize) {
+                throw new TypeError('cannot set sizeCalculation without setting maxSize or maxEntrySize');
+            }
+            if (typeof this.sizeCalculation !== 'function') {
+                throw new TypeError('sizeCalculation set to non-function');
+            }
+        }
+        if (memoMethod !== undefined &&
+            typeof memoMethod !== 'function') {
+            throw new TypeError('memoMethod must be a function if defined');
+        }
+        this.#memoMethod = memoMethod;
+        if (fetchMethod !== undefined &&
+            typeof fetchMethod !== 'function') {
+            throw new TypeError('fetchMethod must be a function if specified');
+        }
+        this.#fetchMethod = fetchMethod;
+        this.#hasFetchMethod = !!fetchMethod;
+        this.#keyMap = new Map();
+        this.#keyList = new Array(max).fill(undefined);
+        this.#valList = new Array(max).fill(undefined);
+        this.#next = new UintArray(max);
+        this.#prev = new UintArray(max);
+        this.#head = 0;
+        this.#tail = 0;
+        this.#free = Stack.create(max);
+        this.#size = 0;
+        this.#calculatedSize = 0;
+        if (typeof dispose === 'function') {
+            this.#dispose = dispose;
+        }
+        if (typeof disposeAfter === 'function') {
+            this.#disposeAfter = disposeAfter;
+            this.#disposed = [];
+        }
+        else {
+            this.#disposeAfter = undefined;
+            this.#disposed = undefined;
+        }
+        this.#hasDispose = !!this.#dispose;
+        this.#hasDisposeAfter = !!this.#disposeAfter;
+        this.noDisposeOnSet = !!noDisposeOnSet;
+        this.noUpdateTTL = !!noUpdateTTL;
+        this.noDeleteOnFetchRejection = !!noDeleteOnFetchRejection;
+        this.allowStaleOnFetchRejection = !!allowStaleOnFetchRejection;
+        this.allowStaleOnFetchAbort = !!allowStaleOnFetchAbort;
+        this.ignoreFetchAbort = !!ignoreFetchAbort;
+        // NB: maxEntrySize is set to maxSize if it's set
+        if (this.maxEntrySize !== 0) {
+            if (this.#maxSize !== 0) {
+                if (!isPosInt(this.#maxSize)) {
+                    throw new TypeError('maxSize must be a positive integer if specified');
+                }
+            }
+            if (!isPosInt(this.maxEntrySize)) {
+                throw new TypeError('maxEntrySize must be a positive integer if specified');
+            }
+            this.#initializeSizeTracking();
+        }
+        this.allowStale = !!allowStale;
+        this.noDeleteOnStaleGet = !!noDeleteOnStaleGet;
+        this.updateAgeOnGet = !!updateAgeOnGet;
+        this.updateAgeOnHas = !!updateAgeOnHas;
+        this.ttlResolution =
+            isPosInt(ttlResolution) || ttlResolution === 0
+                ? ttlResolution
+                : 1;
+        this.ttlAutopurge = !!ttlAutopurge;
+        this.ttl = ttl || 0;
+        if (this.ttl) {
+            if (!isPosInt(this.ttl)) {
+                throw new TypeError('ttl must be a positive integer if specified');
+            }
+            this.#initializeTTLTracking();
+        }
+        // do not allow completely unbounded caches
+        if (this.#max === 0 && this.ttl === 0 && this.#maxSize === 0) {
+            throw new TypeError('At least one of max, maxSize, or ttl is required');
+        }
+        if (!this.ttlAutopurge && !this.#max && !this.#maxSize) {
+            const code = 'LRU_CACHE_UNBOUNDED';
+            if (shouldWarn(code)) {
+                warned.add(code);
+                const msg = 'TTL caching without ttlAutopurge, max, or maxSize can ' +
+                    'result in unbounded memory consumption.';
+                emitWarning(msg, 'UnboundedCacheWarning', code, LRUCache);
+            }
+        }
+    }
+    /**
+     * Return the number of ms left in the item's TTL. If item is not in cache,
+     * returns `0`. Returns `Infinity` if item is in cache without a defined TTL.
+     */
+    getRemainingTTL(key) {
+        return this.#keyMap.has(key) ? Infinity : 0;
+    }
+    #initializeTTLTracking() {
+        const ttls = new ZeroArray(this.#max);
+        const starts = new ZeroArray(this.#max);
+        this.#ttls = ttls;
+        this.#starts = starts;
+        this.#setItemTTL = (index, ttl, start = perf.now()) => {
+            starts[index] = ttl !== 0 ? start : 0;
+            ttls[index] = ttl;
+            if (ttl !== 0 && this.ttlAutopurge) {
+                const t = setTimeout(() => {
+                    if (this.#isStale(index)) {
+                        this.#delete(this.#keyList[index], 'expire');
+                    }
+                }, ttl + 1);
+                // unref() not supported on all platforms
+                /* c8 ignore start */
+                if (t.unref) {
+                    t.unref();
+                }
+                /* c8 ignore stop */
+            }
+        };
+        this.#updateItemAge = index => {
+            starts[index] = ttls[index] !== 0 ? perf.now() : 0;
+        };
+        this.#statusTTL = (status, index) => {
+            if (ttls[index]) {
+                const ttl = ttls[index];
+                const start = starts[index];
+                /* c8 ignore next */
+                if (!ttl || !start)
+                    return;
+                status.ttl = ttl;
+                status.start = start;
+                status.now = cachedNow || getNow();
+                const age = status.now - start;
+                status.remainingTTL = ttl - age;
+            }
+        };
+        // debounce calls to perf.now() to 1s so we're not hitting
+        // that costly call repeatedly.
+        let cachedNow = 0;
+        const getNow = () => {
+            const n = perf.now();
+            if (this.ttlResolution > 0) {
+                cachedNow = n;
+                const t = setTimeout(() => (cachedNow = 0), this.ttlResolution);
+                // not available on all platforms
+                /* c8 ignore start */
+                if (t.unref) {
+                    t.unref();
+                }
+                /* c8 ignore stop */
+            }
+            return n;
+        };
+        this.getRemainingTTL = key => {
+            const index = this.#keyMap.get(key);
+            if (index === undefined) {
+                return 0;
+            }
+            const ttl = ttls[index];
+            const start = starts[index];
+            if (!ttl || !start) {
+                return Infinity;
+            }
+            const age = (cachedNow || getNow()) - start;
+            return ttl - age;
+        };
+        this.#isStale = index => {
+            const s = starts[index];
+            const t = ttls[index];
+            return !!t && !!s && (cachedNow || getNow()) - s > t;
+        };
+    }
+    // conditionally set private methods related to TTL
+    #updateItemAge = () => { };
+    #statusTTL = () => { };
+    #setItemTTL = () => { };
+    /* c8 ignore stop */
+    #isStale = () => false;
+    #initializeSizeTracking() {
+        const sizes = new ZeroArray(this.#max);
+        this.#calculatedSize = 0;
+        this.#sizes = sizes;
+        this.#removeItemSize = index => {
+            this.#calculatedSize -= sizes[index];
+            sizes[index] = 0;
+        };
+        this.#requireSize = (k, v, size, sizeCalculation) => {
+            // provisionally accept background fetches.
+            // actual value size will be checked when they return.
+            if (this.#isBackgroundFetch(v)) {
+                return 0;
+            }
+            if (!isPosInt(size)) {
+                if (sizeCalculation) {
+                    if (typeof sizeCalculation !== 'function') {
+                        throw new TypeError('sizeCalculation must be a function');
+                    }
+                    size = sizeCalculation(v, k);
+                    if (!isPosInt(size)) {
+                        throw new TypeError('sizeCalculation return invalid (expect positive integer)');
+                    }
+                }
+                else {
+                    throw new TypeError('invalid size value (must be positive integer). ' +
+                        'When maxSize or maxEntrySize is used, sizeCalculation ' +
+                        'or size must be set.');
+                }
+            }
+            return size;
+        };
+        this.#addItemSize = (index, size, status) => {
+            sizes[index] = size;
+            if (this.#maxSize) {
+                const maxSize = this.#maxSize - sizes[index];
+                while (this.#calculatedSize > maxSize) {
+                    this.#evict(true);
+                }
+            }
+            this.#calculatedSize += sizes[index];
+            if (status) {
+                status.entrySize = size;
+                status.totalCalculatedSize = this.#calculatedSize;
+            }
+        };
+    }
+    #removeItemSize = _i => { };
+    #addItemSize = (_i, _s, _st) => { };
+    #requireSize = (_k, _v, size, sizeCalculation) => {
+        if (size || sizeCalculation) {
+            throw new TypeError('cannot set size without setting maxSize or maxEntrySize on cache');
+        }
+        return 0;
+    };
+    *#indexes({ allowStale = this.allowStale } = {}) {
+        if (this.#size) {
+            for (let i = this.#tail; true;) {
+                if (!this.#isValidIndex(i)) {
+                    break;
+                }
+                if (allowStale || !this.#isStale(i)) {
+                    yield i;
+                }
+                if (i === this.#head) {
+                    break;
+                }
+                else {
+                    i = this.#prev[i];
+                }
+            }
+        }
+    }
+    *#rindexes({ allowStale = this.allowStale } = {}) {
+        if (this.#size) {
+            for (let i = this.#head; true;) {
+                if (!this.#isValidIndex(i)) {
+                    break;
+                }
+                if (allowStale || !this.#isStale(i)) {
+                    yield i;
+                }
+                if (i === this.#tail) {
+                    break;
+                }
+                else {
+                    i = this.#next[i];
+                }
+            }
+        }
+    }
+    #isValidIndex(index) {
+        return (index !== undefined &&
+            this.#keyMap.get(this.#keyList[index]) === index);
+    }
+    /**
+     * Return a generator yielding `[key, value]` pairs,
+     * in order from most recently used to least recently used.
+     */
+    *entries() {
+        for (const i of this.#indexes()) {
+            if (this.#valList[i] !== undefined &&
+                this.#keyList[i] !== undefined &&
+                !this.#isBackgroundFetch(this.#valList[i])) {
+                yield [this.#keyList[i], this.#valList[i]];
+            }
+        }
+    }
+    /**
+     * Inverse order version of {@link LRUCache.entries}
+     *
+     * Return a generator yielding `[key, value]` pairs,
+     * in order from least recently used to most recently used.
+     */
+    *rentries() {
+        for (const i of this.#rindexes()) {
+            if (this.#valList[i] !== undefined &&
+                this.#keyList[i] !== undefined &&
+                !this.#isBackgroundFetch(this.#valList[i])) {
+                yield [this.#keyList[i], this.#valList[i]];
+            }
+        }
+    }
+    /**
+     * Return a generator yielding the keys in the cache,
+     * in order from most recently used to least recently used.
+     */
+    *keys() {
+        for (const i of this.#indexes()) {
+            const k = this.#keyList[i];
+            if (k !== undefined &&
+                !this.#isBackgroundFetch(this.#valList[i])) {
+                yield k;
+            }
+        }
+    }
+    /**
+     * Inverse order version of {@link LRUCache.keys}
+     *
+     * Return a generator yielding the keys in the cache,
+     * in order from least recently used to most recently used.
+     */
+    *rkeys() {
+        for (const i of this.#rindexes()) {
+            const k = this.#keyList[i];
+            if (k !== undefined &&
+                !this.#isBackgroundFetch(this.#valList[i])) {
+                yield k;
+            }
+        }
+    }
+    /**
+     * Return a generator yielding the values in the cache,
+     * in order from most recently used to least recently used.
+     */
+    *values() {
+        for (const i of this.#indexes()) {
+            const v = this.#valList[i];
+            if (v !== undefined &&
+                !this.#isBackgroundFetch(this.#valList[i])) {
+                yield this.#valList[i];
+            }
+        }
+    }
+    /**
+     * Inverse order version of {@link LRUCache.values}
+     *
+     * Return a generator yielding the values in the cache,
+     * in order from least recently used to most recently used.
+     */
+    *rvalues() {
+        for (const i of this.#rindexes()) {
+            const v = this.#valList[i];
+            if (v !== undefined &&
+                !this.#isBackgroundFetch(this.#valList[i])) {
+                yield this.#valList[i];
+            }
+        }
+    }
+    /**
+     * Iterating over the cache itself yields the same results as
+     * {@link LRUCache.entries}
+     */
+    [Symbol.iterator]() {
+        return this.entries();
+    }
+    /**
+     * A String value that is used in the creation of the default string
+     * description of an object. Called by the built-in method
+     * `Object.prototype.toString`.
+     */
+    [Symbol.toStringTag] = 'LRUCache';
+    /**
+     * Find a value for which the supplied fn method returns a truthy value,
+     * similar to `Array.find()`. fn is called as `fn(value, key, cache)`.
+     */
+    find(fn, getOptions = {}) {
+        for (const i of this.#indexes()) {
+            const v = this.#valList[i];
+            const value = this.#isBackgroundFetch(v)
+                ? v.__staleWhileFetching
+                : v;
+            if (value === undefined)
+                continue;
+            if (fn(value, this.#keyList[i], this)) {
+                return this.get(this.#keyList[i], getOptions);
+            }
+        }
+    }
+    /**
+     * Call the supplied function on each item in the cache, in order from most
+     * recently used to least recently used.
+     *
+     * `fn` is called as `fn(value, key, cache)`.
+     *
+     * If `thisp` is provided, function will be called in the `this`-context of
+     * the provided object, or the cache if no `thisp` object is provided.
+     *
+     * Does not update age or recenty of use, or iterate over stale values.
+     */
+    forEach(fn, thisp = this) {
+        for (const i of this.#indexes()) {
+            const v = this.#valList[i];
+            const value = this.#isBackgroundFetch(v)
+                ? v.__staleWhileFetching
+                : v;
+            if (value === undefined)
+                continue;
+            fn.call(thisp, value, this.#keyList[i], this);
+        }
+    }
+    /**
+     * The same as {@link LRUCache.forEach} but items are iterated over in
+     * reverse order.  (ie, less recently used items are iterated over first.)
+     */
+    rforEach(fn, thisp = this) {
+        for (const i of this.#rindexes()) {
+            const v = this.#valList[i];
+            const value = this.#isBackgroundFetch(v)
+                ? v.__staleWhileFetching
+                : v;
+            if (value === undefined)
+                continue;
+            fn.call(thisp, value, this.#keyList[i], this);
+        }
+    }
+    /**
+     * Delete any stale entries. Returns true if anything was removed,
+     * false otherwise.
+     */
+    purgeStale() {
+        let deleted = false;
+        for (const i of this.#rindexes({ allowStale: true })) {
+            if (this.#isStale(i)) {
+                this.#delete(this.#keyList[i], 'expire');
+                deleted = true;
+            }
+        }
+        return deleted;
+    }
+    /**
+     * Get the extended info about a given entry, to get its value, size, and
+     * TTL info simultaneously. Returns `undefined` if the key is not present.
+     *
+     * Unlike {@link LRUCache#dump}, which is designed to be portable and survive
+     * serialization, the `start` value is always the current timestamp, and the
+     * `ttl` is a calculated remaining time to live (negative if expired).
+     *
+     * Always returns stale values, if their info is found in the cache, so be
+     * sure to check for expirations (ie, a negative {@link LRUCache.Entry#ttl})
+     * if relevant.
+     */
+    info(key) {
+        const i = this.#keyMap.get(key);
+        if (i === undefined)
+            return undefined;
+        const v = this.#valList[i];
+        const value = this.#isBackgroundFetch(v)
+            ? v.__staleWhileFetching
+            : v;
+        if (value === undefined)
+            return undefined;
+        const entry = { value };
+        if (this.#ttls && this.#starts) {
+            const ttl = this.#ttls[i];
+            const start = this.#starts[i];
+            if (ttl && start) {
+                const remain = ttl - (perf.now() - start);
+                entry.ttl = remain;
+                entry.start = Date.now();
+            }
+        }
+        if (this.#sizes) {
+            entry.size = this.#sizes[i];
+        }
+        return entry;
+    }
+    /**
+     * Return an array of [key, {@link LRUCache.Entry}] tuples which can be
+     * passed to {@link LRLUCache#load}.
+     *
+     * The `start` fields are calculated relative to a portable `Date.now()`
+     * timestamp, even if `performance.now()` is available.
+     *
+     * Stale entries are always included in the `dump`, even if
+     * {@link LRUCache.OptionsBase.allowStale} is false.
+     *
+     * Note: this returns an actual array, not a generator, so it can be more
+     * easily passed around.
+     */
+    dump() {
+        const arr = [];
+        for (const i of this.#indexes({ allowStale: true })) {
+            const key = this.#keyList[i];
+            const v = this.#valList[i];
+            const value = this.#isBackgroundFetch(v)
+                ? v.__staleWhileFetching
+                : v;
+            if (value === undefined || key === undefined)
+                continue;
+            const entry = { value };
+            if (this.#ttls && this.#starts) {
+                entry.ttl = this.#ttls[i];
+                // always dump the start relative to a portable timestamp
+                // it's ok for this to be a bit slow, it's a rare operation.
+                const age = perf.now() - this.#starts[i];
+                entry.start = Math.floor(Date.now() - age);
+            }
+            if (this.#sizes) {
+                entry.size = this.#sizes[i];
+            }
+            arr.unshift([key, entry]);
+        }
+        return arr;
+    }
+    /**
+     * Reset the cache and load in the items in entries in the order listed.
+     *
+     * The shape of the resulting cache may be different if the same options are
+     * not used in both caches.
+     *
+     * The `start` fields are assumed to be calculated relative to a portable
+     * `Date.now()` timestamp, even if `performance.now()` is available.
+     */
+    load(arr) {
+        this.clear();
+        for (const [key, entry] of arr) {
+            if (entry.start) {
+                // entry.start is a portable timestamp, but we may be using
+                // node's performance.now(), so calculate the offset, so that
+                // we get the intended remaining TTL, no matter how long it's
+                // been on ice.
+                //
+                // it's ok for this to be a bit slow, it's a rare operation.
+                const age = Date.now() - entry.start;
+                entry.start = perf.now() - age;
+            }
+            this.set(key, entry.value, entry);
+        }
+    }
+    /**
+     * Add a value to the cache.
+     *
+     * Note: if `undefined` is specified as a value, this is an alias for
+     * {@link LRUCache#delete}
+     *
+     * Fields on the {@link LRUCache.SetOptions} options param will override
+     * their corresponding values in the constructor options for the scope
+     * of this single `set()` operation.
+     *
+     * If `start` is provided, then that will set the effective start
+     * time for the TTL calculation. Note that this must be a previous
+     * value of `performance.now()` if supported, or a previous value of
+     * `Date.now()` if not.
+     *
+     * Options object may also include `size`, which will prevent
+     * calling the `sizeCalculation` function and just use the specified
+     * number if it is a positive integer, and `noDisposeOnSet` which
+     * will prevent calling a `dispose` function in the case of
+     * overwrites.
+     *
+     * If the `size` (or return value of `sizeCalculation`) for a given
+     * entry is greater than `maxEntrySize`, then the item will not be
+     * added to the cache.
+     *
+     * Will update the recency of the entry.
+     *
+     * If the value is `undefined`, then this is an alias for
+     * `cache.delete(key)`. `undefined` is never stored in the cache.
+     */
+    set(k, v, setOptions = {}) {
+        if (v === undefined) {
+            this.delete(k);
+            return this;
+        }
+        const { ttl = this.ttl, start, noDisposeOnSet = this.noDisposeOnSet, sizeCalculation = this.sizeCalculation, status, } = setOptions;
+        let { noUpdateTTL = this.noUpdateTTL } = setOptions;
+        const size = this.#requireSize(k, v, setOptions.size || 0, sizeCalculation);
+        // if the item doesn't fit, don't do anything
+        // NB: maxEntrySize set to maxSize by default
+        if (this.maxEntrySize && size > this.maxEntrySize) {
+            if (status) {
+                status.set = 'miss';
+                status.maxEntrySizeExceeded = true;
+            }
+            // have to delete, in case something is there already.
+            this.#delete(k, 'set');
+            return this;
+        }
+        let index = this.#size === 0 ? undefined : this.#keyMap.get(k);
+        if (index === undefined) {
+            // addition
+            index = (this.#size === 0
+                ? this.#tail
+                : this.#free.length !== 0
+                    ? this.#free.pop()
+                    : this.#size === this.#max
+                        ? this.#evict(false)
+                        : this.#size);
+            this.#keyList[index] = k;
+            this.#valList[index] = v;
+            this.#keyMap.set(k, index);
+            this.#next[this.#tail] = index;
+            this.#prev[index] = this.#tail;
+            this.#tail = index;
+            this.#size++;
+            this.#addItemSize(index, size, status);
+            if (status)
+                status.set = 'add';
+            noUpdateTTL = false;
+        }
+        else {
+            // update
+            this.#moveToTail(index);
+            const oldVal = this.#valList[index];
+            if (v !== oldVal) {
+                if (this.#hasFetchMethod && this.#isBackgroundFetch(oldVal)) {
+                    oldVal.__abortController.abort(new Error('replaced'));
+                    const { __staleWhileFetching: s } = oldVal;
+                    if (s !== undefined && !noDisposeOnSet) {
+                        if (this.#hasDispose) {
+                            this.#dispose?.(s, k, 'set');
+                        }
+                        if (this.#hasDisposeAfter) {
+                            this.#disposed?.push([s, k, 'set']);
+                        }
+                    }
+                }
+                else if (!noDisposeOnSet) {
+                    if (this.#hasDispose) {
+                        this.#dispose?.(oldVal, k, 'set');
+                    }
+                    if (this.#hasDisposeAfter) {
+                        this.#disposed?.push([oldVal, k, 'set']);
+                    }
+                }
+                this.#removeItemSize(index);
+                this.#addItemSize(index, size, status);
+                this.#valList[index] = v;
+                if (status) {
+                    status.set = 'replace';
+                    const oldValue = oldVal && this.#isBackgroundFetch(oldVal)
+                        ? oldVal.__staleWhileFetching
+                        : oldVal;
+                    if (oldValue !== undefined)
+                        status.oldValue = oldValue;
+                }
+            }
+            else if (status) {
+                status.set = 'update';
+            }
+        }
+        if (ttl !== 0 && !this.#ttls) {
+            this.#initializeTTLTracking();
+        }
+        if (this.#ttls) {
+            if (!noUpdateTTL) {
+                this.#setItemTTL(index, ttl, start);
+            }
+            if (status)
+                this.#statusTTL(status, index);
+        }
+        if (!noDisposeOnSet && this.#hasDisposeAfter && this.#disposed) {
+            const dt = this.#disposed;
+            let task;
+            while ((task = dt?.shift())) {
+                this.#disposeAfter?.(...task);
+            }
+        }
+        return this;
+    }
+    /**
+     * Evict the least recently used item, returning its value or
+     * `undefined` if cache is empty.
+     */
+    pop() {
+        try {
+            while (this.#size) {
+                const val = this.#valList[this.#head];
+                this.#evict(true);
+                if (this.#isBackgroundFetch(val)) {
+                    if (val.__staleWhileFetching) {
+                        return val.__staleWhileFetching;
+                    }
+                }
+                else if (val !== undefined) {
+                    return val;
+                }
+            }
+        }
+        finally {
+            if (this.#hasDisposeAfter && this.#disposed) {
+                const dt = this.#disposed;
+                let task;
+                while ((task = dt?.shift())) {
+                    this.#disposeAfter?.(...task);
+                }
+            }
+        }
+    }
+    #evict(free) {
+        const head = this.#head;
+        const k = this.#keyList[head];
+        const v = this.#valList[head];
+        if (this.#hasFetchMethod && this.#isBackgroundFetch(v)) {
+            v.__abortController.abort(new Error('evicted'));
+        }
+        else if (this.#hasDispose || this.#hasDisposeAfter) {
+            if (this.#hasDispose) {
+                this.#dispose?.(v, k, 'evict');
+            }
+            if (this.#hasDisposeAfter) {
+                this.#disposed?.push([v, k, 'evict']);
+            }
+        }
+        this.#removeItemSize(head);
+        // if we aren't about to use the index, then null these out
+        if (free) {
+            this.#keyList[head] = undefined;
+            this.#valList[head] = undefined;
+            this.#free.push(head);
+        }
+        if (this.#size === 1) {
+            this.#head = this.#tail = 0;
+            this.#free.length = 0;
+        }
+        else {
+            this.#head = this.#next[head];
+        }
+        this.#keyMap.delete(k);
+        this.#size--;
+        return head;
+    }
+    /**
+     * Check if a key is in the cache, without updating the recency of use.
+     * Will return false if the item is stale, even though it is technically
+     * in the cache.
+     *
+     * Check if a key is in the cache, without updating the recency of
+     * use. Age is updated if {@link LRUCache.OptionsBase.updateAgeOnHas} is set
+     * to `true` in either the options or the constructor.
+     *
+     * Will return `false` if the item is stale, even though it is technically in
+     * the cache. The difference can be determined (if it matters) by using a
+     * `status` argument, and inspecting the `has` field.
+     *
+     * Will not update item age unless
+     * {@link LRUCache.OptionsBase.updateAgeOnHas} is set.
+     */
+    has(k, hasOptions = {}) {
+        const { updateAgeOnHas = this.updateAgeOnHas, status } = hasOptions;
+        const index = this.#keyMap.get(k);
+        if (index !== undefined) {
+            const v = this.#valList[index];
+            if (this.#isBackgroundFetch(v) &&
+                v.__staleWhileFetching === undefined) {
+                return false;
+            }
+            if (!this.#isStale(index)) {
+                if (updateAgeOnHas) {
+                    this.#updateItemAge(index);
+                }
+                if (status) {
+                    status.has = 'hit';
+                    this.#statusTTL(status, index);
+                }
+                return true;
+            }
+            else if (status) {
+                status.has = 'stale';
+                this.#statusTTL(status, index);
+            }
+        }
+        else if (status) {
+            status.has = 'miss';
+        }
+        return false;
+    }
+    /**
+     * Like {@link LRUCache#get} but doesn't update recency or delete stale
+     * items.
+     *
+     * Returns `undefined` if the item is stale, unless
+     * {@link LRUCache.OptionsBase.allowStale} is set.
+     */
+    peek(k, peekOptions = {}) {
+        const { allowStale = this.allowStale } = peekOptions;
+        const index = this.#keyMap.get(k);
+        if (index === undefined ||
+            (!allowStale && this.#isStale(index))) {
+            return;
+        }
+        const v = this.#valList[index];
+        // either stale and allowed, or forcing a refresh of non-stale value
+        return this.#isBackgroundFetch(v) ? v.__staleWhileFetching : v;
+    }
+    #backgroundFetch(k, index, options, context) {
+        const v = index === undefined ? undefined : this.#valList[index];
+        if (this.#isBackgroundFetch(v)) {
+            return v;
+        }
+        const ac = new AC();
+        const { signal } = options;
+        // when/if our AC signals, then stop listening to theirs.
+        signal?.addEventListener('abort', () => ac.abort(signal.reason), {
+            signal: ac.signal,
+        });
+        const fetchOpts = {
+            signal: ac.signal,
+            options,
+            context,
+        };
+        const cb = (v, updateCache = false) => {
+            const { aborted } = ac.signal;
+            const ignoreAbort = options.ignoreFetchAbort && v !== undefined;
+            if (options.status) {
+                if (aborted && !updateCache) {
+                    options.status.fetchAborted = true;
+                    options.status.fetchError = ac.signal.reason;
+                    if (ignoreAbort)
+                        options.status.fetchAbortIgnored = true;
+                }
+                else {
+                    options.status.fetchResolved = true;
+                }
+            }
+            if (aborted && !ignoreAbort && !updateCache) {
+                return fetchFail(ac.signal.reason);
+            }
+            // either we didn't abort, and are still here, or we did, and ignored
+            const bf = p;
+            if (this.#valList[index] === p) {
+                if (v === undefined) {
+                    if (bf.__staleWhileFetching) {
+                        this.#valList[index] = bf.__staleWhileFetching;
+                    }
+                    else {
+                        this.#delete(k, 'fetch');
+                    }
+                }
+                else {
+                    if (options.status)
+                        options.status.fetchUpdated = true;
+                    this.set(k, v, fetchOpts.options);
+                }
+            }
+            return v;
+        };
+        const eb = (er) => {
+            if (options.status) {
+                options.status.fetchRejected = true;
+                options.status.fetchError = er;
+            }
+            return fetchFail(er);
+        };
+        const fetchFail = (er) => {
+            const { aborted } = ac.signal;
+            const allowStaleAborted = aborted && options.allowStaleOnFetchAbort;
+            const allowStale = allowStaleAborted || options.allowStaleOnFetchRejection;
+            const noDelete = allowStale || options.noDeleteOnFetchRejection;
+            const bf = p;
+            if (this.#valList[index] === p) {
+                // if we allow stale on fetch rejections, then we need to ensure that
+                // the stale value is not removed from the cache when the fetch fails.
+                const del = !noDelete || bf.__staleWhileFetching === undefined;
+                if (del) {
+                    this.#delete(k, 'fetch');
+                }
+                else if (!allowStaleAborted) {
+                    // still replace the *promise* with the stale value,
+                    // since we are done with the promise at this point.
+                    // leave it untouched if we're still waiting for an
+                    // aborted background fetch that hasn't yet returned.
+                    this.#valList[index] = bf.__staleWhileFetching;
+                }
+            }
+            if (allowStale) {
+                if (options.status && bf.__staleWhileFetching !== undefined) {
+                    options.status.returnedStale = true;
+                }
+                return bf.__staleWhileFetching;
+            }
+            else if (bf.__returned === bf) {
+                throw er;
+            }
+        };
+        const pcall = (res, rej) => {
+            const fmp = this.#fetchMethod?.(k, v, fetchOpts);
+            if (fmp && fmp instanceof Promise) {
+                fmp.then(v => res(v === undefined ? undefined : v), rej);
+            }
+            // ignored, we go until we finish, regardless.
+            // defer check until we are actually aborting,
+            // so fetchMethod can override.
+            ac.signal.addEventListener('abort', () => {
+                if (!options.ignoreFetchAbort ||
+                    options.allowStaleOnFetchAbort) {
+                    res(undefined);
+                    // when it eventually resolves, update the cache.
+                    if (options.allowStaleOnFetchAbort) {
+                        res = v => cb(v, true);
+                    }
+                }
+            });
+        };
+        if (options.status)
+            options.status.fetchDispatched = true;
+        const p = new Promise(pcall).then(cb, eb);
+        const bf = Object.assign(p, {
+            __abortController: ac,
+            __staleWhileFetching: v,
+            __returned: undefined,
+        });
+        if (index === undefined) {
+            // internal, don't expose status.
+            this.set(k, bf, { ...fetchOpts.options, status: undefined });
+            index = this.#keyMap.get(k);
+        }
+        else {
+            this.#valList[index] = bf;
+        }
+        return bf;
+    }
+    #isBackgroundFetch(p) {
+        if (!this.#hasFetchMethod)
+            return false;
+        const b = p;
+        return (!!b &&
+            b instanceof Promise &&
+            b.hasOwnProperty('__staleWhileFetching') &&
+            b.__abortController instanceof AC);
+    }
+    async fetch(k, fetchOptions = {}) {
+        const { 
+        // get options
+        allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet, 
+        // set options
+        ttl = this.ttl, noDisposeOnSet = this.noDisposeOnSet, size = 0, sizeCalculation = this.sizeCalculation, noUpdateTTL = this.noUpdateTTL, 
+        // fetch exclusive options
+        noDeleteOnFetchRejection = this.noDeleteOnFetchRejection, allowStaleOnFetchRejection = this.allowStaleOnFetchRejection, ignoreFetchAbort = this.ignoreFetchAbort, allowStaleOnFetchAbort = this.allowStaleOnFetchAbort, context, forceRefresh = false, status, signal, } = fetchOptions;
+        if (!this.#hasFetchMethod) {
+            if (status)
+                status.fetch = 'get';
+            return this.get(k, {
+                allowStale,
+                updateAgeOnGet,
+                noDeleteOnStaleGet,
+                status,
+            });
+        }
+        const options = {
+            allowStale,
+            updateAgeOnGet,
+            noDeleteOnStaleGet,
+            ttl,
+            noDisposeOnSet,
+            size,
+            sizeCalculation,
+            noUpdateTTL,
+            noDeleteOnFetchRejection,
+            allowStaleOnFetchRejection,
+            allowStaleOnFetchAbort,
+            ignoreFetchAbort,
+            status,
+            signal,
+        };
+        let index = this.#keyMap.get(k);
+        if (index === undefined) {
+            if (status)
+                status.fetch = 'miss';
+            const p = this.#backgroundFetch(k, index, options, context);
+            return (p.__returned = p);
+        }
+        else {
+            // in cache, maybe already fetching
+            const v = this.#valList[index];
+            if (this.#isBackgroundFetch(v)) {
+                const stale = allowStale && v.__staleWhileFetching !== undefined;
+                if (status) {
+                    status.fetch = 'inflight';
+                    if (stale)
+                        status.returnedStale = true;
+                }
+                return stale ? v.__staleWhileFetching : (v.__returned = v);
+            }
+            // if we force a refresh, that means do NOT serve the cached value,
+            // unless we are already in the process of refreshing the cache.
+            const isStale = this.#isStale(index);
+            if (!forceRefresh && !isStale) {
+                if (status)
+                    status.fetch = 'hit';
+                this.#moveToTail(index);
+                if (updateAgeOnGet) {
+                    this.#updateItemAge(index);
+                }
+                if (status)
+                    this.#statusTTL(status, index);
+                return v;
+            }
+            // ok, it is stale or a forced refresh, and not already fetching.
+            // refresh the cache.
+            const p = this.#backgroundFetch(k, index, options, context);
+            const hasStale = p.__staleWhileFetching !== undefined;
+            const staleVal = hasStale && allowStale;
+            if (status) {
+                status.fetch = isStale ? 'stale' : 'refresh';
+                if (staleVal && isStale)
+                    status.returnedStale = true;
+            }
+            return staleVal ? p.__staleWhileFetching : (p.__returned = p);
+        }
+    }
+    async forceFetch(k, fetchOptions = {}) {
+        const v = await this.fetch(k, fetchOptions);
+        if (v === undefined)
+            throw new Error('fetch() returned undefined');
+        return v;
+    }
+    memo(k, memoOptions = {}) {
+        const memoMethod = this.#memoMethod;
+        if (!memoMethod) {
+            throw new Error('no memoMethod provided to constructor');
+        }
+        const { context, forceRefresh, ...options } = memoOptions;
+        const v = this.get(k, options);
+        if (!forceRefresh && v !== undefined)
+            return v;
+        const vv = memoMethod(k, v, {
+            options,
+            context,
+        });
+        this.set(k, vv, options);
+        return vv;
+    }
+    /**
+     * Return a value from the cache. Will update the recency of the cache
+     * entry found.
+     *
+     * If the key is not found, get() will return `undefined`.
+     */
+    get(k, getOptions = {}) {
+        const { allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet, status, } = getOptions;
+        const index = this.#keyMap.get(k);
+        if (index !== undefined) {
+            const value = this.#valList[index];
+            const fetching = this.#isBackgroundFetch(value);
+            if (status)
+                this.#statusTTL(status, index);
+            if (this.#isStale(index)) {
+                if (status)
+                    status.get = 'stale';
+                // delete only if not an in-flight background fetch
+                if (!fetching) {
+                    if (!noDeleteOnStaleGet) {
+                        this.#delete(k, 'expire');
+                    }
+                    if (status && allowStale)
+                        status.returnedStale = true;
+                    return allowStale ? value : undefined;
+                }
+                else {
+                    if (status &&
+                        allowStale &&
+                        value.__staleWhileFetching !== undefined) {
+                        status.returnedStale = true;
+                    }
+                    return allowStale ? value.__staleWhileFetching : undefined;
+                }
+            }
+            else {
+                if (status)
+                    status.get = 'hit';
+                // if we're currently fetching it, we don't actually have it yet
+                // it's not stale, which means this isn't a staleWhileRefetching.
+                // If it's not stale, and fetching, AND has a __staleWhileFetching
+                // value, then that means the user fetched with {forceRefresh:true},
+                // so it's safe to return that value.
+                if (fetching) {
+                    return value.__staleWhileFetching;
+                }
+                this.#moveToTail(index);
+                if (updateAgeOnGet) {
+                    this.#updateItemAge(index);
+                }
+                return value;
+            }
+        }
+        else if (status) {
+            status.get = 'miss';
+        }
+    }
+    #connect(p, n) {
+        this.#prev[n] = p;
+        this.#next[p] = n;
+    }
+    #moveToTail(index) {
+        // if tail already, nothing to do
+        // if head, move head to next[index]
+        // else
+        //   move next[prev[index]] to next[index] (head has no prev)
+        //   move prev[next[index]] to prev[index]
+        // prev[index] = tail
+        // next[tail] = index
+        // tail = index
+        if (index !== this.#tail) {
+            if (index === this.#head) {
+                this.#head = this.#next[index];
+            }
+            else {
+                this.#connect(this.#prev[index], this.#next[index]);
+            }
+            this.#connect(this.#tail, index);
+            this.#tail = index;
+        }
+    }
+    /**
+     * Deletes a key out of the cache.
+     *
+     * Returns true if the key was deleted, false otherwise.
+     */
+    delete(k) {
+        return this.#delete(k, 'delete');
+    }
+    #delete(k, reason) {
+        let deleted = false;
+        if (this.#size !== 0) {
+            const index = this.#keyMap.get(k);
+            if (index !== undefined) {
+                deleted = true;
+                if (this.#size === 1) {
+                    this.#clear(reason);
+                }
+                else {
+                    this.#removeItemSize(index);
+                    const v = this.#valList[index];
+                    if (this.#isBackgroundFetch(v)) {
+                        v.__abortController.abort(new Error('deleted'));
+                    }
+                    else if (this.#hasDispose || this.#hasDisposeAfter) {
+                        if (this.#hasDispose) {
+                            this.#dispose?.(v, k, reason);
+                        }
+                        if (this.#hasDisposeAfter) {
+                            this.#disposed?.push([v, k, reason]);
+                        }
+                    }
+                    this.#keyMap.delete(k);
+                    this.#keyList[index] = undefined;
+                    this.#valList[index] = undefined;
+                    if (index === this.#tail) {
+                        this.#tail = this.#prev[index];
+                    }
+                    else if (index === this.#head) {
+                        this.#head = this.#next[index];
+                    }
+                    else {
+                        const pi = this.#prev[index];
+                        this.#next[pi] = this.#next[index];
+                        const ni = this.#next[index];
+                        this.#prev[ni] = this.#prev[index];
+                    }
+                    this.#size--;
+                    this.#free.push(index);
+                }
+            }
+        }
+        if (this.#hasDisposeAfter && this.#disposed?.length) {
+            const dt = this.#disposed;
+            let task;
+            while ((task = dt?.shift())) {
+                this.#disposeAfter?.(...task);
+            }
+        }
+        return deleted;
+    }
+    /**
+     * Clear the cache entirely, throwing away all values.
+     */
+    clear() {
+        return this.#clear('delete');
+    }
+    #clear(reason) {
+        for (const index of this.#rindexes({ allowStale: true })) {
+            const v = this.#valList[index];
+            if (this.#isBackgroundFetch(v)) {
+                v.__abortController.abort(new Error('deleted'));
+            }
+            else {
+                const k = this.#keyList[index];
+                if (this.#hasDispose) {
+                    this.#dispose?.(v, k, reason);
+                }
+                if (this.#hasDisposeAfter) {
+                    this.#disposed?.push([v, k, reason]);
+                }
+            }
+        }
+        this.#keyMap.clear();
+        this.#valList.fill(undefined);
+        this.#keyList.fill(undefined);
+        if (this.#ttls && this.#starts) {
+            this.#ttls.fill(0);
+            this.#starts.fill(0);
+        }
+        if (this.#sizes) {
+            this.#sizes.fill(0);
+        }
+        this.#head = 0;
+        this.#tail = 0;
+        this.#free.length = 0;
+        this.#calculatedSize = 0;
+        this.#size = 0;
+        if (this.#hasDisposeAfter && this.#disposed) {
+            const dt = this.#disposed;
+            let task;
+            while ((task = dt?.shift())) {
+                this.#disposeAfter?.(...task);
+            }
+        }
+    }
+}
+exports.LRUCache = LRUCache;
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -126069,7 +127633,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PathScurry = exports.Path = exports.PathScurryDarwin = exports.PathScurryPosix = exports.PathScurryWin32 = exports.PathScurryBase = exports.PathPosix = exports.PathWin32 = exports.PathBase = exports.ChildrenCache = exports.ResolveCache = void 0;
-const lru_cache_1 = __nccwpck_require__(27472);
+const lru_cache_1 = __nccwpck_require__(26258);
 const node_path_1 = __nccwpck_require__(76760);
 const node_url_1 = __nccwpck_require__(73136);
 const fs_1 = __nccwpck_require__(79896);
@@ -128056,1559 +129620,6 @@ exports.Path = process.platform === 'win32' ? PathWin32 : PathPosix;
 exports.PathScurry = process.platform === 'win32' ? PathScurryWin32
     : process.platform === 'darwin' ? PathScurryDarwin
         : PathScurryPosix;
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ 27472:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-/**
- * @module LRUCache
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.LRUCache = void 0;
-const perf = typeof performance === 'object' &&
-    performance &&
-    typeof performance.now === 'function'
-    ? performance
-    : Date;
-const warned = new Set();
-/* c8 ignore start */
-const PROCESS = (typeof process === 'object' && !!process ? process : {});
-/* c8 ignore start */
-const emitWarning = (msg, type, code, fn) => {
-    typeof PROCESS.emitWarning === 'function'
-        ? PROCESS.emitWarning(msg, type, code, fn)
-        : console.error(`[${code}] ${type}: ${msg}`);
-};
-let AC = globalThis.AbortController;
-let AS = globalThis.AbortSignal;
-/* c8 ignore start */
-if (typeof AC === 'undefined') {
-    //@ts-ignore
-    AS = class AbortSignal {
-        onabort;
-        _onabort = [];
-        reason;
-        aborted = false;
-        addEventListener(_, fn) {
-            this._onabort.push(fn);
-        }
-    };
-    //@ts-ignore
-    AC = class AbortController {
-        constructor() {
-            warnACPolyfill();
-        }
-        signal = new AS();
-        abort(reason) {
-            if (this.signal.aborted)
-                return;
-            //@ts-ignore
-            this.signal.reason = reason;
-            //@ts-ignore
-            this.signal.aborted = true;
-            //@ts-ignore
-            for (const fn of this.signal._onabort) {
-                fn(reason);
-            }
-            this.signal.onabort?.(reason);
-        }
-    };
-    let printACPolyfillWarning = PROCESS.env?.LRU_CACHE_IGNORE_AC_WARNING !== '1';
-    const warnACPolyfill = () => {
-        if (!printACPolyfillWarning)
-            return;
-        printACPolyfillWarning = false;
-        emitWarning('AbortController is not defined. If using lru-cache in ' +
-            'node 14, load an AbortController polyfill from the ' +
-            '`node-abort-controller` package. A minimal polyfill is ' +
-            'provided for use by LRUCache.fetch(), but it should not be ' +
-            'relied upon in other contexts (eg, passing it to other APIs that ' +
-            'use AbortController/AbortSignal might have undesirable effects). ' +
-            'You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.', 'NO_ABORT_CONTROLLER', 'ENOTSUP', warnACPolyfill);
-    };
-}
-/* c8 ignore stop */
-const shouldWarn = (code) => !warned.has(code);
-const TYPE = Symbol('type');
-const isPosInt = (n) => n && n === Math.floor(n) && n > 0 && isFinite(n);
-/* c8 ignore start */
-// This is a little bit ridiculous, tbh.
-// The maximum array length is 2^32-1 or thereabouts on most JS impls.
-// And well before that point, you're caching the entire world, I mean,
-// that's ~32GB of just integers for the next/prev links, plus whatever
-// else to hold that many keys and values.  Just filling the memory with
-// zeroes at init time is brutal when you get that big.
-// But why not be complete?
-// Maybe in the future, these limits will have expanded.
-const getUintArray = (max) => !isPosInt(max)
-    ? null
-    : max <= Math.pow(2, 8)
-        ? Uint8Array
-        : max <= Math.pow(2, 16)
-            ? Uint16Array
-            : max <= Math.pow(2, 32)
-                ? Uint32Array
-                : max <= Number.MAX_SAFE_INTEGER
-                    ? ZeroArray
-                    : null;
-/* c8 ignore stop */
-class ZeroArray extends Array {
-    constructor(size) {
-        super(size);
-        this.fill(0);
-    }
-}
-class Stack {
-    heap;
-    length;
-    // private constructor
-    static #constructing = false;
-    static create(max) {
-        const HeapCls = getUintArray(max);
-        if (!HeapCls)
-            return [];
-        Stack.#constructing = true;
-        const s = new Stack(max, HeapCls);
-        Stack.#constructing = false;
-        return s;
-    }
-    constructor(max, HeapCls) {
-        /* c8 ignore start */
-        if (!Stack.#constructing) {
-            throw new TypeError('instantiate Stack using Stack.create(n)');
-        }
-        /* c8 ignore stop */
-        this.heap = new HeapCls(max);
-        this.length = 0;
-    }
-    push(n) {
-        this.heap[this.length++] = n;
-    }
-    pop() {
-        return this.heap[--this.length];
-    }
-}
-/**
- * Default export, the thing you're using this module to get.
- *
- * The `K` and `V` types define the key and value types, respectively. The
- * optional `FC` type defines the type of the `context` object passed to
- * `cache.fetch()` and `cache.memo()`.
- *
- * Keys and values **must not** be `null` or `undefined`.
- *
- * All properties from the options object (with the exception of `max`,
- * `maxSize`, `fetchMethod`, `memoMethod`, `dispose` and `disposeAfter`) are
- * added as normal public members. (The listed options are read-only getters.)
- *
- * Changing any of these will alter the defaults for subsequent method calls.
- */
-class LRUCache {
-    // options that cannot be changed without disaster
-    #max;
-    #maxSize;
-    #dispose;
-    #disposeAfter;
-    #fetchMethod;
-    #memoMethod;
-    /**
-     * {@link LRUCache.OptionsBase.ttl}
-     */
-    ttl;
-    /**
-     * {@link LRUCache.OptionsBase.ttlResolution}
-     */
-    ttlResolution;
-    /**
-     * {@link LRUCache.OptionsBase.ttlAutopurge}
-     */
-    ttlAutopurge;
-    /**
-     * {@link LRUCache.OptionsBase.updateAgeOnGet}
-     */
-    updateAgeOnGet;
-    /**
-     * {@link LRUCache.OptionsBase.updateAgeOnHas}
-     */
-    updateAgeOnHas;
-    /**
-     * {@link LRUCache.OptionsBase.allowStale}
-     */
-    allowStale;
-    /**
-     * {@link LRUCache.OptionsBase.noDisposeOnSet}
-     */
-    noDisposeOnSet;
-    /**
-     * {@link LRUCache.OptionsBase.noUpdateTTL}
-     */
-    noUpdateTTL;
-    /**
-     * {@link LRUCache.OptionsBase.maxEntrySize}
-     */
-    maxEntrySize;
-    /**
-     * {@link LRUCache.OptionsBase.sizeCalculation}
-     */
-    sizeCalculation;
-    /**
-     * {@link LRUCache.OptionsBase.noDeleteOnFetchRejection}
-     */
-    noDeleteOnFetchRejection;
-    /**
-     * {@link LRUCache.OptionsBase.noDeleteOnStaleGet}
-     */
-    noDeleteOnStaleGet;
-    /**
-     * {@link LRUCache.OptionsBase.allowStaleOnFetchAbort}
-     */
-    allowStaleOnFetchAbort;
-    /**
-     * {@link LRUCache.OptionsBase.allowStaleOnFetchRejection}
-     */
-    allowStaleOnFetchRejection;
-    /**
-     * {@link LRUCache.OptionsBase.ignoreFetchAbort}
-     */
-    ignoreFetchAbort;
-    // computed properties
-    #size;
-    #calculatedSize;
-    #keyMap;
-    #keyList;
-    #valList;
-    #next;
-    #prev;
-    #head;
-    #tail;
-    #free;
-    #disposed;
-    #sizes;
-    #starts;
-    #ttls;
-    #hasDispose;
-    #hasFetchMethod;
-    #hasDisposeAfter;
-    /**
-     * Do not call this method unless you need to inspect the
-     * inner workings of the cache.  If anything returned by this
-     * object is modified in any way, strange breakage may occur.
-     *
-     * These fields are private for a reason!
-     *
-     * @internal
-     */
-    static unsafeExposeInternals(c) {
-        return {
-            // properties
-            starts: c.#starts,
-            ttls: c.#ttls,
-            sizes: c.#sizes,
-            keyMap: c.#keyMap,
-            keyList: c.#keyList,
-            valList: c.#valList,
-            next: c.#next,
-            prev: c.#prev,
-            get head() {
-                return c.#head;
-            },
-            get tail() {
-                return c.#tail;
-            },
-            free: c.#free,
-            // methods
-            isBackgroundFetch: (p) => c.#isBackgroundFetch(p),
-            backgroundFetch: (k, index, options, context) => c.#backgroundFetch(k, index, options, context),
-            moveToTail: (index) => c.#moveToTail(index),
-            indexes: (options) => c.#indexes(options),
-            rindexes: (options) => c.#rindexes(options),
-            isStale: (index) => c.#isStale(index),
-        };
-    }
-    // Protected read-only members
-    /**
-     * {@link LRUCache.OptionsBase.max} (read-only)
-     */
-    get max() {
-        return this.#max;
-    }
-    /**
-     * {@link LRUCache.OptionsBase.maxSize} (read-only)
-     */
-    get maxSize() {
-        return this.#maxSize;
-    }
-    /**
-     * The total computed size of items in the cache (read-only)
-     */
-    get calculatedSize() {
-        return this.#calculatedSize;
-    }
-    /**
-     * The number of items stored in the cache (read-only)
-     */
-    get size() {
-        return this.#size;
-    }
-    /**
-     * {@link LRUCache.OptionsBase.fetchMethod} (read-only)
-     */
-    get fetchMethod() {
-        return this.#fetchMethod;
-    }
-    get memoMethod() {
-        return this.#memoMethod;
-    }
-    /**
-     * {@link LRUCache.OptionsBase.dispose} (read-only)
-     */
-    get dispose() {
-        return this.#dispose;
-    }
-    /**
-     * {@link LRUCache.OptionsBase.disposeAfter} (read-only)
-     */
-    get disposeAfter() {
-        return this.#disposeAfter;
-    }
-    constructor(options) {
-        const { max = 0, ttl, ttlResolution = 1, ttlAutopurge, updateAgeOnGet, updateAgeOnHas, allowStale, dispose, disposeAfter, noDisposeOnSet, noUpdateTTL, maxSize = 0, maxEntrySize = 0, sizeCalculation, fetchMethod, memoMethod, noDeleteOnFetchRejection, noDeleteOnStaleGet, allowStaleOnFetchRejection, allowStaleOnFetchAbort, ignoreFetchAbort, } = options;
-        if (max !== 0 && !isPosInt(max)) {
-            throw new TypeError('max option must be a nonnegative integer');
-        }
-        const UintArray = max ? getUintArray(max) : Array;
-        if (!UintArray) {
-            throw new Error('invalid max value: ' + max);
-        }
-        this.#max = max;
-        this.#maxSize = maxSize;
-        this.maxEntrySize = maxEntrySize || this.#maxSize;
-        this.sizeCalculation = sizeCalculation;
-        if (this.sizeCalculation) {
-            if (!this.#maxSize && !this.maxEntrySize) {
-                throw new TypeError('cannot set sizeCalculation without setting maxSize or maxEntrySize');
-            }
-            if (typeof this.sizeCalculation !== 'function') {
-                throw new TypeError('sizeCalculation set to non-function');
-            }
-        }
-        if (memoMethod !== undefined &&
-            typeof memoMethod !== 'function') {
-            throw new TypeError('memoMethod must be a function if defined');
-        }
-        this.#memoMethod = memoMethod;
-        if (fetchMethod !== undefined &&
-            typeof fetchMethod !== 'function') {
-            throw new TypeError('fetchMethod must be a function if specified');
-        }
-        this.#fetchMethod = fetchMethod;
-        this.#hasFetchMethod = !!fetchMethod;
-        this.#keyMap = new Map();
-        this.#keyList = new Array(max).fill(undefined);
-        this.#valList = new Array(max).fill(undefined);
-        this.#next = new UintArray(max);
-        this.#prev = new UintArray(max);
-        this.#head = 0;
-        this.#tail = 0;
-        this.#free = Stack.create(max);
-        this.#size = 0;
-        this.#calculatedSize = 0;
-        if (typeof dispose === 'function') {
-            this.#dispose = dispose;
-        }
-        if (typeof disposeAfter === 'function') {
-            this.#disposeAfter = disposeAfter;
-            this.#disposed = [];
-        }
-        else {
-            this.#disposeAfter = undefined;
-            this.#disposed = undefined;
-        }
-        this.#hasDispose = !!this.#dispose;
-        this.#hasDisposeAfter = !!this.#disposeAfter;
-        this.noDisposeOnSet = !!noDisposeOnSet;
-        this.noUpdateTTL = !!noUpdateTTL;
-        this.noDeleteOnFetchRejection = !!noDeleteOnFetchRejection;
-        this.allowStaleOnFetchRejection = !!allowStaleOnFetchRejection;
-        this.allowStaleOnFetchAbort = !!allowStaleOnFetchAbort;
-        this.ignoreFetchAbort = !!ignoreFetchAbort;
-        // NB: maxEntrySize is set to maxSize if it's set
-        if (this.maxEntrySize !== 0) {
-            if (this.#maxSize !== 0) {
-                if (!isPosInt(this.#maxSize)) {
-                    throw new TypeError('maxSize must be a positive integer if specified');
-                }
-            }
-            if (!isPosInt(this.maxEntrySize)) {
-                throw new TypeError('maxEntrySize must be a positive integer if specified');
-            }
-            this.#initializeSizeTracking();
-        }
-        this.allowStale = !!allowStale;
-        this.noDeleteOnStaleGet = !!noDeleteOnStaleGet;
-        this.updateAgeOnGet = !!updateAgeOnGet;
-        this.updateAgeOnHas = !!updateAgeOnHas;
-        this.ttlResolution =
-            isPosInt(ttlResolution) || ttlResolution === 0
-                ? ttlResolution
-                : 1;
-        this.ttlAutopurge = !!ttlAutopurge;
-        this.ttl = ttl || 0;
-        if (this.ttl) {
-            if (!isPosInt(this.ttl)) {
-                throw new TypeError('ttl must be a positive integer if specified');
-            }
-            this.#initializeTTLTracking();
-        }
-        // do not allow completely unbounded caches
-        if (this.#max === 0 && this.ttl === 0 && this.#maxSize === 0) {
-            throw new TypeError('At least one of max, maxSize, or ttl is required');
-        }
-        if (!this.ttlAutopurge && !this.#max && !this.#maxSize) {
-            const code = 'LRU_CACHE_UNBOUNDED';
-            if (shouldWarn(code)) {
-                warned.add(code);
-                const msg = 'TTL caching without ttlAutopurge, max, or maxSize can ' +
-                    'result in unbounded memory consumption.';
-                emitWarning(msg, 'UnboundedCacheWarning', code, LRUCache);
-            }
-        }
-    }
-    /**
-     * Return the number of ms left in the item's TTL. If item is not in cache,
-     * returns `0`. Returns `Infinity` if item is in cache without a defined TTL.
-     */
-    getRemainingTTL(key) {
-        return this.#keyMap.has(key) ? Infinity : 0;
-    }
-    #initializeTTLTracking() {
-        const ttls = new ZeroArray(this.#max);
-        const starts = new ZeroArray(this.#max);
-        this.#ttls = ttls;
-        this.#starts = starts;
-        this.#setItemTTL = (index, ttl, start = perf.now()) => {
-            starts[index] = ttl !== 0 ? start : 0;
-            ttls[index] = ttl;
-            if (ttl !== 0 && this.ttlAutopurge) {
-                const t = setTimeout(() => {
-                    if (this.#isStale(index)) {
-                        this.#delete(this.#keyList[index], 'expire');
-                    }
-                }, ttl + 1);
-                // unref() not supported on all platforms
-                /* c8 ignore start */
-                if (t.unref) {
-                    t.unref();
-                }
-                /* c8 ignore stop */
-            }
-        };
-        this.#updateItemAge = index => {
-            starts[index] = ttls[index] !== 0 ? perf.now() : 0;
-        };
-        this.#statusTTL = (status, index) => {
-            if (ttls[index]) {
-                const ttl = ttls[index];
-                const start = starts[index];
-                /* c8 ignore next */
-                if (!ttl || !start)
-                    return;
-                status.ttl = ttl;
-                status.start = start;
-                status.now = cachedNow || getNow();
-                const age = status.now - start;
-                status.remainingTTL = ttl - age;
-            }
-        };
-        // debounce calls to perf.now() to 1s so we're not hitting
-        // that costly call repeatedly.
-        let cachedNow = 0;
-        const getNow = () => {
-            const n = perf.now();
-            if (this.ttlResolution > 0) {
-                cachedNow = n;
-                const t = setTimeout(() => (cachedNow = 0), this.ttlResolution);
-                // not available on all platforms
-                /* c8 ignore start */
-                if (t.unref) {
-                    t.unref();
-                }
-                /* c8 ignore stop */
-            }
-            return n;
-        };
-        this.getRemainingTTL = key => {
-            const index = this.#keyMap.get(key);
-            if (index === undefined) {
-                return 0;
-            }
-            const ttl = ttls[index];
-            const start = starts[index];
-            if (!ttl || !start) {
-                return Infinity;
-            }
-            const age = (cachedNow || getNow()) - start;
-            return ttl - age;
-        };
-        this.#isStale = index => {
-            const s = starts[index];
-            const t = ttls[index];
-            return !!t && !!s && (cachedNow || getNow()) - s > t;
-        };
-    }
-    // conditionally set private methods related to TTL
-    #updateItemAge = () => { };
-    #statusTTL = () => { };
-    #setItemTTL = () => { };
-    /* c8 ignore stop */
-    #isStale = () => false;
-    #initializeSizeTracking() {
-        const sizes = new ZeroArray(this.#max);
-        this.#calculatedSize = 0;
-        this.#sizes = sizes;
-        this.#removeItemSize = index => {
-            this.#calculatedSize -= sizes[index];
-            sizes[index] = 0;
-        };
-        this.#requireSize = (k, v, size, sizeCalculation) => {
-            // provisionally accept background fetches.
-            // actual value size will be checked when they return.
-            if (this.#isBackgroundFetch(v)) {
-                return 0;
-            }
-            if (!isPosInt(size)) {
-                if (sizeCalculation) {
-                    if (typeof sizeCalculation !== 'function') {
-                        throw new TypeError('sizeCalculation must be a function');
-                    }
-                    size = sizeCalculation(v, k);
-                    if (!isPosInt(size)) {
-                        throw new TypeError('sizeCalculation return invalid (expect positive integer)');
-                    }
-                }
-                else {
-                    throw new TypeError('invalid size value (must be positive integer). ' +
-                        'When maxSize or maxEntrySize is used, sizeCalculation ' +
-                        'or size must be set.');
-                }
-            }
-            return size;
-        };
-        this.#addItemSize = (index, size, status) => {
-            sizes[index] = size;
-            if (this.#maxSize) {
-                const maxSize = this.#maxSize - sizes[index];
-                while (this.#calculatedSize > maxSize) {
-                    this.#evict(true);
-                }
-            }
-            this.#calculatedSize += sizes[index];
-            if (status) {
-                status.entrySize = size;
-                status.totalCalculatedSize = this.#calculatedSize;
-            }
-        };
-    }
-    #removeItemSize = _i => { };
-    #addItemSize = (_i, _s, _st) => { };
-    #requireSize = (_k, _v, size, sizeCalculation) => {
-        if (size || sizeCalculation) {
-            throw new TypeError('cannot set size without setting maxSize or maxEntrySize on cache');
-        }
-        return 0;
-    };
-    *#indexes({ allowStale = this.allowStale } = {}) {
-        if (this.#size) {
-            for (let i = this.#tail; true;) {
-                if (!this.#isValidIndex(i)) {
-                    break;
-                }
-                if (allowStale || !this.#isStale(i)) {
-                    yield i;
-                }
-                if (i === this.#head) {
-                    break;
-                }
-                else {
-                    i = this.#prev[i];
-                }
-            }
-        }
-    }
-    *#rindexes({ allowStale = this.allowStale } = {}) {
-        if (this.#size) {
-            for (let i = this.#head; true;) {
-                if (!this.#isValidIndex(i)) {
-                    break;
-                }
-                if (allowStale || !this.#isStale(i)) {
-                    yield i;
-                }
-                if (i === this.#tail) {
-                    break;
-                }
-                else {
-                    i = this.#next[i];
-                }
-            }
-        }
-    }
-    #isValidIndex(index) {
-        return (index !== undefined &&
-            this.#keyMap.get(this.#keyList[index]) === index);
-    }
-    /**
-     * Return a generator yielding `[key, value]` pairs,
-     * in order from most recently used to least recently used.
-     */
-    *entries() {
-        for (const i of this.#indexes()) {
-            if (this.#valList[i] !== undefined &&
-                this.#keyList[i] !== undefined &&
-                !this.#isBackgroundFetch(this.#valList[i])) {
-                yield [this.#keyList[i], this.#valList[i]];
-            }
-        }
-    }
-    /**
-     * Inverse order version of {@link LRUCache.entries}
-     *
-     * Return a generator yielding `[key, value]` pairs,
-     * in order from least recently used to most recently used.
-     */
-    *rentries() {
-        for (const i of this.#rindexes()) {
-            if (this.#valList[i] !== undefined &&
-                this.#keyList[i] !== undefined &&
-                !this.#isBackgroundFetch(this.#valList[i])) {
-                yield [this.#keyList[i], this.#valList[i]];
-            }
-        }
-    }
-    /**
-     * Return a generator yielding the keys in the cache,
-     * in order from most recently used to least recently used.
-     */
-    *keys() {
-        for (const i of this.#indexes()) {
-            const k = this.#keyList[i];
-            if (k !== undefined &&
-                !this.#isBackgroundFetch(this.#valList[i])) {
-                yield k;
-            }
-        }
-    }
-    /**
-     * Inverse order version of {@link LRUCache.keys}
-     *
-     * Return a generator yielding the keys in the cache,
-     * in order from least recently used to most recently used.
-     */
-    *rkeys() {
-        for (const i of this.#rindexes()) {
-            const k = this.#keyList[i];
-            if (k !== undefined &&
-                !this.#isBackgroundFetch(this.#valList[i])) {
-                yield k;
-            }
-        }
-    }
-    /**
-     * Return a generator yielding the values in the cache,
-     * in order from most recently used to least recently used.
-     */
-    *values() {
-        for (const i of this.#indexes()) {
-            const v = this.#valList[i];
-            if (v !== undefined &&
-                !this.#isBackgroundFetch(this.#valList[i])) {
-                yield this.#valList[i];
-            }
-        }
-    }
-    /**
-     * Inverse order version of {@link LRUCache.values}
-     *
-     * Return a generator yielding the values in the cache,
-     * in order from least recently used to most recently used.
-     */
-    *rvalues() {
-        for (const i of this.#rindexes()) {
-            const v = this.#valList[i];
-            if (v !== undefined &&
-                !this.#isBackgroundFetch(this.#valList[i])) {
-                yield this.#valList[i];
-            }
-        }
-    }
-    /**
-     * Iterating over the cache itself yields the same results as
-     * {@link LRUCache.entries}
-     */
-    [Symbol.iterator]() {
-        return this.entries();
-    }
-    /**
-     * A String value that is used in the creation of the default string
-     * description of an object. Called by the built-in method
-     * `Object.prototype.toString`.
-     */
-    [Symbol.toStringTag] = 'LRUCache';
-    /**
-     * Find a value for which the supplied fn method returns a truthy value,
-     * similar to `Array.find()`. fn is called as `fn(value, key, cache)`.
-     */
-    find(fn, getOptions = {}) {
-        for (const i of this.#indexes()) {
-            const v = this.#valList[i];
-            const value = this.#isBackgroundFetch(v)
-                ? v.__staleWhileFetching
-                : v;
-            if (value === undefined)
-                continue;
-            if (fn(value, this.#keyList[i], this)) {
-                return this.get(this.#keyList[i], getOptions);
-            }
-        }
-    }
-    /**
-     * Call the supplied function on each item in the cache, in order from most
-     * recently used to least recently used.
-     *
-     * `fn` is called as `fn(value, key, cache)`.
-     *
-     * If `thisp` is provided, function will be called in the `this`-context of
-     * the provided object, or the cache if no `thisp` object is provided.
-     *
-     * Does not update age or recenty of use, or iterate over stale values.
-     */
-    forEach(fn, thisp = this) {
-        for (const i of this.#indexes()) {
-            const v = this.#valList[i];
-            const value = this.#isBackgroundFetch(v)
-                ? v.__staleWhileFetching
-                : v;
-            if (value === undefined)
-                continue;
-            fn.call(thisp, value, this.#keyList[i], this);
-        }
-    }
-    /**
-     * The same as {@link LRUCache.forEach} but items are iterated over in
-     * reverse order.  (ie, less recently used items are iterated over first.)
-     */
-    rforEach(fn, thisp = this) {
-        for (const i of this.#rindexes()) {
-            const v = this.#valList[i];
-            const value = this.#isBackgroundFetch(v)
-                ? v.__staleWhileFetching
-                : v;
-            if (value === undefined)
-                continue;
-            fn.call(thisp, value, this.#keyList[i], this);
-        }
-    }
-    /**
-     * Delete any stale entries. Returns true if anything was removed,
-     * false otherwise.
-     */
-    purgeStale() {
-        let deleted = false;
-        for (const i of this.#rindexes({ allowStale: true })) {
-            if (this.#isStale(i)) {
-                this.#delete(this.#keyList[i], 'expire');
-                deleted = true;
-            }
-        }
-        return deleted;
-    }
-    /**
-     * Get the extended info about a given entry, to get its value, size, and
-     * TTL info simultaneously. Returns `undefined` if the key is not present.
-     *
-     * Unlike {@link LRUCache#dump}, which is designed to be portable and survive
-     * serialization, the `start` value is always the current timestamp, and the
-     * `ttl` is a calculated remaining time to live (negative if expired).
-     *
-     * Always returns stale values, if their info is found in the cache, so be
-     * sure to check for expirations (ie, a negative {@link LRUCache.Entry#ttl})
-     * if relevant.
-     */
-    info(key) {
-        const i = this.#keyMap.get(key);
-        if (i === undefined)
-            return undefined;
-        const v = this.#valList[i];
-        const value = this.#isBackgroundFetch(v)
-            ? v.__staleWhileFetching
-            : v;
-        if (value === undefined)
-            return undefined;
-        const entry = { value };
-        if (this.#ttls && this.#starts) {
-            const ttl = this.#ttls[i];
-            const start = this.#starts[i];
-            if (ttl && start) {
-                const remain = ttl - (perf.now() - start);
-                entry.ttl = remain;
-                entry.start = Date.now();
-            }
-        }
-        if (this.#sizes) {
-            entry.size = this.#sizes[i];
-        }
-        return entry;
-    }
-    /**
-     * Return an array of [key, {@link LRUCache.Entry}] tuples which can be
-     * passed to {@link LRLUCache#load}.
-     *
-     * The `start` fields are calculated relative to a portable `Date.now()`
-     * timestamp, even if `performance.now()` is available.
-     *
-     * Stale entries are always included in the `dump`, even if
-     * {@link LRUCache.OptionsBase.allowStale} is false.
-     *
-     * Note: this returns an actual array, not a generator, so it can be more
-     * easily passed around.
-     */
-    dump() {
-        const arr = [];
-        for (const i of this.#indexes({ allowStale: true })) {
-            const key = this.#keyList[i];
-            const v = this.#valList[i];
-            const value = this.#isBackgroundFetch(v)
-                ? v.__staleWhileFetching
-                : v;
-            if (value === undefined || key === undefined)
-                continue;
-            const entry = { value };
-            if (this.#ttls && this.#starts) {
-                entry.ttl = this.#ttls[i];
-                // always dump the start relative to a portable timestamp
-                // it's ok for this to be a bit slow, it's a rare operation.
-                const age = perf.now() - this.#starts[i];
-                entry.start = Math.floor(Date.now() - age);
-            }
-            if (this.#sizes) {
-                entry.size = this.#sizes[i];
-            }
-            arr.unshift([key, entry]);
-        }
-        return arr;
-    }
-    /**
-     * Reset the cache and load in the items in entries in the order listed.
-     *
-     * The shape of the resulting cache may be different if the same options are
-     * not used in both caches.
-     *
-     * The `start` fields are assumed to be calculated relative to a portable
-     * `Date.now()` timestamp, even if `performance.now()` is available.
-     */
-    load(arr) {
-        this.clear();
-        for (const [key, entry] of arr) {
-            if (entry.start) {
-                // entry.start is a portable timestamp, but we may be using
-                // node's performance.now(), so calculate the offset, so that
-                // we get the intended remaining TTL, no matter how long it's
-                // been on ice.
-                //
-                // it's ok for this to be a bit slow, it's a rare operation.
-                const age = Date.now() - entry.start;
-                entry.start = perf.now() - age;
-            }
-            this.set(key, entry.value, entry);
-        }
-    }
-    /**
-     * Add a value to the cache.
-     *
-     * Note: if `undefined` is specified as a value, this is an alias for
-     * {@link LRUCache#delete}
-     *
-     * Fields on the {@link LRUCache.SetOptions} options param will override
-     * their corresponding values in the constructor options for the scope
-     * of this single `set()` operation.
-     *
-     * If `start` is provided, then that will set the effective start
-     * time for the TTL calculation. Note that this must be a previous
-     * value of `performance.now()` if supported, or a previous value of
-     * `Date.now()` if not.
-     *
-     * Options object may also include `size`, which will prevent
-     * calling the `sizeCalculation` function and just use the specified
-     * number if it is a positive integer, and `noDisposeOnSet` which
-     * will prevent calling a `dispose` function in the case of
-     * overwrites.
-     *
-     * If the `size` (or return value of `sizeCalculation`) for a given
-     * entry is greater than `maxEntrySize`, then the item will not be
-     * added to the cache.
-     *
-     * Will update the recency of the entry.
-     *
-     * If the value is `undefined`, then this is an alias for
-     * `cache.delete(key)`. `undefined` is never stored in the cache.
-     */
-    set(k, v, setOptions = {}) {
-        if (v === undefined) {
-            this.delete(k);
-            return this;
-        }
-        const { ttl = this.ttl, start, noDisposeOnSet = this.noDisposeOnSet, sizeCalculation = this.sizeCalculation, status, } = setOptions;
-        let { noUpdateTTL = this.noUpdateTTL } = setOptions;
-        const size = this.#requireSize(k, v, setOptions.size || 0, sizeCalculation);
-        // if the item doesn't fit, don't do anything
-        // NB: maxEntrySize set to maxSize by default
-        if (this.maxEntrySize && size > this.maxEntrySize) {
-            if (status) {
-                status.set = 'miss';
-                status.maxEntrySizeExceeded = true;
-            }
-            // have to delete, in case something is there already.
-            this.#delete(k, 'set');
-            return this;
-        }
-        let index = this.#size === 0 ? undefined : this.#keyMap.get(k);
-        if (index === undefined) {
-            // addition
-            index = (this.#size === 0
-                ? this.#tail
-                : this.#free.length !== 0
-                    ? this.#free.pop()
-                    : this.#size === this.#max
-                        ? this.#evict(false)
-                        : this.#size);
-            this.#keyList[index] = k;
-            this.#valList[index] = v;
-            this.#keyMap.set(k, index);
-            this.#next[this.#tail] = index;
-            this.#prev[index] = this.#tail;
-            this.#tail = index;
-            this.#size++;
-            this.#addItemSize(index, size, status);
-            if (status)
-                status.set = 'add';
-            noUpdateTTL = false;
-        }
-        else {
-            // update
-            this.#moveToTail(index);
-            const oldVal = this.#valList[index];
-            if (v !== oldVal) {
-                if (this.#hasFetchMethod && this.#isBackgroundFetch(oldVal)) {
-                    oldVal.__abortController.abort(new Error('replaced'));
-                    const { __staleWhileFetching: s } = oldVal;
-                    if (s !== undefined && !noDisposeOnSet) {
-                        if (this.#hasDispose) {
-                            this.#dispose?.(s, k, 'set');
-                        }
-                        if (this.#hasDisposeAfter) {
-                            this.#disposed?.push([s, k, 'set']);
-                        }
-                    }
-                }
-                else if (!noDisposeOnSet) {
-                    if (this.#hasDispose) {
-                        this.#dispose?.(oldVal, k, 'set');
-                    }
-                    if (this.#hasDisposeAfter) {
-                        this.#disposed?.push([oldVal, k, 'set']);
-                    }
-                }
-                this.#removeItemSize(index);
-                this.#addItemSize(index, size, status);
-                this.#valList[index] = v;
-                if (status) {
-                    status.set = 'replace';
-                    const oldValue = oldVal && this.#isBackgroundFetch(oldVal)
-                        ? oldVal.__staleWhileFetching
-                        : oldVal;
-                    if (oldValue !== undefined)
-                        status.oldValue = oldValue;
-                }
-            }
-            else if (status) {
-                status.set = 'update';
-            }
-        }
-        if (ttl !== 0 && !this.#ttls) {
-            this.#initializeTTLTracking();
-        }
-        if (this.#ttls) {
-            if (!noUpdateTTL) {
-                this.#setItemTTL(index, ttl, start);
-            }
-            if (status)
-                this.#statusTTL(status, index);
-        }
-        if (!noDisposeOnSet && this.#hasDisposeAfter && this.#disposed) {
-            const dt = this.#disposed;
-            let task;
-            while ((task = dt?.shift())) {
-                this.#disposeAfter?.(...task);
-            }
-        }
-        return this;
-    }
-    /**
-     * Evict the least recently used item, returning its value or
-     * `undefined` if cache is empty.
-     */
-    pop() {
-        try {
-            while (this.#size) {
-                const val = this.#valList[this.#head];
-                this.#evict(true);
-                if (this.#isBackgroundFetch(val)) {
-                    if (val.__staleWhileFetching) {
-                        return val.__staleWhileFetching;
-                    }
-                }
-                else if (val !== undefined) {
-                    return val;
-                }
-            }
-        }
-        finally {
-            if (this.#hasDisposeAfter && this.#disposed) {
-                const dt = this.#disposed;
-                let task;
-                while ((task = dt?.shift())) {
-                    this.#disposeAfter?.(...task);
-                }
-            }
-        }
-    }
-    #evict(free) {
-        const head = this.#head;
-        const k = this.#keyList[head];
-        const v = this.#valList[head];
-        if (this.#hasFetchMethod && this.#isBackgroundFetch(v)) {
-            v.__abortController.abort(new Error('evicted'));
-        }
-        else if (this.#hasDispose || this.#hasDisposeAfter) {
-            if (this.#hasDispose) {
-                this.#dispose?.(v, k, 'evict');
-            }
-            if (this.#hasDisposeAfter) {
-                this.#disposed?.push([v, k, 'evict']);
-            }
-        }
-        this.#removeItemSize(head);
-        // if we aren't about to use the index, then null these out
-        if (free) {
-            this.#keyList[head] = undefined;
-            this.#valList[head] = undefined;
-            this.#free.push(head);
-        }
-        if (this.#size === 1) {
-            this.#head = this.#tail = 0;
-            this.#free.length = 0;
-        }
-        else {
-            this.#head = this.#next[head];
-        }
-        this.#keyMap.delete(k);
-        this.#size--;
-        return head;
-    }
-    /**
-     * Check if a key is in the cache, without updating the recency of use.
-     * Will return false if the item is stale, even though it is technically
-     * in the cache.
-     *
-     * Check if a key is in the cache, without updating the recency of
-     * use. Age is updated if {@link LRUCache.OptionsBase.updateAgeOnHas} is set
-     * to `true` in either the options or the constructor.
-     *
-     * Will return `false` if the item is stale, even though it is technically in
-     * the cache. The difference can be determined (if it matters) by using a
-     * `status` argument, and inspecting the `has` field.
-     *
-     * Will not update item age unless
-     * {@link LRUCache.OptionsBase.updateAgeOnHas} is set.
-     */
-    has(k, hasOptions = {}) {
-        const { updateAgeOnHas = this.updateAgeOnHas, status } = hasOptions;
-        const index = this.#keyMap.get(k);
-        if (index !== undefined) {
-            const v = this.#valList[index];
-            if (this.#isBackgroundFetch(v) &&
-                v.__staleWhileFetching === undefined) {
-                return false;
-            }
-            if (!this.#isStale(index)) {
-                if (updateAgeOnHas) {
-                    this.#updateItemAge(index);
-                }
-                if (status) {
-                    status.has = 'hit';
-                    this.#statusTTL(status, index);
-                }
-                return true;
-            }
-            else if (status) {
-                status.has = 'stale';
-                this.#statusTTL(status, index);
-            }
-        }
-        else if (status) {
-            status.has = 'miss';
-        }
-        return false;
-    }
-    /**
-     * Like {@link LRUCache#get} but doesn't update recency or delete stale
-     * items.
-     *
-     * Returns `undefined` if the item is stale, unless
-     * {@link LRUCache.OptionsBase.allowStale} is set.
-     */
-    peek(k, peekOptions = {}) {
-        const { allowStale = this.allowStale } = peekOptions;
-        const index = this.#keyMap.get(k);
-        if (index === undefined ||
-            (!allowStale && this.#isStale(index))) {
-            return;
-        }
-        const v = this.#valList[index];
-        // either stale and allowed, or forcing a refresh of non-stale value
-        return this.#isBackgroundFetch(v) ? v.__staleWhileFetching : v;
-    }
-    #backgroundFetch(k, index, options, context) {
-        const v = index === undefined ? undefined : this.#valList[index];
-        if (this.#isBackgroundFetch(v)) {
-            return v;
-        }
-        const ac = new AC();
-        const { signal } = options;
-        // when/if our AC signals, then stop listening to theirs.
-        signal?.addEventListener('abort', () => ac.abort(signal.reason), {
-            signal: ac.signal,
-        });
-        const fetchOpts = {
-            signal: ac.signal,
-            options,
-            context,
-        };
-        const cb = (v, updateCache = false) => {
-            const { aborted } = ac.signal;
-            const ignoreAbort = options.ignoreFetchAbort && v !== undefined;
-            if (options.status) {
-                if (aborted && !updateCache) {
-                    options.status.fetchAborted = true;
-                    options.status.fetchError = ac.signal.reason;
-                    if (ignoreAbort)
-                        options.status.fetchAbortIgnored = true;
-                }
-                else {
-                    options.status.fetchResolved = true;
-                }
-            }
-            if (aborted && !ignoreAbort && !updateCache) {
-                return fetchFail(ac.signal.reason);
-            }
-            // either we didn't abort, and are still here, or we did, and ignored
-            const bf = p;
-            if (this.#valList[index] === p) {
-                if (v === undefined) {
-                    if (bf.__staleWhileFetching) {
-                        this.#valList[index] = bf.__staleWhileFetching;
-                    }
-                    else {
-                        this.#delete(k, 'fetch');
-                    }
-                }
-                else {
-                    if (options.status)
-                        options.status.fetchUpdated = true;
-                    this.set(k, v, fetchOpts.options);
-                }
-            }
-            return v;
-        };
-        const eb = (er) => {
-            if (options.status) {
-                options.status.fetchRejected = true;
-                options.status.fetchError = er;
-            }
-            return fetchFail(er);
-        };
-        const fetchFail = (er) => {
-            const { aborted } = ac.signal;
-            const allowStaleAborted = aborted && options.allowStaleOnFetchAbort;
-            const allowStale = allowStaleAborted || options.allowStaleOnFetchRejection;
-            const noDelete = allowStale || options.noDeleteOnFetchRejection;
-            const bf = p;
-            if (this.#valList[index] === p) {
-                // if we allow stale on fetch rejections, then we need to ensure that
-                // the stale value is not removed from the cache when the fetch fails.
-                const del = !noDelete || bf.__staleWhileFetching === undefined;
-                if (del) {
-                    this.#delete(k, 'fetch');
-                }
-                else if (!allowStaleAborted) {
-                    // still replace the *promise* with the stale value,
-                    // since we are done with the promise at this point.
-                    // leave it untouched if we're still waiting for an
-                    // aborted background fetch that hasn't yet returned.
-                    this.#valList[index] = bf.__staleWhileFetching;
-                }
-            }
-            if (allowStale) {
-                if (options.status && bf.__staleWhileFetching !== undefined) {
-                    options.status.returnedStale = true;
-                }
-                return bf.__staleWhileFetching;
-            }
-            else if (bf.__returned === bf) {
-                throw er;
-            }
-        };
-        const pcall = (res, rej) => {
-            const fmp = this.#fetchMethod?.(k, v, fetchOpts);
-            if (fmp && fmp instanceof Promise) {
-                fmp.then(v => res(v === undefined ? undefined : v), rej);
-            }
-            // ignored, we go until we finish, regardless.
-            // defer check until we are actually aborting,
-            // so fetchMethod can override.
-            ac.signal.addEventListener('abort', () => {
-                if (!options.ignoreFetchAbort ||
-                    options.allowStaleOnFetchAbort) {
-                    res(undefined);
-                    // when it eventually resolves, update the cache.
-                    if (options.allowStaleOnFetchAbort) {
-                        res = v => cb(v, true);
-                    }
-                }
-            });
-        };
-        if (options.status)
-            options.status.fetchDispatched = true;
-        const p = new Promise(pcall).then(cb, eb);
-        const bf = Object.assign(p, {
-            __abortController: ac,
-            __staleWhileFetching: v,
-            __returned: undefined,
-        });
-        if (index === undefined) {
-            // internal, don't expose status.
-            this.set(k, bf, { ...fetchOpts.options, status: undefined });
-            index = this.#keyMap.get(k);
-        }
-        else {
-            this.#valList[index] = bf;
-        }
-        return bf;
-    }
-    #isBackgroundFetch(p) {
-        if (!this.#hasFetchMethod)
-            return false;
-        const b = p;
-        return (!!b &&
-            b instanceof Promise &&
-            b.hasOwnProperty('__staleWhileFetching') &&
-            b.__abortController instanceof AC);
-    }
-    async fetch(k, fetchOptions = {}) {
-        const { 
-        // get options
-        allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet, 
-        // set options
-        ttl = this.ttl, noDisposeOnSet = this.noDisposeOnSet, size = 0, sizeCalculation = this.sizeCalculation, noUpdateTTL = this.noUpdateTTL, 
-        // fetch exclusive options
-        noDeleteOnFetchRejection = this.noDeleteOnFetchRejection, allowStaleOnFetchRejection = this.allowStaleOnFetchRejection, ignoreFetchAbort = this.ignoreFetchAbort, allowStaleOnFetchAbort = this.allowStaleOnFetchAbort, context, forceRefresh = false, status, signal, } = fetchOptions;
-        if (!this.#hasFetchMethod) {
-            if (status)
-                status.fetch = 'get';
-            return this.get(k, {
-                allowStale,
-                updateAgeOnGet,
-                noDeleteOnStaleGet,
-                status,
-            });
-        }
-        const options = {
-            allowStale,
-            updateAgeOnGet,
-            noDeleteOnStaleGet,
-            ttl,
-            noDisposeOnSet,
-            size,
-            sizeCalculation,
-            noUpdateTTL,
-            noDeleteOnFetchRejection,
-            allowStaleOnFetchRejection,
-            allowStaleOnFetchAbort,
-            ignoreFetchAbort,
-            status,
-            signal,
-        };
-        let index = this.#keyMap.get(k);
-        if (index === undefined) {
-            if (status)
-                status.fetch = 'miss';
-            const p = this.#backgroundFetch(k, index, options, context);
-            return (p.__returned = p);
-        }
-        else {
-            // in cache, maybe already fetching
-            const v = this.#valList[index];
-            if (this.#isBackgroundFetch(v)) {
-                const stale = allowStale && v.__staleWhileFetching !== undefined;
-                if (status) {
-                    status.fetch = 'inflight';
-                    if (stale)
-                        status.returnedStale = true;
-                }
-                return stale ? v.__staleWhileFetching : (v.__returned = v);
-            }
-            // if we force a refresh, that means do NOT serve the cached value,
-            // unless we are already in the process of refreshing the cache.
-            const isStale = this.#isStale(index);
-            if (!forceRefresh && !isStale) {
-                if (status)
-                    status.fetch = 'hit';
-                this.#moveToTail(index);
-                if (updateAgeOnGet) {
-                    this.#updateItemAge(index);
-                }
-                if (status)
-                    this.#statusTTL(status, index);
-                return v;
-            }
-            // ok, it is stale or a forced refresh, and not already fetching.
-            // refresh the cache.
-            const p = this.#backgroundFetch(k, index, options, context);
-            const hasStale = p.__staleWhileFetching !== undefined;
-            const staleVal = hasStale && allowStale;
-            if (status) {
-                status.fetch = isStale ? 'stale' : 'refresh';
-                if (staleVal && isStale)
-                    status.returnedStale = true;
-            }
-            return staleVal ? p.__staleWhileFetching : (p.__returned = p);
-        }
-    }
-    async forceFetch(k, fetchOptions = {}) {
-        const v = await this.fetch(k, fetchOptions);
-        if (v === undefined)
-            throw new Error('fetch() returned undefined');
-        return v;
-    }
-    memo(k, memoOptions = {}) {
-        const memoMethod = this.#memoMethod;
-        if (!memoMethod) {
-            throw new Error('no memoMethod provided to constructor');
-        }
-        const { context, forceRefresh, ...options } = memoOptions;
-        const v = this.get(k, options);
-        if (!forceRefresh && v !== undefined)
-            return v;
-        const vv = memoMethod(k, v, {
-            options,
-            context,
-        });
-        this.set(k, vv, options);
-        return vv;
-    }
-    /**
-     * Return a value from the cache. Will update the recency of the cache
-     * entry found.
-     *
-     * If the key is not found, get() will return `undefined`.
-     */
-    get(k, getOptions = {}) {
-        const { allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet, status, } = getOptions;
-        const index = this.#keyMap.get(k);
-        if (index !== undefined) {
-            const value = this.#valList[index];
-            const fetching = this.#isBackgroundFetch(value);
-            if (status)
-                this.#statusTTL(status, index);
-            if (this.#isStale(index)) {
-                if (status)
-                    status.get = 'stale';
-                // delete only if not an in-flight background fetch
-                if (!fetching) {
-                    if (!noDeleteOnStaleGet) {
-                        this.#delete(k, 'expire');
-                    }
-                    if (status && allowStale)
-                        status.returnedStale = true;
-                    return allowStale ? value : undefined;
-                }
-                else {
-                    if (status &&
-                        allowStale &&
-                        value.__staleWhileFetching !== undefined) {
-                        status.returnedStale = true;
-                    }
-                    return allowStale ? value.__staleWhileFetching : undefined;
-                }
-            }
-            else {
-                if (status)
-                    status.get = 'hit';
-                // if we're currently fetching it, we don't actually have it yet
-                // it's not stale, which means this isn't a staleWhileRefetching.
-                // If it's not stale, and fetching, AND has a __staleWhileFetching
-                // value, then that means the user fetched with {forceRefresh:true},
-                // so it's safe to return that value.
-                if (fetching) {
-                    return value.__staleWhileFetching;
-                }
-                this.#moveToTail(index);
-                if (updateAgeOnGet) {
-                    this.#updateItemAge(index);
-                }
-                return value;
-            }
-        }
-        else if (status) {
-            status.get = 'miss';
-        }
-    }
-    #connect(p, n) {
-        this.#prev[n] = p;
-        this.#next[p] = n;
-    }
-    #moveToTail(index) {
-        // if tail already, nothing to do
-        // if head, move head to next[index]
-        // else
-        //   move next[prev[index]] to next[index] (head has no prev)
-        //   move prev[next[index]] to prev[index]
-        // prev[index] = tail
-        // next[tail] = index
-        // tail = index
-        if (index !== this.#tail) {
-            if (index === this.#head) {
-                this.#head = this.#next[index];
-            }
-            else {
-                this.#connect(this.#prev[index], this.#next[index]);
-            }
-            this.#connect(this.#tail, index);
-            this.#tail = index;
-        }
-    }
-    /**
-     * Deletes a key out of the cache.
-     *
-     * Returns true if the key was deleted, false otherwise.
-     */
-    delete(k) {
-        return this.#delete(k, 'delete');
-    }
-    #delete(k, reason) {
-        let deleted = false;
-        if (this.#size !== 0) {
-            const index = this.#keyMap.get(k);
-            if (index !== undefined) {
-                deleted = true;
-                if (this.#size === 1) {
-                    this.#clear(reason);
-                }
-                else {
-                    this.#removeItemSize(index);
-                    const v = this.#valList[index];
-                    if (this.#isBackgroundFetch(v)) {
-                        v.__abortController.abort(new Error('deleted'));
-                    }
-                    else if (this.#hasDispose || this.#hasDisposeAfter) {
-                        if (this.#hasDispose) {
-                            this.#dispose?.(v, k, reason);
-                        }
-                        if (this.#hasDisposeAfter) {
-                            this.#disposed?.push([v, k, reason]);
-                        }
-                    }
-                    this.#keyMap.delete(k);
-                    this.#keyList[index] = undefined;
-                    this.#valList[index] = undefined;
-                    if (index === this.#tail) {
-                        this.#tail = this.#prev[index];
-                    }
-                    else if (index === this.#head) {
-                        this.#head = this.#next[index];
-                    }
-                    else {
-                        const pi = this.#prev[index];
-                        this.#next[pi] = this.#next[index];
-                        const ni = this.#next[index];
-                        this.#prev[ni] = this.#prev[index];
-                    }
-                    this.#size--;
-                    this.#free.push(index);
-                }
-            }
-        }
-        if (this.#hasDisposeAfter && this.#disposed?.length) {
-            const dt = this.#disposed;
-            let task;
-            while ((task = dt?.shift())) {
-                this.#disposeAfter?.(...task);
-            }
-        }
-        return deleted;
-    }
-    /**
-     * Clear the cache entirely, throwing away all values.
-     */
-    clear() {
-        return this.#clear('delete');
-    }
-    #clear(reason) {
-        for (const index of this.#rindexes({ allowStale: true })) {
-            const v = this.#valList[index];
-            if (this.#isBackgroundFetch(v)) {
-                v.__abortController.abort(new Error('deleted'));
-            }
-            else {
-                const k = this.#keyList[index];
-                if (this.#hasDispose) {
-                    this.#dispose?.(v, k, reason);
-                }
-                if (this.#hasDisposeAfter) {
-                    this.#disposed?.push([v, k, reason]);
-                }
-            }
-        }
-        this.#keyMap.clear();
-        this.#valList.fill(undefined);
-        this.#keyList.fill(undefined);
-        if (this.#ttls && this.#starts) {
-            this.#ttls.fill(0);
-            this.#starts.fill(0);
-        }
-        if (this.#sizes) {
-            this.#sizes.fill(0);
-        }
-        this.#head = 0;
-        this.#tail = 0;
-        this.#free.length = 0;
-        this.#calculatedSize = 0;
-        this.#size = 0;
-        if (this.#hasDisposeAfter && this.#disposed) {
-            const dt = this.#disposed;
-            let task;
-            while ((task = dt?.shift())) {
-                this.#disposeAfter?.(...task);
-            }
-        }
-    }
-}
-exports.LRUCache = LRUCache;
 //# sourceMappingURL=index.js.map
 
 /***/ }),

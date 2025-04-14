@@ -109,6 +109,8 @@ const generatePreviousCoverage = async (
   testCommand: string
 ): Promise<Lcov | undefined> => {
   const artifact = new DefaultArtifactClient();
+  // If any changes have already happened in the build process, save them to be restored later
+  await exec("git add . && git stash");
   await exec(`git checkout ${prevSha}`);
   let report: Lcov | undefined;
   try {
@@ -129,6 +131,12 @@ const generatePreviousCoverage = async (
     await exec(`git reset --hard`);
     await exec(`git clean -d -f .`);
     await exec(`git checkout ${currentBranch}`);
+    try {
+      await exec("git stash pop");
+    } catch (e) {
+      debug("Failed to pop stash");
+      debug("Error" + e);
+    }
     return report;
   }
 };
