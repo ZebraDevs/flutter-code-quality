@@ -109766,12 +109766,14 @@ const minimist_1 = __importDefault(__nccwpck_require__(38595));
 const node_child_process_1 = __nccwpck_require__(31421);
 exports.COVERAGE_DIR = ".coverage";
 const run = async (isLocal) => {
+    (0, core_1.startGroup)("Setup");
     try {
         (0, node_child_process_1.execSync)("flutter pub get");
     }
     catch (e) {
         console.error(e);
     }
+    (0, core_1.endGroup)();
     try {
         const workingDirectory = isLocal ? "." : (0, core_1.getInput)("working-directory");
         // Check if the working directory is different from the current directory
@@ -109783,7 +109785,7 @@ const run = async (isLocal) => {
         const testCommand = isLocal ? "" : (0, core_1.getInput)("test-command");
         const runAnalyze = isLocal ? true : (0, core_1.getBooleanInput)("run-analyze");
         const runCoverage = isLocal ? true : (0, core_1.getBooleanInput)("run-coverage");
-        const runPrevCoverage = isLocal ? true : (0, core_1.getBooleanInput)("run-prev-coverage");
+        const runPrevCoverage = isLocal ? true : (0, core_1.getBooleanInput)("run-prev-coverage") && (0, core_1.getBooleanInput)("run-coverage");
         const runBehindBy = isLocal ? true : (0, core_1.getBooleanInput)("run-behind-by");
         const createComment = isLocal ? true : (0, core_1.getBooleanInput)("create-comment");
         const score = isLocal ? "90" : (0, core_1.getInput)("coverage-pass-score");
