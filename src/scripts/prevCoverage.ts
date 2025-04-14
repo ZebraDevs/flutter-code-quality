@@ -131,7 +131,12 @@ const generatePreviousCoverage = async (
     await exec(`git reset --hard`);
     await exec(`git clean -d -f .`);
     await exec(`git checkout ${currentBranch}`);
-    await exec("git stash pop");
+    try {
+      await exec("git stash pop");
+    } catch (e) {
+      debug("Failed to pop stash");
+      debug("Error" + e);
+    }
     return report;
   }
 };
