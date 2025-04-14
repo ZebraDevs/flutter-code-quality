@@ -1,4 +1,4 @@
-import { getBooleanInput, getInput, setFailed } from "@actions/core";
+import { endGroup, getBooleanInput, getInput, setFailed, startGroup } from "@actions/core";
 import { getAnalyze } from "./scripts/analyze";
 import { getOctokit, context } from "@actions/github";
 import { getCoverage } from "./scripts/coverage";
@@ -11,16 +11,19 @@ import { retrievePreviousCoverage } from "./scripts/prevCoverage";
 import { Lcov } from "lcov-utils";
 import minimist from "minimist";
 import { execSync } from "node:child_process";
+import { start } from "node:repl";
 
 export type stepResponse = { output: string; error: boolean };
 export const COVERAGE_DIR = ".coverage";
 
 const run = async (isLocal: boolean) => {
+  startGroup("Setup");
   try {
     execSync("flutter pub get");
   } catch (e) {
     console.error(e);
   }
+  endGroup();
 
   try {
     const workingDirectory = isLocal ? "." : getInput("working-directory");
@@ -35,7 +38,7 @@ const run = async (isLocal: boolean) => {
     const testCommand = isLocal ? "" : getInput("test-command");
     const runAnalyze = isLocal ? true : getBooleanInput("run-analyze");
     const runCoverage = isLocal ? true : getBooleanInput("run-coverage");
-    const runPrevCoverage = isLocal ? true : getBooleanInput("run-prev-coverage");
+    const runPrevCoverage = isLocal ? true : getBooleanInput("run-prev-coverage") && getBooleanInput("run-coverage");
     const runBehindBy = isLocal ? true : getBooleanInput("run-behind-by");
     const createComment = isLocal ? true : getBooleanInput("create-comment");
     const score = isLocal ? "90" : getInput("coverage-pass-score");
