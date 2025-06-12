@@ -2,6 +2,8 @@ on:
   pull_request_target:
 
 name: CI - Pull Request
+permissions:
+  contents: write
 
 jobs:
   set-env:
