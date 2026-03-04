@@ -1395,12 +1395,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.19.30":
-  version: 20.19.30
-  resolution: "@types/node@npm:20.19.30"
+"@types/node@npm:^20.19.35":
+  version: 20.19.35
+  resolution: "@types/node@npm:20.19.35"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/23dbea652727d947ea35fc1c4e8acb7e1c535e85f6c139c3a4697864a5af164655ce305ab0877ea4cca537deee0405bf56aeac714f236ae1a3dd0fa6b87cc860
+  checksum: 10c0/e27d3e1eac4105b627fdba2d86577e603c66fc7b4ad61418d41f3898d84b2f5ff3e0c6b6d3948b34976ea91056e6359740b387edcc65ca516c3f2b5a0c0f9c6a
   languageName: node
   linkType: hard
 
@@ -2283,7 +2283,7 @@ __metadata:
     "@types/adm-zip": "npm:^0.5.7"
     "@types/jest": "npm:^29.5.14"
     "@types/minimist": "npm:^1.2.5"
-    "@types/node": "npm:^20.19.30"
+    "@types/node": "npm:^20.19.35"
     adm-zip: "npm:^0.5.16"
     jest: "npm:^29.7.0"
     lcov-utils: "npm:^0.5.4"
