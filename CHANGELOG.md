@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.0.11](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.10...v1.0.11) (2026-07-09)
+
+
+### 🪲 Bug Fixes
+
+* Previously built code being lost ([#45](https://github.com/ZebraDevs/flutter-code-quality/issues/45)) ([1f1dedb](https://github.com/ZebraDevs/flutter-code-quality/commit/1f1dedbe9fb617738352aa8d0a4146f8ccdc7ad3))
+
+
+### ⛓️ Dependencies
+
+* Update @actions/artifact from 2.3.2 to 5.0.3 to address security vulnerabilities ([3cfb4b6](https://github.com/ZebraDevs/flutter-code-quality/commit/3cfb4b6ef3bbc06efea5d6d4f48638f5328a5801))
+* Update deps ([33b02c8](https://github.com/ZebraDevs/flutter-code-quality/commit/33b02c8d20976a4627825d2bf27c12645af39cfc))
+* Update deps ([a38651d](https://github.com/ZebraDevs/flutter-code-quality/commit/a38651d108ac1d2500dc8b67b8e2de5eb7c4e463))
+* Update deps ([a48ddc4](https://github.com/ZebraDevs/flutter-code-quality/commit/a48ddc44e79c64c47461bcc2a298757cd5421714))
+* Update deps ([79d331a](https://github.com/ZebraDevs/flutter-code-quality/commit/79d331a7a3757c6e40df0304dd73bc5d9fdc572d))
+* Update deps ([5b25770](https://github.com/ZebraDevs/flutter-code-quality/commit/5b25770cc346f9913639b405b452733ad4126c6d))
+
 ## [1.0.10](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.9...v1.0.10) (2025-04-11)
 
 
