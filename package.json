@@ -11,7 +11,7 @@
     "@actions/github": "^6.0.1",
     "@types/adm-zip": "^0.5.8",
     "@types/minimist": "^1.2.5",
-    "adm-zip": "^0.5.18",
+    "adm-zip": "^0.6.0",
     "lcov-utils": "^0.5.7",
     "minimist": "^1.2.8"
   },
