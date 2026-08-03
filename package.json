@@ -33,7 +33,6 @@
     "graceful-fs": "^4.2.11"
   },
   "resolutions": {
-    "brace-expansion": "2.1.4",
     "undici": "6.27.0",
     "socks": "2.8.9",
     "tinyglobby/picomatch": "4.0.5",
