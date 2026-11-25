@@ -1,1 +1,6 @@
 include: package:zds_analysis/analysis_options_strict.yaml
+
+analyzer:
+  errors:
+    # Flutter 3.47+ deprecates package:flutter/material.dart; this fixture must analyze clean on any version.
+    deprecated_member_use: ignore
