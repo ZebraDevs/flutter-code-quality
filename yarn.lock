@@ -1513,7 +1513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24":
+"@types/node@npm:^24.19.2":
   version: 24.19.2
   resolution: "@types/node@npm:24.19.2"
   dependencies:
@@ -2535,7 +2535,7 @@ __metadata:
     "@types/adm-zip": "npm:^0.5.8"
     "@types/jest": "npm:^30.0.0"
     "@types/minimist": "npm:^1.2.5"
-    "@types/node": "npm:^24"
+    "@types/node": "npm:^24.19.2"
     "@vercel/ncc": "npm:^0.45.0"
     adm-zip: "npm:^0.6.1"
     jest: "npm:^30.5.2"
