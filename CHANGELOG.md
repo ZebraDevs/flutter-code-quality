@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.11...v1.1.0) (2026-11-26)
+
+
+### ✨ New Features
+
+* security updates for ci, workflows, deps and node24 runtime ([#80](https://github.com/ZebraDevs/flutter-code-quality/issues/80)) ([573de0a](https://github.com/ZebraDevs/flutter-code-quality/commit/573de0add63d24be85c600d7cec993013a54a4b6))
+
 ## [1.0.11](https://github.com/ZebraDevs/flutter-code-quality/compare/v1.0.10...v1.0.11) (2026-07-09)
 
 
