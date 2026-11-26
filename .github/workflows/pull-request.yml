@@ -1,84 +1,56 @@
-on:
-  pull_request_target:
+on: pull_request
 
 name: CI - Pull Request
-permissions:
-  contents: read
-  pull-requests: write
-  actions: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+permissions: {}
 
 jobs:
-  set-env:
-    name: "Set environment"
-    runs-on: ubuntu-latest
-    outputs:
-      env: ${{ steps.get_env.outputs.env }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          repository: ${{github.event.pull_request.head.repo.full_name}}
-          ref: ${{ github.head_ref }}
-
-      - name: Determine Environment
-        id: get_env
-        run: |
-          codeowners=$(cat .github/CODEOWNERS) 
-          if [[ $(echo "${codeowners[@]}" | fgrep -w "@${{github.actor}}") ]]; then
-            echo PROWNER
-            echo "env=pr_owner" >> $GITHUB_OUTPUT
-          else
-            echo PR
-            echo "env=pr" >> $GITHUB_OUTPUT
-          fi
-
   pull_request_checks:
-    needs: set-env
-    environment: ${{needs.set-env.outputs.env}}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          repository: ${{github.event.pull_request.head.repo.full_name}}
-          ref: ${{ github.head_ref }}
+          persist-credentials: false
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           cache: true
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "20"
+          node-version-file: .nvmrc
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
 
       - name: Build bundled file
-        run: yes | npx @vercel/ncc build src/main.ts
+        run: yarn build
 
       - name: setup flutter test repos
         run: |
           cd tests/fail_repo
           flutter pub get
           cd ../pass_repo
-          flutter pub get 
-          cd ../..
+          flutter pub get
 
       - name: run tests
         run: yarn run test
 
-      - name: Check for modified files
-        id: git-check
-        run: echo "modified=$(if [ -n "$(git status --porcelain)" ]; then echo "true"; else echo "false"; fi)" >>  $GITHUB_ENV
-
-      - name: Update changes in GitHub repository
-        if: env.modified == 'true'
+      # Bot commits pushed with GITHUB_TOKEN don't trigger CI, so required checks would never report on them
+      - name: Check bundled file is committed
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add -A
-          git commit -m 'ci(automated commit): Build bundled file'
-          git push
+          if [ -n "$(git status --porcelain dist)" ]; then
+            git status --porcelain dist
+            echo "::error::dist is out of date. Run 'yarn build' and commit the result."
+            exit 1
+          fi
